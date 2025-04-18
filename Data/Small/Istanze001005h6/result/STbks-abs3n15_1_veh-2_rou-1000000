@@ -1,0 +1,54 @@
+
+
+day[1] route[0]: travel time = 0
+ node[ 0 ] ->depot
+day[1] route[1]: travel time = 0
+ node[ 0 ] ->depot
+day[2] route[0]: travel time = 0
+ node[ 0 ] ->depot
+day[2] route[1]: travel time = 1054
+ node[ 0 ] -> node[ 12 ] -> node[ 1 ] -> node[ 13 ] -> node[ 8 ] -> node[ 15 ] -> node[ 14 ] -> node[ 3 ] ->depot
+day[3] route[0]: travel time = 1709
+ node[ 0 ] -> node[ 3 ] -> node[ 7 ] -> node[ 6 ] -> node[ 11 ] -> node[ 9 ] -> node[ 2 ] -> node[ 13 ] -> node[ 1 ] -> node[ 12 ] ->depot
+day[3] route[1]: travel time = 337
+ node[ 0 ] -> node[ 10 ] -> node[ 5 ] -> node[ 4 ] ->depot
+day[4] route[0]: travel time = 0
+ node[ 0 ] ->depot
+day[4] route[1]: travel time = 1106
+ node[ 0 ] -> node[ 14 ] -> node[ 7 ] -> node[ 6 ] -> node[ 11 ] -> node[ 8 ] -> node[ 15 ] ->depot
+day[5] route[0]: travel time = 532
+ node[ 0 ] -> node[ 5 ] -> node[ 10 ] -> node[ 3 ] -> node[ 14 ] -> node[ 4 ] ->depot
+day[5] route[1]: travel time = 1466
+ node[ 0 ] -> node[ 8 ] -> node[ 9 ] -> node[ 2 ] -> node[ 13 ] -> node[ 1 ] -> node[ 12 ] ->depot
+day[6] route[0]: travel time = 0
+ node[ 0 ] ->depot
+day[6] route[1]: travel time = 0
+ node[ 0 ] ->depot
+CUSTOMER 1 bounds (0,156) [morning: 78 ,replinishment: 0, everning: 0] [morning: 0 ,replinishment: 156, everning: 78] [morning: 78 ,replinishment: 78, everning: 78] [morning: 78 ,replinishment: 0, everning: 0] [morning: 0 ,replinishment: 156, everning: 78] [morning: 78 ,replinishment: 0, everning: 0] 
+CUSTOMER 2 bounds (0,294) [morning: 196 ,replinishment: 0, everning: 98] [morning: 98 ,replinishment: 0, everning: 0] [morning: 0 ,replinishment: 196, everning: 98] [morning: 98 ,replinishment: 0, everning: 0] [morning: 0 ,replinishment: 196, everning: 98] [morning: 98 ,replinishment: 0, everning: 0] 
+CUSTOMER 3 bounds (0,88) [morning: 44 ,replinishment: 0, everning: 0] [morning: 0 ,replinishment: 87, everning: 43] [morning: 43 ,replinishment: 45, everning: 44] [morning: 44 ,replinishment: 0, everning: 0] [morning: 0 ,replinishment: 88, everning: 44] [morning: 44 ,replinishment: 0, everning: 0] 
+CUSTOMER 4 bounds (0,195) [morning: 130 ,replinishment: 0, everning: 65] [morning: 65 ,replinishment: 0, everning: 0] [morning: 0 ,replinishment: 130, everning: 65] [morning: 65 ,replinishment: 0, everning: 0] [morning: 0 ,replinishment: 130, everning: 65] [morning: 65 ,replinishment: 0, everning: 0] 
+CUSTOMER 5 bounds (0,285) [morning: 190 ,replinishment: 0, everning: 95] [morning: 95 ,replinishment: 0, everning: 0] [morning: 0 ,replinishment: 190, everning: 95] [morning: 95 ,replinishment: 0, everning: 0] [morning: 0 ,replinishment: 190, everning: 95] [morning: 95 ,replinishment: 0, everning: 0] 
+CUSTOMER 6 bounds (0,33) [morning: 22 ,replinishment: 0, everning: 11] [morning: 11 ,replinishment: 0, everning: 0] [morning: 0 ,replinishment: 11, everning: 0] [morning: 0 ,replinishment: 33, everning: 22] [morning: 22 ,replinishment: 0, everning: 11] [morning: 11 ,replinishment: 0, everning: 0] 
+CUSTOMER 7 bounds (0,171) [morning: 114 ,replinishment: 0, everning: 57] [morning: 57 ,replinishment: 0, everning: 0] [morning: 0 ,replinishment: 57, everning: 0] [morning: 0 ,replinishment: 171, everning: 114] [morning: 114 ,replinishment: 0, everning: 57] [morning: 57 ,replinishment: 0, everning: 0] 
+CUSTOMER 8 bounds (0,76) [morning: 38 ,replinishment: 0, everning: 0] [morning: 0 ,replinishment: 76, everning: 38] [morning: 38 ,replinishment: 0, everning: 0] [morning: 0 ,replinishment: 51, everning: 13] [morning: 13 ,replinishment: 63, everning: 38] [morning: 38 ,replinishment: 0, everning: 0] 
+CUSTOMER 9 bounds (0,141) [morning: 94 ,replinishment: 0, everning: 47] [morning: 47 ,replinishment: 0, everning: 0] [morning: 0 ,replinishment: 114, everning: 67] [morning: 67 ,replinishment: 0, everning: 20] [morning: 20 ,replinishment: 95, everning: 68] [morning: 68 ,replinishment: 0, everning: 21] 
+CUSTOMER 10 bounds (0,270) [morning: 180 ,replinishment: 0, everning: 90] [morning: 90 ,replinishment: 0, everning: 0] [morning: 0 ,replinishment: 260, everning: 170] [morning: 170 ,replinishment: 0, everning: 80] [morning: 80 ,replinishment: 100, everning: 90] [morning: 90 ,replinishment: 0, everning: 0] 
+CUSTOMER 11 bounds (0,282) [morning: 188 ,replinishment: 0, everning: 94] [morning: 94 ,replinishment: 0, everning: 0] [morning: 0 ,replinishment: 94, everning: 0] [morning: 0 ,replinishment: 282, everning: 188] [morning: 188 ,replinishment: 0, everning: 94] [morning: 94 ,replinishment: 0, everning: 0] 
+CUSTOMER 12 bounds (0,60) [morning: 30 ,replinishment: 0, everning: 0] [morning: 0 ,replinishment: 60, everning: 30] [morning: 30 ,replinishment: 30, everning: 30] [morning: 30 ,replinishment: 0, everning: 0] [morning: 0 ,replinishment: 60, everning: 30] [morning: 30 ,replinishment: 0, everning: 0] 
+CUSTOMER 13 bounds (0,110) [morning: 55 ,replinishment: 0, everning: 0] [morning: 0 ,replinishment: 110, everning: 55] [morning: 55 ,replinishment: 55, everning: 55] [morning: 55 ,replinishment: 0, everning: 0] [morning: 0 ,replinishment: 110, everning: 55] [morning: 55 ,replinishment: 0, everning: 0] 
+CUSTOMER 14 bounds (0,172) [morning: 86 ,replinishment: 0, everning: 0] [morning: 0 ,replinishment: 172, everning: 86] [morning: 86 ,replinishment: 0, everning: 0] [morning: 0 ,replinishment: 86, everning: 0] [morning: 0 ,replinishment: 172, everning: 86] [morning: 86 ,replinishment: 0, everning: 0] 
+CUSTOMER 15 bounds (0,57) [morning: 38 ,replinishment: 0, everning: 19] [morning: 19 ,replinishment: 19, everning: 19] [morning: 19 ,replinishment: 0, everning: 0] [morning: 0 ,replinishment: 57, everning: 38] [morning: 38 ,replinishment: 0, everning: 19] [morning: 19 ,replinishment: 0, everning: 0] 
+SUPPLIER    [3297,3297] [4204,3524] [4431,3171] [4078,3398] [4305,2945] [3852,3852] 
+COST SUMMARY : ROUTE 6204 | LOAD 0 | SUPPLY 605.61 | CLIENT 98.02
+COST SUMMARY : OVERALL 6907.63
+6907.63
+6
+Total Time: 742
+Best Solution Time: 273
+ 0 2 1 1054 680  9 0 12 1 13 8 15 14 3 0
+ 0 3 1 1709 680  11 0 3 7 6 11 9 2 13 1 12 0
+ 0 3 1 337 580  5 0 10 5 4 0
+ 0 4 1 1106 680  8 0 14 7 6 11 8 15 0
+ 0 5 1 532 680  7 0 5 10 3 14 4 0
+ 0 5 1 1466 680  8 0 8 9 2 13 1 12 0

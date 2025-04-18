@@ -1,0 +1,34 @@
+
+
+ node[ 0 ] ->depot
+ node[ 0 ] ->depot
+ node[ 0 ] ->depot
+ node[ 0 ] -> node[ 3 ] -> node[ 12 ] -> node[ 6 ] -> node[ 17 ] -> node[ 15 ] -> node[ 30 ] ->depot
+ node[ 0 ] -> node[ 20 ] -> node[ 21 ] -> node[ 29 ] -> node[ 4 ] -> node[ 13 ] -> node[ 2 ] -> node[ 18 ] -> node[ 5 ] ->depot
+ node[ 0 ] ->depot
+ node[ 0 ] -> node[ 27 ] -> node[ 14 ] -> node[ 8 ] -> node[ 9 ] -> node[ 2 ] -> node[ 29 ] -> node[ 4 ] -> node[ 22 ] ->depot
+ node[ 0 ] -> node[ 11 ] -> node[ 28 ] -> node[ 7 ] -> node[ 10 ] ->depot
+ node[ 0 ] -> node[ 24 ] -> node[ 26 ] -> node[ 1 ] ->depot
+ node[ 0 ] -> node[ 23 ] -> node[ 16 ] -> node[ 25 ] -> node[ 19 ] -> node[ 30 ] ->depot
+ node[ 0 ] ->depot
+ node[ 0 ] ->depot
+ node[ 0 ] ->depot
+ node[ 0 ] ->depot
+ node[ 0 ] ->depot
+ROUTE: 4040
+LOAD: 0SUPPLY: 4529.7
+CLIENT INVENTORY: 1202.06
+CLIENT STOCKOUT: 0
+CLIENT STOCKOUT Amount: 0
+COST SUMMARY : OVERALL 9771.76
+9771.76
+6
+Total Time: 172
+PITime: 124
+Best Solution Time: 32
+ 0 1 1 519 448  8 0 3 12 6 17 15 30 0
+ 0 1 1 874 443  10 0 20 21 29 4 13 2 18 5 0
+ 0 2 1 1197 449  10 0 27 14 8 9 2 29 4 22 0
+ 0 2 1 376 362  6 0 11 28 7 10 0
+ 0 2 1 220 264  5 0 24 26 1 0
+ 0 2 1 854 458  7 0 23 16 25 19 30 0

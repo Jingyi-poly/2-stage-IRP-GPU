@@ -1,0 +1,64 @@
+
+
+ node[ 0 ] ->depot
+ node[ 0 ] ->depot
+ node[ 0 ] -> node[ 7 ] -> node[ 3 ] -> node[ 1 ] -> node[ 8 ] -> node[ 4 ] ->depot
+ node[ 0 ] -> node[ 5 ] -> node[ 11 ] -> node[ 12 ] -> node[ 13 ] -> node[ 10 ] -> node[ 14 ] -> node[ 2 ] -> node[ 15 ] ->depot
+ node[ 0 ] ->depot
+ node[ 0 ] ->depot
+COST SUMMARY : ROUTE 1794 | LOAD 0 | SUPPLY 2450.4 | CLIENT 510.62
+COST SUMMARY : OVERALL 4755.02
+4755.02
+2
+Total Time: 102
+Best Solution Time: 3
+ 0 2 1 850 592  7 0 7 3 1 8 4 0
+ 0 2 1 944 592  10 0 5 11 12 13 10 14 2 15 0
+
+
+ node[ 0 ] ->depot
+ node[ 0 ] ->depot
+ node[ 0 ] -> node[ 7 ] -> node[ 3 ] -> node[ 1 ] -> node[ 8 ] -> node[ 4 ] ->depot
+ node[ 0 ] -> node[ 15 ] -> node[ 2 ] -> node[ 14 ] -> node[ 10 ] -> node[ 13 ] -> node[ 12 ] -> node[ 11 ] -> node[ 5 ] ->depot
+ node[ 0 ] ->depot
+ node[ 0 ] ->depot
+COST SUMMARY : ROUTE 1794 | LOAD 0 | SUPPLY 2450.4 | CLIENT 510.62
+COST SUMMARY : OVERALL 4755.02
+4755.02
+2
+Total Time: 104
+Best Solution Time: 4
+ 0 2 1 850 592  7 0 7 3 1 8 4 0
+ 0 2 1 944 592  10 0 15 2 14 10 13 12 11 5 0
+
+
+ node[ 0 ] ->depot
+ node[ 0 ] ->depot
+ node[ 0 ] -> node[ 15 ] -> node[ 2 ] -> node[ 14 ] -> node[ 10 ] -> node[ 13 ] -> node[ 12 ] -> node[ 11 ] -> node[ 5 ] ->depot
+ node[ 0 ] -> node[ 4 ] -> node[ 8 ] -> node[ 1 ] -> node[ 3 ] -> node[ 7 ] ->depot
+ node[ 0 ] ->depot
+ node[ 0 ] ->depot
+COST SUMMARY : ROUTE 1794 | LOAD 0 | SUPPLY 2450.4 | CLIENT 510.62
+COST SUMMARY : OVERALL 4755.02
+4755.02
+2
+Total Time: 106
+Best Solution Time: 8
+ 0 2 1 944 592  10 0 15 2 14 10 13 12 11 5 0
+ 0 2 1 850 592  7 0 4 8 1 3 7 0
+
+
+ node[ 0 ] ->depot
+ node[ 0 ] ->depot
+ node[ 0 ] -> node[ 7 ] -> node[ 3 ] -> node[ 1 ] -> node[ 8 ] -> node[ 4 ] ->depot
+ node[ 0 ] -> node[ 15 ] -> node[ 2 ] -> node[ 14 ] -> node[ 10 ] -> node[ 13 ] -> node[ 12 ] -> node[ 11 ] -> node[ 5 ] ->depot
+ node[ 0 ] ->depot
+ node[ 0 ] ->depot
+COST SUMMARY : ROUTE 1794 | LOAD 0 | SUPPLY 2450.4 | CLIENT 510.62
+COST SUMMARY : OVERALL 4755.02
+4755.02
+2
+Total Time: 108
+Best Solution Time: 11
+ 0 2 1 850 592  7 0 7 3 1 8 4 0
+ 0 2 1 944 592  10 0 15 2 14 10 13 12 11 5 0

@@ -1,0 +1,90 @@
+
+
+day[1] route[0]: travel time = 0
+ node[ 0 ] ->depot
+day[1] route[1]: travel time = 0
+ node[ 0 ] ->depot
+day[1] route[2]: travel time = 0
+ node[ 0 ] ->depot
+day[1] route[3]: travel time = 0
+ node[ 0 ] ->depot
+day[1] route[4]: travel time = 944
+ node[ 0 ] -> node[ 2 ] -> node[ 4 ] -> node[ 5 ] ->depot
+day[2] route[0]: travel time = 810
+ node[ 0 ] -> node[ 5 ] ->depot
+day[2] route[1]: travel time = 1022
+ node[ 0 ] -> node[ 1 ] ->depot
+day[2] route[2]: travel time = 106
+ node[ 0 ] -> node[ 3 ] ->depot
+day[2] route[3]: travel time = 326
+ node[ 0 ] -> node[ 2 ] ->depot
+day[2] route[4]: travel time = 0
+ node[ 0 ] ->depot
+day[3] route[0]: travel time = 810
+ node[ 0 ] -> node[ 5 ] ->depot
+day[3] route[1]: travel time = 1022
+ node[ 0 ] -> node[ 1 ] ->depot
+day[3] route[2]: travel time = 326
+ node[ 0 ] -> node[ 2 ] ->depot
+day[3] route[3]: travel time = 0
+ node[ 0 ] ->depot
+day[3] route[4]: travel time = 0
+ node[ 0 ] ->depot
+day[4] route[0]: travel time = 1022
+ node[ 0 ] -> node[ 1 ] ->depot
+day[4] route[1]: travel time = 0
+ node[ 0 ] ->depot
+day[4] route[2]: travel time = 0
+ node[ 0 ] ->depot
+day[4] route[3]: travel time = 365
+ node[ 0 ] -> node[ 2 ] -> node[ 3 ] ->depot
+day[4] route[4]: travel time = 942
+ node[ 0 ] -> node[ 4 ] -> node[ 5 ] ->depot
+day[5] route[0]: travel time = 810
+ node[ 0 ] -> node[ 5 ] ->depot
+day[5] route[1]: travel time = 1022
+ node[ 0 ] -> node[ 1 ] ->depot
+day[5] route[2]: travel time = 326
+ node[ 0 ] -> node[ 2 ] ->depot
+day[5] route[3]: travel time = 0
+ node[ 0 ] ->depot
+day[5] route[4]: travel time = 0
+ node[ 0 ] ->depot
+day[6] route[0]: travel time = 1022
+ node[ 0 ] -> node[ 1 ] ->depot
+day[6] route[1]: travel time = 0
+ node[ 0 ] ->depot
+day[6] route[2]: travel time = 0
+ node[ 0 ] ->depot
+day[6] route[3]: travel time = 0
+ node[ 0 ] ->depot
+day[6] route[4]: travel time = 365
+ node[ 0 ] -> node[ 2 ] -> node[ 3 ] ->depot
+CUSTOMER 1 bounds (0,174) [morning: 87 ,replinishment: 0, everning: 0] [morning: 0 ,replinishment: 87, everning: 0] [morning: 0 ,replinishment: 87, everning: 0] [morning: 0 ,replinishment: 87, everning: 0] [morning: 0 ,replinishment: 87, everning: 0] [morning: 0 ,replinishment: 87, everning: 0] 
+CUSTOMER 2 bounds (0,150) [morning: 75 ,replinishment: 18, everning: 18] [morning: 18 ,replinishment: 87, everning: 30] [morning: 30 ,replinishment: 87, everning: 42] [morning: 42 ,replinishment: 35, everning: 2] [morning: 2 ,replinishment: 87, everning: 14] [morning: 14 ,replinishment: 61, everning: 0] 
+CUSTOMER 3 bounds (0,52) [morning: 26 ,replinishment: 0, everning: 0] [morning: 0 ,replinishment: 52, everning: 26] [morning: 26 ,replinishment: 0, everning: 0] [morning: 0 ,replinishment: 52, everning: 26] [morning: 26 ,replinishment: 0, everning: 0] [morning: 0 ,replinishment: 26, everning: 0] 
+CUSTOMER 4 bounds (0,63) [morning: 42 ,replinishment: 21, everning: 42] [morning: 42 ,replinishment: 0, everning: 21] [morning: 21 ,replinishment: 0, everning: 0] [morning: 0 ,replinishment: 63, everning: 42] [morning: 42 ,replinishment: 0, everning: 21] [morning: 21 ,replinishment: 0, everning: 0] 
+CUSTOMER 5 bounds (0,249) [morning: 166 ,replinishment: 48, everning: 131] [morning: 131 ,replinishment: 87, everning: 135] [morning: 135 ,replinishment: 86, everning: 138] [morning: 138 ,replinishment: 24, everning: 79] [morning: 79 ,replinishment: 87, everning: 83] [morning: 83 ,replinishment: 0, everning: 0] 
+SUPPLIER    [980,893] [1185,872] [1164,904] [1196,935] [1227,966] [1258,1084] 
+COST SUMMARY : ROUTE 11240 | LOAD 0 | SUPPLY 169.62 | CLIENT 29.6
+COST SUMMARY : OVERALL 11439.2
+11439.2
+16
+Total Time: 762
+Best Solution Time: 11
+ 0 1 1 944 87  5 0 2 4 5 0
+ 0 2 1 810 87  3 0 5 0
+ 0 2 1 1022 87  3 0 1 0
+ 0 2 1 106 52  3 0 3 0
+ 0 2 1 326 87  3 0 2 0
+ 0 3 1 810 86  3 0 5 0
+ 0 3 1 1022 87  3 0 1 0
+ 0 3 1 326 87  3 0 2 0
+ 0 4 1 1022 87  3 0 1 0
+ 0 4 1 365 87  4 0 2 3 0
+ 0 4 1 942 87  4 0 4 5 0
+ 0 5 1 810 87  3 0 5 0
+ 0 5 1 1022 87  3 0 1 0
+ 0 5 1 326 87  3 0 2 0
+ 0 6 1 1022 87  3 0 1 0
+ 0 6 1 365 87  4 0 2 3 0

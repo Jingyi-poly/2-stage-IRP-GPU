@@ -1,0 +1,35 @@
+
+
+ node[ 0 ] ->depot
+ node[ 0 ] ->depot
+ node[ 0 ] ->depot
+ node[ 0 ] -> node[ 6 ] -> node[ 16 ] -> node[ 2 ] -> node[ 19 ] -> node[ 4 ] -> node[ 12 ] -> node[ 10 ] ->depot
+ node[ 0 ] -> node[ 13 ] -> node[ 20 ] -> node[ 11 ] -> node[ 15 ] -> node[ 3 ] ->depot
+ node[ 0 ] -> node[ 8 ] -> node[ 17 ] -> node[ 7 ] -> node[ 14 ] -> node[ 18 ] -> node[ 9 ] ->depot
+ node[ 0 ] ->depot
+ node[ 0 ] ->depot
+ node[ 0 ] -> node[ 6 ] -> node[ 5 ] -> node[ 16 ] -> node[ 10 ] -> node[ 13 ] ->depot
+ node[ 0 ] -> node[ 5 ] -> node[ 2 ] -> node[ 19 ] -> node[ 4 ] -> node[ 12 ] ->depot
+ node[ 0 ] -> node[ 3 ] -> node[ 11 ] -> node[ 15 ] ->depot
+ node[ 0 ] -> node[ 8 ] -> node[ 14 ] -> node[ 7 ] -> node[ 17 ] -> node[ 20 ] -> node[ 13 ] ->depot
+ node[ 0 ] ->depot
+ node[ 0 ] -> node[ 15 ] -> node[ 11 ] -> node[ 14 ] -> node[ 18 ] -> node[ 9 ] -> node[ 20 ] ->depot
+ node[ 0 ] -> node[ 13 ] -> node[ 10 ] -> node[ 4 ] -> node[ 16 ] -> node[ 6 ] ->depot
+ node[ 0 ] ->depot
+ node[ 0 ] ->depot
+ node[ 0 ] ->depot
+COST SUMMARY : ROUTE 8240 | LOAD 0 | SUPPLY 602.31 | CLIENT 693.77
+COST SUMMARY : OVERALL 9536.08
+9536.08
+9
+Total Time: 1795
+Best Solution Time: 1325
+ 0 2 1 1011 523  9 0 6 16 2 19 4 12 10 0
+ 0 2 1 726 523  7 0 13 20 11 15 3 0
+ 0 2 1 1178 523  8 0 8 17 7 14 18 9 0
+ 0 3 1 776 523  7 0 6 5 16 10 13 0
+ 0 4 1 921 523  7 0 5 2 19 4 12 0
+ 0 4 1 583 501  5 0 3 11 15 0
+ 0 4 1 927 523  8 0 8 14 7 17 20 13 0
+ 0 5 1 1289 523  8 0 15 11 14 18 9 20 0
+ 0 5 1 829 523  7 0 13 10 4 16 6 0

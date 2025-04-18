@@ -1,0 +1,34 @@
+
+
+day[1] route[0]: travel time = 0
+ node[ 0 ] ->depot
+day[2] route[0]: travel time = 1092
+ node[ 0 ] -> node[ 3 ] -> node[ 4 ] -> node[ 1 ] -> node[ 5 ] ->depot
+day[3] route[0]: travel time = 748
+ node[ 0 ] -> node[ 5 ] -> node[ 2 ] ->depot
+day[4] route[0]: travel time = 0
+ node[ 0 ] ->depot
+day[5] route[0]: travel time = 1032
+ node[ 0 ] -> node[ 3 ] -> node[ 1 ] -> node[ 5 ] ->depot
+day[6] route[0]: travel time = 0
+ node[ 0 ] ->depot
+CUSTOMER 1 bounds (0,75) [morning: 72 ,replinishment: 0, everning: 42] [morning: 42 ,replinishment: 33, everning: 42] [morning: 42 ,replinishment: 0, everning: 14] [morning: 14 ,replinishment: 0, everning: 0] [morning: 0 ,replinishment: 75, everning: 52] [morning: 52 ,replinishment: 0, everning: 22] 
+CUSTOMER 2 bounds (0,316) [morning: 245 ,replinishment: 0, everning: 165] [morning: 165 ,replinishment: 0, everning: 87] [morning: 87 ,replinishment: 229, everning: 241] [morning: 241 ,replinishment: 0, everning: 162] [morning: 162 ,replinishment: 0, everning: 86] [morning: 86 ,replinishment: 0, everning: 4] 
+CUSTOMER 3 bounds (0,93) [morning: 10 ,replinishment: 0, everning: 0] [morning: 0 ,replinishment: 93, everning: 61] [morning: 61 ,replinishment: 0, everning: 38] [morning: 38 ,replinishment: 0, everning: 11] [morning: 11 ,replinishment: 82, everning: 61] [morning: 61 ,replinishment: 0, everning: 29] 
+CUSTOMER 4 bounds (0,56) [morning: 52 ,replinishment: 0, everning: 43] [morning: 43 ,replinishment: 13, everning: 46] [morning: 46 ,replinishment: 0, everning: 38] [morning: 38 ,replinishment: 0, everning: 26] [morning: 26 ,replinishment: 0, everning: 15] [morning: 15 ,replinishment: 0, everning: 6] 
+CUSTOMER 5 bounds (0,166) [morning: 59 ,replinishment: 0, everning: 0] [morning: 0 ,replinishment: 166, everning: 82] [morning: 82 ,replinishment: 84, everning: 77] [morning: 77 ,replinishment: 0, everning: 9] [morning: 9 ,replinishment: 157, everning: 98] [morning: 98 ,replinishment: 0, everning: 19] 
+SUPPLIER    [1.0001e+12,1.0001e+12] [1.0002e+12,1.0002e+12] [1.0003e+12,1.0003e+12] [1.0004e+12,1.0004e+12] [1.0005e+12,1.0005e+12] [1.0006e+12,1.0006e+12] 
+ROUTE: 2872
+LOAD: 0SUPPLY: 0
+CLIENT INVENTORY: 94.191
+CLIENT STOCKOUT: 632.988
+CLIENT STOCKOUT Amount: 40
+COST SUMMARY : OVERALL 3599.18
+3599.18
+3
+Total Time: 28
+PITime: 18
+Best Solution Time: 0
+ 0 2 1 1092 305  6 0 3 4 1 5 0
+ 0 3 1 748 313  4 0 5 2 0
+ 0 5 1 1032 314  5 0 3 1 5 0

@@ -1,0 +1,49 @@
+
+
+day[1] route[0]: travel time = 0
+ node[ 0 ] ->depot
+day[1] route[1]: travel time = 0
+ node[ 0 ] ->depot
+day[1] route[2]: travel time = 0
+ node[ 0 ] ->depot
+day[1] route[3]: travel time = 0
+ node[ 0 ] ->depot
+day[1] route[4]: travel time = 364
+ node[ 0 ] -> node[ 4 ] -> node[ 1 ] ->depot
+day[2] route[0]: travel time = 278
+ node[ 0 ] -> node[ 4 ] ->depot
+day[2] route[1]: travel time = 0
+ node[ 0 ] ->depot
+day[2] route[2]: travel time = 0
+ node[ 0 ] ->depot
+day[2] route[3]: travel time = 0
+ node[ 0 ] ->depot
+day[2] route[4]: travel time = 779
+ node[ 0 ] -> node[ 3 ] -> node[ 5 ] -> node[ 2 ] ->depot
+day[3] route[0]: travel time = 180
+ node[ 0 ] -> node[ 3 ] ->depot
+day[3] route[1]: travel time = 278
+ node[ 0 ] -> node[ 4 ] ->depot
+day[3] route[2]: travel time = 0
+ node[ 0 ] ->depot
+day[3] route[3]: travel time = 0
+ node[ 0 ] ->depot
+day[3] route[4]: travel time = 0
+ node[ 0 ] ->depot
+CUSTOMER 1 bounds (0,57) [morning: 38 ,replinishment: 19, everning: 38] [morning: 38 ,replinishment: 0, everning: 19] [morning: 19 ,replinishment: 0, everning: 0] 
+CUSTOMER 2 bounds (0,141) [morning: 94 ,replinishment: 0, everning: 47] [morning: 47 ,replinishment: 47, everning: 47] [morning: 47 ,replinishment: 0, everning: 0] 
+CUSTOMER 3 bounds (0,216) [morning: 144 ,replinishment: 0, everning: 72] [morning: 72 ,replinishment: 2, everning: 2] [morning: 2 ,replinishment: 70, everning: 0] 
+CUSTOMER 4 bounds (0,162) [morning: 81 ,replinishment: 22, everning: 22] [morning: 22 ,replinishment: 70, everning: 11] [morning: 11 ,replinishment: 70, everning: 0] 
+CUSTOMER 5 bounds (0,45) [morning: 30 ,replinishment: 0, everning: 15] [morning: 15 ,replinishment: 15, everning: 15] [morning: 15 ,replinishment: 0, everning: 0] 
+SUPPLIER    [855,814] [1048,914] [1148,1008] 
+COST SUMMARY : ROUTE 1879 | LOAD 0 | SUPPLY 820.8 | CLIENT 118.41
+COST SUMMARY : OVERALL 2818.21
+2818.21
+5
+Total Time: 135
+Best Solution Time: 0
+ 0 1 1 364 41  4 0 4 1 0
+ 0 2 1 278 70  3 0 4 0
+ 0 2 1 779 64  5 0 3 5 2 0
+ 0 3 1 180 70  3 0 3 0
+ 0 3 1 278 70  3 0 4 0

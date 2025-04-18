@@ -1,0 +1,150 @@
+
+
+ node[ 0 ] ->depot
+ node[ 0 ] ->depot
+ node[ 0 ] ->depot
+ node[ 0 ] -> node[ 25 ] -> node[ 8 ] -> node[ 19 ] -> node[ 2 ] ->depot
+ node[ 0 ] -> node[ 35 ] -> node[ 10 ] -> node[ 11 ] -> node[ 17 ] -> node[ 14 ] -> node[ 16 ] -> node[ 23 ] -> node[ 39 ] -> node[ 3 ] -> node[ 21 ] ->depot
+ node[ 0 ] -> node[ 26 ] -> node[ 4 ] -> node[ 7 ] -> node[ 15 ] -> node[ 12 ] -> node[ 13 ] -> node[ 20 ] -> node[ 37 ] -> node[ 5 ] -> node[ 32 ] ->depot
+ node[ 0 ] -> node[ 31 ] -> node[ 1 ] -> node[ 38 ] -> node[ 33 ] -> node[ 29 ] -> node[ 6 ] -> node[ 27 ] -> node[ 18 ] -> node[ 25 ] ->depot
+ node[ 0 ] -> node[ 24 ] -> node[ 28 ] -> node[ 22 ] -> node[ 40 ] -> node[ 9 ] -> node[ 34 ] -> node[ 36 ] -> node[ 19 ] -> node[ 2 ] ->depot
+ node[ 0 ] ->depot
+ node[ 0 ] ->depot
+ node[ 0 ] ->depot
+ node[ 0 ] ->depot
+COST SUMMARY : ROUTE 3977 | LOAD 0 | SUPPLY 5337.9 | CLIENT 1101.29
+COST SUMMARY : OVERALL 10416.2
+10416.2
+5
+Total Time: 578
+Best Solution Time: 165
+ 0 1 1 455 239  6 0 25 8 19 2 0
+ 0 2 1 976 684  12 0 35 10 11 17 14 16 23 39 3 21 0
+ 0 2 1 1058 684  12 0 26 4 7 15 12 13 20 37 5 32 0
+ 0 2 1 957 684  11 0 31 1 38 33 29 6 27 18 25 0
+ 0 2 1 531 675  11 0 24 28 22 40 9 34 36 19 2 0
+
+
+ node[ 0 ] ->depot
+ node[ 0 ] ->depot
+ node[ 0 ] ->depot
+ node[ 0 ] -> node[ 25 ] -> node[ 8 ] -> node[ 19 ] -> node[ 2 ] ->depot
+ node[ 0 ] -> node[ 24 ] -> node[ 28 ] -> node[ 22 ] -> node[ 40 ] -> node[ 9 ] -> node[ 34 ] -> node[ 36 ] -> node[ 19 ] -> node[ 2 ] ->depot
+ node[ 0 ] -> node[ 25 ] -> node[ 18 ] -> node[ 27 ] -> node[ 6 ] -> node[ 29 ] -> node[ 33 ] -> node[ 38 ] -> node[ 1 ] -> node[ 31 ] ->depot
+ node[ 0 ] -> node[ 26 ] -> node[ 4 ] -> node[ 7 ] -> node[ 15 ] -> node[ 12 ] -> node[ 13 ] -> node[ 20 ] -> node[ 37 ] -> node[ 5 ] -> node[ 32 ] ->depot
+ node[ 0 ] -> node[ 35 ] -> node[ 10 ] -> node[ 11 ] -> node[ 17 ] -> node[ 14 ] -> node[ 16 ] -> node[ 23 ] -> node[ 39 ] -> node[ 3 ] -> node[ 21 ] ->depot
+ node[ 0 ] ->depot
+ node[ 0 ] ->depot
+ node[ 0 ] ->depot
+ node[ 0 ] ->depot
+COST SUMMARY : ROUTE 3977 | LOAD 0 | SUPPLY 5341.5 | CLIENT 1095.61
+COST SUMMARY : OVERALL 10414.1
+10414.1
+5
+Total Time: 800
+Best Solution Time: 397
+ 0 1 1 455 235  6 0 25 8 19 2 0
+ 0 2 1 531 675  11 0 24 28 22 40 9 34 36 19 2 0
+ 0 2 1 957 684  11 0 25 18 27 6 29 33 38 1 31 0
+ 0 2 1 1058 684  12 0 26 4 7 15 12 13 20 37 5 32 0
+ 0 2 1 976 684  12 0 35 10 11 17 14 16 23 39 3 21 0
+
+
+ node[ 0 ] ->depot
+ node[ 0 ] ->depot
+ node[ 0 ] ->depot
+ node[ 0 ] ->depot
+ node[ 0 ] -> node[ 21 ] -> node[ 3 ] -> node[ 39 ] -> node[ 23 ] -> node[ 16 ] -> node[ 14 ] -> node[ 17 ] -> node[ 11 ] -> node[ 10 ] -> node[ 35 ] ->depot
+ node[ 0 ] -> node[ 2 ] -> node[ 19 ] -> node[ 36 ] -> node[ 34 ] -> node[ 9 ] -> node[ 40 ] -> node[ 22 ] -> node[ 28 ] -> node[ 24 ] ->depot
+ node[ 0 ] -> node[ 26 ] -> node[ 4 ] -> node[ 7 ] -> node[ 15 ] -> node[ 12 ] -> node[ 13 ] -> node[ 20 ] -> node[ 37 ] -> node[ 5 ] -> node[ 32 ] ->depot
+ node[ 0 ] -> node[ 31 ] -> node[ 1 ] -> node[ 38 ] -> node[ 33 ] -> node[ 29 ] -> node[ 6 ] -> node[ 27 ] -> node[ 18 ] -> node[ 25 ] ->depot
+ node[ 0 ] ->depot
+ node[ 0 ] ->depot
+ node[ 0 ] ->depot
+ node[ 0 ] -> node[ 25 ] -> node[ 8 ] -> node[ 19 ] -> node[ 2 ] ->depot
+COST SUMMARY : ROUTE 3977 | LOAD 0 | SUPPLY 5441.1 | CLIENT 1001.56
+COST SUMMARY : OVERALL 10419.7
+10419.7
+5
+Total Time: 614
+Best Solution Time: 208
+ 0 2 1 976 684  12 0 21 3 39 23 16 14 17 11 10 35 0
+ 0 2 1 531 684  11 0 2 19 36 34 9 40 22 28 24 0
+ 0 2 1 1058 684  12 0 26 4 7 15 12 13 20 37 5 32 0
+ 0 2 1 957 684  11 0 31 1 38 33 29 6 27 18 25 0
+ 0 3 1 455 355  6 0 25 8 19 2 0
+
+
+ node[ 0 ] ->depot
+ node[ 0 ] ->depot
+ node[ 0 ] ->depot
+ node[ 0 ] ->depot
+ node[ 0 ] -> node[ 21 ] -> node[ 3 ] -> node[ 39 ] -> node[ 23 ] -> node[ 16 ] -> node[ 14 ] -> node[ 17 ] -> node[ 11 ] -> node[ 10 ] -> node[ 35 ] ->depot
+ node[ 0 ] -> node[ 31 ] -> node[ 1 ] -> node[ 38 ] -> node[ 33 ] -> node[ 29 ] -> node[ 6 ] -> node[ 27 ] -> node[ 18 ] -> node[ 25 ] ->depot
+ node[ 0 ] -> node[ 26 ] -> node[ 4 ] -> node[ 7 ] -> node[ 15 ] -> node[ 12 ] -> node[ 13 ] -> node[ 20 ] -> node[ 37 ] -> node[ 5 ] -> node[ 32 ] ->depot
+ node[ 0 ] -> node[ 2 ] -> node[ 19 ] -> node[ 36 ] -> node[ 34 ] -> node[ 9 ] -> node[ 40 ] -> node[ 22 ] -> node[ 28 ] -> node[ 24 ] ->depot
+ node[ 0 ] ->depot
+ node[ 0 ] ->depot
+ node[ 0 ] ->depot
+ node[ 0 ] -> node[ 25 ] -> node[ 8 ] -> node[ 19 ] -> node[ 2 ] ->depot
+COST SUMMARY : ROUTE 3977 | LOAD 0 | SUPPLY 5441.1 | CLIENT 1001.56
+COST SUMMARY : OVERALL 10419.7
+10419.7
+5
+Total Time: 530
+Best Solution Time: 121
+ 0 2 1 976 684  12 0 21 3 39 23 16 14 17 11 10 35 0
+ 0 2 1 957 684  11 0 31 1 38 33 29 6 27 18 25 0
+ 0 2 1 1058 684  12 0 26 4 7 15 12 13 20 37 5 32 0
+ 0 2 1 531 684  11 0 2 19 36 34 9 40 22 28 24 0
+ 0 3 1 455 355  6 0 25 8 19 2 0
+
+
+ node[ 0 ] ->depot
+ node[ 0 ] ->depot
+ node[ 0 ] ->depot
+ node[ 0 ] ->depot
+ node[ 0 ] -> node[ 24 ] -> node[ 28 ] -> node[ 22 ] -> node[ 40 ] -> node[ 9 ] -> node[ 34 ] -> node[ 36 ] -> node[ 19 ] -> node[ 2 ] ->depot
+ node[ 0 ] -> node[ 25 ] -> node[ 18 ] -> node[ 27 ] -> node[ 6 ] -> node[ 29 ] -> node[ 33 ] -> node[ 38 ] -> node[ 1 ] -> node[ 31 ] ->depot
+ node[ 0 ] -> node[ 21 ] -> node[ 3 ] -> node[ 39 ] -> node[ 23 ] -> node[ 16 ] -> node[ 14 ] -> node[ 17 ] -> node[ 11 ] -> node[ 10 ] -> node[ 35 ] ->depot
+ node[ 0 ] -> node[ 26 ] -> node[ 4 ] -> node[ 7 ] -> node[ 15 ] -> node[ 12 ] -> node[ 13 ] -> node[ 20 ] -> node[ 37 ] -> node[ 5 ] -> node[ 32 ] ->depot
+ node[ 0 ] ->depot
+ node[ 0 ] ->depot
+ node[ 0 ] ->depot
+ node[ 0 ] -> node[ 2 ] -> node[ 19 ] -> node[ 8 ] -> node[ 25 ] ->depot
+COST SUMMARY : ROUTE 3977 | LOAD 0 | SUPPLY 5441.1 | CLIENT 1001.56
+COST SUMMARY : OVERALL 10419.7
+10419.7
+5
+Total Time: 790
+Best Solution Time: 383
+ 0 2 1 531 684  11 0 24 28 22 40 9 34 36 19 2 0
+ 0 2 1 957 684  11 0 25 18 27 6 29 33 38 1 31 0
+ 0 2 1 976 684  12 0 21 3 39 23 16 14 17 11 10 35 0
+ 0 2 1 1058 684  12 0 26 4 7 15 12 13 20 37 5 32 0
+ 0 3 1 455 355  6 0 2 19 8 25 0
+
+
+ node[ 0 ] ->depot
+ node[ 0 ] ->depot
+ node[ 0 ] ->depot
+ node[ 0 ] -> node[ 2 ] -> node[ 19 ] -> node[ 8 ] -> node[ 25 ] ->depot
+ node[ 0 ] -> node[ 24 ] -> node[ 28 ] -> node[ 22 ] -> node[ 40 ] -> node[ 9 ] -> node[ 34 ] -> node[ 36 ] -> node[ 19 ] -> node[ 2 ] ->depot
+ node[ 0 ] -> node[ 25 ] -> node[ 18 ] -> node[ 27 ] -> node[ 6 ] -> node[ 29 ] -> node[ 33 ] -> node[ 38 ] -> node[ 1 ] -> node[ 31 ] ->depot
+ node[ 0 ] -> node[ 26 ] -> node[ 4 ] -> node[ 7 ] -> node[ 15 ] -> node[ 12 ] -> node[ 13 ] -> node[ 20 ] -> node[ 37 ] -> node[ 5 ] -> node[ 32 ] ->depot
+ node[ 0 ] -> node[ 35 ] -> node[ 10 ] -> node[ 11 ] -> node[ 17 ] -> node[ 14 ] -> node[ 16 ] -> node[ 23 ] -> node[ 39 ] -> node[ 3 ] -> node[ 21 ] ->depot
+ node[ 0 ] ->depot
+ node[ 0 ] ->depot
+ node[ 0 ] ->depot
+ node[ 0 ] ->depot
+COST SUMMARY : ROUTE 3977 | LOAD 0 | SUPPLY 5337.9 | CLIENT 1101.29
+COST SUMMARY : OVERALL 10416.2
+10416.2
+5
+Total Time: 953
+Best Solution Time: 550
+ 0 1 1 455 239  6 0 2 19 8 25 0
+ 0 2 1 531 675  11 0 24 28 22 40 9 34 36 19 2 0
+ 0 2 1 957 684  11 0 25 18 27 6 29 33 38 1 31 0
+ 0 2 1 1058 684  12 0 26 4 7 15 12 13 20 37 5 32 0
+ 0 2 1 976 684  12 0 35 10 11 17 14 16 23 39 3 21 0

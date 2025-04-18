@@ -1,0 +1,28 @@
+
+
+day[1] route[0]: travel time = 0
+ node[ 0 ] ->depot
+day[1] route[1]: travel time = 0
+ node[ 0 ] ->depot
+day[2] route[0]: travel time = 0
+ node[ 0 ] ->depot
+day[2] route[1]: travel time = 853
+ node[ 0 ] -> node[ 5 ] -> node[ 2 ] -> node[ 1 ] ->depot
+day[3] route[0]: travel time = 0
+ node[ 0 ] ->depot
+day[3] route[1]: travel time = 236
+ node[ 0 ] -> node[ 3 ] -> node[ 4 ] ->depot
+CUSTOMER 1 bounds (0,93) [morning: 62 ,replinishment: 0, everning: 31] [morning: 31 ,replinishment: 31, everning: 31] [morning: 31 ,replinishment: 0, everning: 0] 
+CUSTOMER 2 bounds (0,180) [morning: 120 ,replinishment: 0, everning: 60] [morning: 60 ,replinishment: 63, everning: 63] [morning: 63 ,replinishment: 0, everning: 3] 
+CUSTOMER 3 bounds (0,51) [morning: 34 ,replinishment: 0, everning: 17] [morning: 17 ,replinishment: 0, everning: 0] [morning: 0 ,replinishment: 51, everning: 34] 
+CUSTOMER 4 bounds (0,114) [morning: 76 ,replinishment: 0, everning: 38] [morning: 38 ,replinishment: 0, everning: 0] [morning: 0 ,replinishment: 38, everning: 0] 
+CUSTOMER 5 bounds (0,24) [morning: 12 ,replinishment: 0, everning: 0] [morning: 0 ,replinishment: 24, everning: 12] [morning: 12 ,replinishment: 0, everning: 0] 
+SUPPLIER    [620,620] [778,660] [818,729] 
+COST SUMMARY : ROUTE 1089 | LOAD 0 | SUPPLY 602.7 | CLIENT 64.69
+COST SUMMARY : OVERALL 1756.39
+1756.39
+2
+Total Time: 32
+Best Solution Time: 32
+ 0 2 1 853 118  5 0 5 2 1 0
+ 0 3 1 236 89  4 0 3 4 0
