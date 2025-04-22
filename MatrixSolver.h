@@ -14,7 +14,7 @@ struct Cost {
     int pointer;
 };
 
-struct InsertionRes {
+struct InsertPlan {
     double cost;
     double quantity;
     Noeud* place;
@@ -38,12 +38,12 @@ private:
     int T;
     vector<double> d;
     vector<Cost> C_prev;
-    vector<vector<InsertionRes>> insertionInfo;
+    vector<vector<InsertPlan>> insertionInfo;
 
 public:
     MatrixSolver(Params* params, int clientId, vector<Noeud*> noeudTravails);
 
-    InsertionRes getInsertionInfo(Client client, int day, vector<Noeud*> noeudTravails, double quantity);
+    InsertPlan getInsertionInfo(Client client, int day, vector<Noeud*> noeudTravails, double quantity);
 
     void preComputeAllInsertionInfo();
     
