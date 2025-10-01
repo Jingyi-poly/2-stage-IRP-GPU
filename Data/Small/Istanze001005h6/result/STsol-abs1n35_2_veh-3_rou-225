@@ -1,0 +1,36 @@
+
+
+ node[ 0 ] ->depot
+ node[ 0 ] ->depot
+ node[ 0 ] ->depot
+ node[ 0 ] ->depot
+ node[ 0 ] -> node[ 16 ] -> node[ 22 ] -> node[ 30 ] -> node[ 26 ] -> node[ 32 ] -> node[ 5 ] -> node[ 28 ] -> node[ 1 ] -> node[ 27 ] -> node[ 13 ] -> node[ 25 ] -> node[ 33 ] ->depot
+ node[ 0 ] -> node[ 6 ] -> node[ 15 ] -> node[ 10 ] -> node[ 21 ] -> node[ 19 ] -> node[ 34 ] -> node[ 24 ] -> node[ 8 ] -> node[ 2 ] -> node[ 4 ] -> node[ 23 ] ->depot
+ node[ 0 ] -> node[ 31 ] -> node[ 22 ] -> node[ 30 ] -> node[ 26 ] -> node[ 12 ] -> node[ 32 ] -> node[ 20 ] -> node[ 3 ] -> node[ 29 ] -> node[ 7 ] ->depot
+ node[ 0 ] -> node[ 11 ] -> node[ 16 ] -> node[ 17 ] ->depot
+ node[ 0 ] -> node[ 6 ] -> node[ 14 ] -> node[ 9 ] -> node[ 10 ] -> node[ 18 ] -> node[ 35 ] -> node[ 4 ] -> node[ 23 ] ->depot
+ node[ 0 ] ->depot
+ node[ 0 ] -> node[ 20 ] -> node[ 25 ] -> node[ 13 ] -> node[ 27 ] -> node[ 34 ] -> node[ 24 ] -> node[ 35 ] -> node[ 18 ] ->depot
+ node[ 0 ] -> node[ 7 ] -> node[ 29 ] -> node[ 3 ] -> node[ 33 ] -> node[ 31 ] ->depot
+ node[ 0 ] -> node[ 23 ] -> node[ 4 ] -> node[ 2 ] -> node[ 8 ] -> node[ 24 ] -> node[ 34 ] -> node[ 19 ] -> node[ 21 ] -> node[ 10 ] -> node[ 15 ] -> node[ 9 ] -> node[ 14 ] -> node[ 6 ] ->depot
+ node[ 0 ] -> node[ 17 ] -> node[ 16 ] -> node[ 11 ] ->depot
+ node[ 0 ] -> node[ 22 ] -> node[ 30 ] -> node[ 26 ] -> node[ 12 ] -> node[ 32 ] -> node[ 5 ] -> node[ 28 ] -> node[ 1 ] -> node[ 27 ] -> node[ 13 ] -> node[ 25 ] ->depot
+ node[ 0 ] ->depot
+ node[ 0 ] ->depot
+ node[ 0 ] ->depot
+COST SUMMARY : ROUTE 8273 | LOAD 0 | SUPPLY 1187.97 | CLIENT 218.05
+COST SUMMARY : OVERALL 9679.02
+9679.02
+10
+Total Time: 2245
+Best Solution Time: 1033
+ 0 2 1 1351 919  14 0 16 22 30 26 32 5 28 1 27 13 25 33 0
+ 0 2 1 982 919  13 0 6 15 10 21 19 34 24 8 2 4 23 0
+ 0 3 1 801 919  12 0 31 22 30 26 12 32 20 3 29 7 0
+ 0 3 1 355 448  5 0 11 16 17 0
+ 0 3 1 833 919  10 0 6 14 9 10 18 35 4 23 0
+ 0 4 1 1084 919  10 0 20 25 13 27 34 24 35 18 0
+ 0 4 1 264 907  7 0 7 29 3 33 31 0
+ 0 5 1 1043 919  15 0 23 4 2 8 24 34 19 21 10 15 9 14 6 0
+ 0 5 1 355 334  5 0 17 16 11 0
+ 0 5 1 1205 919  13 0 22 30 26 12 32 5 28 1 27 13 25 0

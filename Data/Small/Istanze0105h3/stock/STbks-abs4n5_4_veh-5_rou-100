@@ -1,0 +1,51 @@
+
+
+day[1] route[0]: travel time = 646
+ node[ 0 ] -> node[ 4 ] ->depot
+day[1] route[1]: travel time = 366
+ node[ 0 ] -> node[ 1 ] ->depot
+day[1] route[2]: travel time = 0
+ node[ 0 ] ->depot
+day[1] route[3]: travel time = 0
+ node[ 0 ] ->depot
+day[1] route[4]: travel time = 0
+ node[ 0 ] ->depot
+day[2] route[0]: travel time = 144
+ node[ 0 ] -> node[ 3 ] ->depot
+day[2] route[1]: travel time = 366
+ node[ 0 ] -> node[ 1 ] ->depot
+day[2] route[2]: travel time = 376
+ node[ 0 ] -> node[ 2 ] ->depot
+day[2] route[3]: travel time = 646
+ node[ 0 ] -> node[ 4 ] ->depot
+day[2] route[4]: travel time = 0
+ node[ 0 ] ->depot
+day[3] route[0]: travel time = 0
+ node[ 0 ] ->depot
+day[3] route[1]: travel time = 0
+ node[ 0 ] ->depot
+day[3] route[2]: travel time = 0
+ node[ 0 ] ->depot
+day[3] route[3]: travel time = 0
+ node[ 0 ] ->depot
+day[3] route[4]: travel time = 711
+ node[ 0 ] -> node[ 4 ] -> node[ 5 ] ->depot
+CUSTOMER 1 bounds (0,106) [morning: 53 ,replinishment: 53, everning: 53] [morning: 53 ,replinishment: 53, everning: 53] [morning: 53 ,replinishment: 0, everning: 0] 
+CUSTOMER 2 bounds (0,42) [morning: 21 ,replinishment: 0, everning: 0] [morning: 0 ,replinishment: 42, everning: 21] [morning: 21 ,replinishment: 0, everning: 0] 
+CUSTOMER 3 bounds (0,48) [morning: 24 ,replinishment: 0, everning: 0] [morning: 0 ,replinishment: 48, everning: 24] [morning: 24 ,replinishment: 0, everning: 0] 
+CUSTOMER 4 bounds (0,134) [morning: 67 ,replinishment: 53, everning: 53] [morning: 53 ,replinishment: 53, everning: 39] [morning: 39 ,replinishment: 39, everning: 11] 
+CUSTOMER 5 bounds (0,42) [morning: 28 ,replinishment: 0, everning: 14] [morning: 14 ,replinishment: 0, everning: 0] [morning: 0 ,replinishment: 14, everning: 0] 
+SUPPLIER    [551,445] [624,428] [607,554] 
+COST SUMMARY : ROUTE 3255 | LOAD 0 | SUPPLY 428.1 | CLIENT 59.21
+COST SUMMARY : OVERALL 3742.31
+3742.31
+7
+Total Time: 94
+Best Solution Time: 94
+ 0 1 1 646 53  3 0 4 0
+ 0 1 1 366 53  3 0 1 0
+ 0 2 1 144 48  3 0 3 0
+ 0 2 1 366 53  3 0 1 0
+ 0 2 1 376 42  3 0 2 0
+ 0 2 1 646 53  3 0 4 0
+ 0 3 1 711 53  4 0 4 5 0

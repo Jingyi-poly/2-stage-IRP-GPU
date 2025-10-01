@@ -1,0 +1,42 @@
+
+
+ node[ 0 ] ->depot
+ node[ 0 ] ->depot
+ node[ 0 ] ->depot
+ node[ 0 ] ->depot
+ node[ 0 ] ->depot
+ node[ 0 ] -> node[ 25 ] -> node[ 4 ] -> node[ 33 ] -> node[ 12 ] -> node[ 34 ] -> node[ 26 ] -> node[ 29 ] -> node[ 19 ] ->depot
+ node[ 0 ] -> node[ 24 ] -> node[ 21 ] -> node[ 23 ] -> node[ 27 ] -> node[ 5 ] -> node[ 32 ] -> node[ 30 ] -> node[ 20 ] -> node[ 10 ] ->depot
+ node[ 0 ] -> node[ 22 ] -> node[ 8 ] -> node[ 6 ] -> node[ 2 ] -> node[ 35 ] -> node[ 3 ] -> node[ 15 ] -> node[ 17 ] ->depot
+ node[ 0 ] ->depot
+ node[ 0 ] ->depot
+ node[ 0 ] -> node[ 31 ] -> node[ 7 ] -> node[ 14 ] ->depot
+ node[ 0 ] -> node[ 22 ] -> node[ 32 ] -> node[ 11 ] -> node[ 1 ] -> node[ 4 ] -> node[ 25 ] ->depot
+ node[ 0 ] ->depot
+ node[ 0 ] ->depot
+ node[ 0 ] -> node[ 17 ] -> node[ 9 ] -> node[ 15 ] -> node[ 3 ] -> node[ 35 ] -> node[ 18 ] ->depot
+ node[ 0 ] -> node[ 26 ] -> node[ 12 ] -> node[ 28 ] -> node[ 1 ] -> node[ 11 ] -> node[ 5 ] -> node[ 21 ] -> node[ 24 ] ->depot
+ node[ 0 ] ->depot
+ node[ 0 ] -> node[ 10 ] -> node[ 22 ] -> node[ 8 ] -> node[ 6 ] -> node[ 2 ] -> node[ 15 ] -> node[ 17 ] ->depot
+ node[ 0 ] -> node[ 31 ] -> node[ 24 ] -> node[ 23 ] -> node[ 27 ] -> node[ 5 ] -> node[ 32 ] -> node[ 30 ] -> node[ 20 ] ->depot
+ node[ 0 ] -> node[ 14 ] -> node[ 7 ] -> node[ 26 ] -> node[ 34 ] -> node[ 12 ] -> node[ 33 ] -> node[ 4 ] -> node[ 25 ] ->depot
+ node[ 0 ] ->depot
+ node[ 0 ] ->depot
+ node[ 0 ] ->depot
+ node[ 0 ] ->depot
+COST SUMMARY : ROUTE 9191 | LOAD 0 | SUPPLY 1530.87 | CLIENT 1773.13
+COST SUMMARY : OVERALL 12495
+12495
+10
+Total Time: 1326
+Best Solution Time: 529
+ 0 2 1 807 808  10 0 25 4 33 12 34 26 29 19 0
+ 0 2 1 835 808  11 0 24 21 23 27 5 32 30 20 10 0
+ 0 2 1 1069 808  10 0 22 8 6 2 35 3 15 17 0
+ 0 3 1 503 744  5 0 31 7 14 0
+ 0 3 1 1150 808  8 0 22 32 11 1 4 25 0
+ 0 4 1 921 808  8 0 17 9 15 3 35 18 0
+ 0 4 1 1273 808  10 0 26 12 28 1 11 5 21 24 0
+ 0 5 1 985 808  9 0 10 22 8 6 2 15 17 0
+ 0 5 1 798 808  10 0 31 24 23 27 5 32 30 20 0
+ 0 5 1 850 808  10 0 14 7 26 34 12 33 4 25 0

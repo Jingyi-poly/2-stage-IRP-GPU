@@ -1,0 +1,48 @@
+
+
+ node[ 0 ] ->depot
+ node[ 0 ] ->depot
+ node[ 0 ] ->depot
+ node[ 0 ] -> node[ 13 ] -> node[ 6 ] -> node[ 3 ] -> node[ 9 ] -> node[ 23 ] -> node[ 7 ] -> node[ 14 ] -> node[ 16 ] -> node[ 15 ] -> node[ 21 ] -> node[ 5 ] ->depot
+ node[ 0 ] ->depot
+ node[ 0 ] -> node[ 2 ] -> node[ 11 ] -> node[ 5 ] -> node[ 20 ] -> node[ 1 ] -> node[ 25 ] -> node[ 22 ] -> node[ 4 ] -> node[ 8 ] -> node[ 12 ] -> node[ 16 ] -> node[ 6 ] -> node[ 13 ] -> node[ 17 ] ->depot
+COST SUMMARY : ROUTE 2560 | LOAD 0 | SUPPLY 5386.5 | CLIENT 693.29
+COST SUMMARY : OVERALL 8639.79
+8639.79
+2
+Total Time: 167
+Best Solution Time: 11
+ 0 2 1 1339 1174  13 0 13 6 3 9 23 7 14 16 15 21 5 0
+ 0 3 1 1221 1174  16 0 2 11 5 20 1 25 22 4 8 12 16 6 13 17 0
+
+
+ node[ 0 ] ->depot
+ node[ 0 ] ->depot
+ node[ 0 ] ->depot
+ node[ 0 ] -> node[ 13 ] -> node[ 6 ] -> node[ 3 ] -> node[ 9 ] -> node[ 23 ] -> node[ 7 ] -> node[ 14 ] -> node[ 16 ] -> node[ 15 ] -> node[ 21 ] -> node[ 5 ] ->depot
+ node[ 0 ] ->depot
+ node[ 0 ] -> node[ 2 ] -> node[ 11 ] -> node[ 5 ] -> node[ 20 ] -> node[ 1 ] -> node[ 25 ] -> node[ 22 ] -> node[ 4 ] -> node[ 8 ] -> node[ 12 ] -> node[ 16 ] -> node[ 6 ] -> node[ 13 ] -> node[ 17 ] ->depot
+COST SUMMARY : ROUTE 2560 | LOAD 0 | SUPPLY 5386.5 | CLIENT 693.39
+COST SUMMARY : OVERALL 8639.89
+8639.89
+2
+Total Time: 172
+Best Solution Time: 18
+ 0 2 1 1339 1174  13 0 13 6 3 9 23 7 14 16 15 21 5 0
+ 0 3 1 1221 1174  16 0 2 11 5 20 1 25 22 4 8 12 16 6 13 17 0
+
+
+ node[ 0 ] ->depot
+ node[ 0 ] ->depot
+ node[ 0 ] -> node[ 3 ] -> node[ 9 ] -> node[ 23 ] -> node[ 7 ] -> node[ 18 ] -> node[ 8 ] -> node[ 4 ] -> node[ 12 ] -> node[ 14 ] -> node[ 16 ] -> node[ 6 ] ->depot
+ node[ 0 ] -> node[ 17 ] -> node[ 13 ] -> node[ 15 ] -> node[ 22 ] -> node[ 25 ] -> node[ 21 ] -> node[ 1 ] -> node[ 20 ] -> node[ 5 ] -> node[ 11 ] -> node[ 2 ] ->depot
+ node[ 0 ] ->depot
+ node[ 0 ] ->depot
+COST SUMMARY : ROUTE 2322 | LOAD 0 | SUPPLY 5038.5 | CLIENT 1050.67
+COST SUMMARY : OVERALL 8411.17
+8411.17
+2
+Total Time: 157
+Best Solution Time: 26
+ 0 2 1 1285 1167  13 0 3 9 23 7 18 8 4 12 14 16 6 0
+ 0 2 1 1037 1174  13 0 17 13 15 22 25 21 1 20 5 11 2 0

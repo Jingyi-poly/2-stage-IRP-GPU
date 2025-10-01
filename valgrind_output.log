@@ -1,0 +1,621 @@
+==45834== Memcheck, a memory error detector
+==45834== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==45834== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==45834== Command: ./irp Data/Small/Istanze0105h3/0.dat -seed 1001 -type 38 -veh 1 -rou 100 -scenario 30 -control_day_1 1
+==45834== 
+Initializing ThreadPool with 8 threads...
+14
+./irp
+Commande non reconnue : -rou
+nb_scenarios_: 30
+path: Data/Small/Istanze0105h3/0.dat
+isstockout 0
+read file done
+path: Data/Small/Istanze0105h3/0.dat
+isstockout 0
+read file done
+path: Data/Small/Istanze0105h3/0.dat
+isstockout 0
+read file done
+path: Data/Small/Istanze0105h3/0.dat
+isstockout 0
+read file done
+path: Data/Small/Istanze0105h3/0.dat
+isstockout 0
+read file done
+path: Data/Small/Istanze0105h3/0.dat
+isstockout 0
+read file done
+path: Data/Small/Istanze0105h3/0.dat
+isstockout 0
+read file done
+path: Data/Small/Istanze0105h3/0.dat
+isstockout 0
+read file done
+path: Data/Small/Istanze0105h3/0.dat
+isstockout 0
+read file done
+path: Data/Small/Istanze0105h3/0.dat
+isstockout 0
+read file done
+path: Data/Small/Istanze0105h3/0.dat
+isstockout 0
+read file done
+path: Data/Small/Istanze0105h3/0.dat
+isstockout 0
+read file done
+path: Data/Small/Istanze0105h3/0.dat
+isstockout 0
+read file done
+path: Data/Small/Istanze0105h3/0.dat
+isstockout 0
+read file done
+path: Data/Small/Istanze0105h3/0.dat
+isstockout 0
+read file done
+path: Data/Small/Istanze0105h3/0.dat
+isstockout 0
+read file done
+path: Data/Small/Istanze0105h3/0.dat
+isstockout 0
+read file done
+path: Data/Small/Istanze0105h3/0.dat
+isstockout 0
+read file done
+path: Data/Small/Istanze0105h3/0.dat
+isstockout 0
+read file done
+path: Data/Small/Istanze0105h3/0.dat
+isstockout 0
+read file done
+path: Data/Small/Istanze0105h3/0.dat
+isstockout 0
+read file done
+path: Data/Small/Istanze0105h3/0.dat
+isstockout 0
+read file done
+path: Data/Small/Istanze0105h3/0.dat
+isstockout 0
+read file done
+path: Data/Small/Istanze0105h3/0.dat
+isstockout 0
+read file done
+path: Data/Small/Istanze0105h3/0.dat
+isstockout 0
+read file done
+path: Data/Small/Istanze0105h3/0.dat
+isstockout 0
+read file done
+path: Data/Small/Istanze0105h3/0.dat
+isstockout 0
+read file done
+path: Data/Small/Istanze0105h3/0.dat
+isstockout 0
+read file done
+path: Data/Small/Istanze0105h3/0.dat
+isstockout 0
+read file done
+path: Data/Small/Istanze0105h3/0.dat
+isstockout 0
+read file done
+path: Data/Small/Istanze0105h3/0.dat
+isstockout 0
+read file done
+已为所有场景设置客户需求矩阵
+init population
+new Individu
+education
+updateNbValides
+==45834== Conditional jump or move depends on uninitialised value(s)
+==45834==    at 0x154A2D: Population::addIndividu(Individu*) (Population.cpp:179)
+==45834==    by 0x155A8F: Population::Population(ParamsList*) (Population.cpp:113)
+==45834==    by 0x140DB9: mainIRP(int, char**) (main.cpp:222)
+==45834==    by 0x14110B: main (main.cpp:1725)
+==45834==  Uninitialised value was created by a heap allocation
+==45834==    at 0x4849013: operator new(unsigned long) (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==45834==    by 0x155B47: Population::Population(ParamsList*) (Population.cpp:105)
+==45834==    by 0x140DB9: mainIRP(int, char**) (main.cpp:222)
+==45834==    by 0x14110B: main (main.cpp:1725)
+==45834== 
+addIndividu
+==45834== Conditional jump or move depends on uninitialised value(s)
+==45834==    at 0x12A7EB: Individu::~Individu() (Individu.cpp:226)
+==45834==    by 0x155B0E: Population::Population(ParamsList*) (Population.cpp:115)
+==45834==    by 0x140DB9: mainIRP(int, char**) (main.cpp:222)
+==45834==    by 0x14110B: main (main.cpp:1725)
+==45834==  Uninitialised value was created by a heap allocation
+==45834==    at 0x4849013: operator new(unsigned long) (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==45834==    by 0x155B47: Population::Population(ParamsList*) (Population.cpp:105)
+==45834==    by 0x140DB9: mainIRP(int, char**) (main.cpp:222)
+==45834==    by 0x14110B: main (main.cpp:1725)
+==45834== 
+new Individu
+education
+updateNbValides
+addIndividu
+new Individu
+education
+updateNbValides
+addIndividu
+new Individu
+education
+updateNbValides
+addIndividu
+new Individu
+education
+updateNbValides
+addIndividu
+new Individu
+education
+updateNbValides
+addIndividu
+new Individu
+education
+updateNbValides
+addIndividu
+new Individu
+education
+updateNbValides
+addIndividu
+new Individu
+education
+updateNbValides
+addIndividu
+new Individu
+education
+updateNbValides
+addIndividu
+new Individu
+education
+updateNbValides
+addIndividu
+new Individu
+education
+updateNbValides
+addIndividu
+new Individu
+education
+updateNbValides
+addIndividu
+==45834== Use of uninitialised value of size 8
+==45834==    at 0x13B049: LocalSearch::~LocalSearch() (LocalSearch.cpp:1317)
+==45834==    by 0x12A7F4: Individu::~Individu() (Individu.cpp:227)
+==45834==    by 0x155B0E: Population::Population(ParamsList*) (Population.cpp:115)
+==45834==    by 0x140DB9: mainIRP(int, char**) (main.cpp:222)
+==45834==    by 0x14110B: main (main.cpp:1725)
+==45834==  Uninitialised value was created by a heap allocation
+==45834==    at 0x4849013: operator new(unsigned long) (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==45834==    by 0x155B47: Population::Population(ParamsList*) (Population.cpp:105)
+==45834==    by 0x140DB9: mainIRP(int, char**) (main.cpp:222)
+==45834==    by 0x14110B: main (main.cpp:1725)
+==45834== 
+==45834== Invalid read of size 8
+==45834==    at 0x13B049: LocalSearch::~LocalSearch() (LocalSearch.cpp:1317)
+==45834==    by 0x12A7F4: Individu::~Individu() (Individu.cpp:227)
+==45834==    by 0x155B0E: Population::Population(ParamsList*) (Population.cpp:115)
+==45834==    by 0x140DB9: mainIRP(int, char**) (main.cpp:222)
+==45834==    by 0x14110B: main (main.cpp:1725)
+==45834==  Address 0xc252910 is 32 bytes before a block of size 16 in arena "client"
+==45834== 
+==45834== Use of uninitialised value of size 8
+==45834==    at 0x13B053: __normal_iterator (stl_iterator.h:1028)
+==45834==    by 0x13B053: begin (stl_vector.h:821)
+==45834==    by 0x13B053: empty (stl_vector.h:1008)
+==45834==    by 0x13B053: LocalSearch::~LocalSearch() (LocalSearch.cpp:1320)
+==45834==    by 0x12A7F4: Individu::~Individu() (Individu.cpp:227)
+==45834==    by 0x155B0E: Population::Population(ParamsList*) (Population.cpp:115)
+==45834==    by 0x140DB9: mainIRP(int, char**) (main.cpp:222)
+==45834==    by 0x14110B: main (main.cpp:1725)
+==45834==  Uninitialised value was created by a heap allocation
+==45834==    at 0x4849013: operator new(unsigned long) (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==45834==    by 0x155B47: Population::Population(ParamsList*) (Population.cpp:105)
+==45834==    by 0x140DB9: mainIRP(int, char**) (main.cpp:222)
+==45834==    by 0x14110B: main (main.cpp:1725)
+==45834== 
+==45834== Invalid read of size 8
+==45834==    at 0x13B053: __normal_iterator (stl_iterator.h:1028)
+==45834==    by 0x13B053: begin (stl_vector.h:821)
+==45834==    by 0x13B053: empty (stl_vector.h:1008)
+==45834==    by 0x13B053: LocalSearch::~LocalSearch() (LocalSearch.cpp:1320)
+==45834==    by 0x12A7F4: Individu::~Individu() (Individu.cpp:227)
+==45834==    by 0x155B0E: Population::Population(ParamsList*) (Population.cpp:115)
+==45834==    by 0x140DB9: mainIRP(int, char**) (main.cpp:222)
+==45834==    by 0x14110B: main (main.cpp:1725)
+==45834==  Address 0xc2529d8 is 4 bytes after a block of size 4 alloc'd
+==45834==    at 0x4849013: operator new(unsigned long) (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==45834==    by 0x137193: allocate (new_allocator.h:127)
+==45834==    by 0x137193: allocate (alloc_traits.h:464)
+==45834==    by 0x137193: _M_allocate (stl_vector.h:346)
+==45834==    by 0x137193: _M_create_storage (stl_vector.h:361)
+==45834==    by 0x137193: _Vector_base (stl_vector.h:305)
+==45834==    by 0x137193: vector (stl_vector.h:555)
+==45834==    by 0x137193: _Construct<std::vector<int>, const std::vector<int, std::allocator<int> >&> (stl_construct.h:119)
+==45834==    by 0x137193: __uninit_fill_n<std::vector<int>*, long unsigned int, std::vector<int> > (stl_uninitialized.h:237)
+==45834==    by 0x137193: uninitialized_fill_n<std::vector<int>*, long unsigned int, std::vector<int> > (stl_uninitialized.h:297)
+==45834==    by 0x137193: __uninitialized_fill_n_a<std::vector<int>*, long unsigned int, std::vector<int>, std::vector<int> > (stl_uninitialized.h:410)
+==45834==    by 0x137193: _M_fill_initialize (stl_vector.h:1596)
+==45834==    by 0x137193: std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >::vector(unsigned long, std::vector<int, std::allocator<int> > const&, std::allocator<std::vector<int, std::allocator<int> > > const&) (stl_vector.h:525)
+==45834==    by 0x12BC55: Individu::Individu(Params*, double) (Individu.cpp:74)
+==45834==    by 0x12C9DE: operator() (Individu.cpp:216)
+==45834==    by 0x12C9DE: operator() (ScenarioUtils.h:95)
+==45834==    by 0x12C9DE: __invoke_impl<void, BatchRunFunc<Individu::Individu(ParamsList*)::<lambda(int)> >(Individu::Individu(ParamsList*)::<lambda(int)>&&, int, int, bool)::<lambda()>&> (invoke.h:61)
+==45834==    by 0x12C9DE: __invoke<BatchRunFunc<Individu::Individu(ParamsList*)::<lambda(int)> >(Individu::Individu(ParamsList*)::<lambda(int)>&&, int, int, bool)::<lambda()>&> (invoke.h:96)
+==45834==    by 0x12C9DE: __call<void> (functional:420)
+==45834==    by 0x12C9DE: operator()<> (functional:503)
+==45834==    by 0x12C9DE: __invoke_impl<void, std::_Bind<BatchRunFunc<Individu::Individu(ParamsList*)::<lambda(int)> >(Individu::Individu(ParamsList*)::<lambda(int)>&&, int, int, bool)::<lambda()>()>&> (invoke.h:61)
+==45834==    by 0x12C9DE: __invoke_r<void, std::_Bind<BatchRunFunc<Individu::Individu(ParamsList*)::<lambda(int)> >(Individu::Individu(ParamsList*)::<lambda(int)>&&, int, int, bool)::<lambda()>()>&> (invoke.h:111)
+==45834==    by 0x12C9DE: operator() (future:1468)
+==45834==    by 0x12C9DE: operator() (future:1409)
+==45834==    by 0x12C9DE: __invoke_impl<std::unique_ptr<std::__future_base::_Result<void>, std::__future_base::_Result_base::_Deleter>, std::__future_base::_Task_setter<std::unique_ptr<std::__future_base::_Result<void>, std::__future_base::_Result_base::_Deleter>, std::__future_base::_Task_state<std::_Bind<BatchRunFunc<Individu::Individu(ParamsList*)::<lambda(int)> >(Individu::Individu(ParamsList*)::<lambda(int)>&&, int, int, bool)::<lambda()>()>, std::allocator<int>, void()>::_M_run()::<lambda()>, void>&> (invoke.h:61)
+==45834==    by 0x12C9DE: __invoke_r<std::unique_ptr<std::__future_base::_Result_base, std::__future_base::_Result_base::_Deleter>, std::__future_base::_Task_setter<std::unique_ptr<std::__future_base::_Result<void>, std::__future_base::_Result_base::_Deleter>, std::__future_base::_Task_state<std::_Bind<BatchRunFunc<Individu::Individu(ParamsList*)::<lambda(int)> >(Individu::Individu(ParamsList*)::<lambda(int)>&&, int, int, bool)::<lambda()>()>, std::allocator<int>, void()>::_M_run()::<lambda()>, void>&> (invoke.h:116)
+==45834==    by 0x12C9DE: std::_Function_handler<std::unique_ptr<std::__future_base::_Result_base, std::__future_base::_Result_base::_Deleter> (), std::__future_base::_Task_setter<std::unique_ptr<std::__future_base::_Result<void>, std::__future_base::_Result_base::_Deleter>, std::__future_base::_Task_state<std::_Bind<BatchRunFunc<Individu::Individu(ParamsList*)::{lambda(int)#1}>(Individu::Individu(ParamsList*)::{lambda(int)#1}&&, int, int, bool)::{lambda()#1} ()>, std::allocator<int>, void ()>::_M_run()::{lambda()#1}, void> >::_M_invoke(std::_Any_data const&) (std_function.h:291)
+==45834==    by 0x1242C4: operator() (std_function.h:590)
+==45834==    by 0x1242C4: std::__future_base::_State_baseV2::_M_do_set(std::function<std::unique_ptr<std::__future_base::_Result_base, std::__future_base::_Result_base::_Deleter> ()>*, bool*) (future:571)
+==45834==    by 0x12416B: std::once_flag::_Prepare_execution::_Prepare_execution<std::call_once<void (std::__future_base::_State_baseV2::*)(std::function<std::unique_ptr<std::__future_base::_Result_base, std::__future_base::_Result_base::_Deleter> ()>*, bool*), std::__future_base::_State_baseV2*, std::function<std::unique_ptr<std::__future_base::_Result_base, std::__future_base::_Result_base::_Deleter> ()>*, bool*>(std::once_flag&, void (std::__future_base::_State_baseV2::*&&)(std::function<std::unique_ptr<std::__future_base::_Result_base, std::__future_base::_Result_base::_Deleter> ()>*, bool*), std::__future_base::_State_baseV2*&&, std::function<std::unique_ptr<std::__future_base::_Result_base, std::__future_base::_Result_base::_Deleter> ()>*&&, bool*&&)::{lambda()#1}>(void (std::__future_base::_State_baseV2::*&)(std::function<std::unique_ptr<std::__future_base::_Result_base, std::__future_base::_Result_base::_Deleter> ()>*, bool*))::{lambda()#1}::_FUN() (invoke.h:74)
+==45834==    by 0x4F75EE7: __pthread_once_slow (pthread_once.c:116)
+==45834==    by 0x124712: __gthread_once (gthr-default.h:700)
+==45834==    by 0x124712: void std::call_once<void (std::__future_base::_State_baseV2::*)(std::function<std::unique_ptr<std::__future_base::_Result_base, std::__future_base::_Result_base::_Deleter> ()>*, bool*), std::__future_base::_State_baseV2*, std::function<std::unique_ptr<std::__future_base::_Result_base, std::__future_base::_Result_base::_Deleter> ()>*, bool*>(std::once_flag&, void (std::__future_base::_State_baseV2::*&&)(std::function<std::unique_ptr<std::__future_base::_Result_base, std::__future_base::_Result_base::_Deleter> ()>*, bool*), std::__future_base::_State_baseV2*&&, std::function<std::unique_ptr<std::__future_base::_Result_base, std::__future_base::_Result_base::_Deleter> ()>*&&, bool*&&) (mutex:783)
+==45834==    by 0x129851: _M_set_result (future:411)
+==45834==    by 0x129851: std::__future_base::_Task_state<std::_Bind<BatchRunFunc<Individu::Individu(ParamsList*)::{lambda(int)#1}>(Individu::Individu(ParamsList*)::{lambda(int)#1}&&, int, int, bool)::{lambda()#1} ()>, std::allocator<int>, void ()>::_M_run() (future:1471)
+==45834==    by 0x126E54: operator() (future:1604)
+==45834==    by 0x126E54: operator() (ThreadPool.h:56)
+==45834==    by 0x126E54: __invoke_impl<void, ThreadPool::enqueue<BatchRunFunc<Individu::Individu(ParamsList*)::<lambda(int)> >(Individu::Individu(ParamsList*)::<lambda(int)>&&, int, int, bool)::<lambda()> >(BatchRunFunc<Individu::Individu(ParamsList*)::<lambda(int)> >(Individu::Individu(ParamsList*)::<lambda(int)>&&, int, int, bool)::<lambda()>&&)::<lambda()>&> (invoke.h:61)
+==45834==    by 0x126E54: __invoke_r<void, ThreadPool::enqueue<BatchRunFunc<Individu::Individu(ParamsList*)::<lambda(int)> >(Individu::Individu(ParamsList*)::<lambda(int)>&&, int, int, bool)::<lambda()> >(BatchRunFunc<Individu::Individu(ParamsList*)::<lambda(int)> >(Individu::Individu(ParamsList*)::<lambda(int)>&&, int, int, bool)::<lambda()>&&)::<lambda()>&> (invoke.h:111)
+==45834==    by 0x126E54: std::_Function_handler<void (), ThreadPool::enqueue<BatchRunFunc<Individu::Individu(ParamsList*)::{lambda(int)#1}>(Individu::Individu(ParamsList*)::{lambda(int)#1}&&, int, int, bool)::{lambda()#1}>(Individu::Individu(ParamsList*)::{lambda(int)#1}&&)::{lambda()#1}>::_M_invoke(std::_Any_data const&) (std_function.h:290)
+==45834==    by 0x17EFE9: ThreadPool::ThreadPool(unsigned long)::{lambda()#1}::operator()() const (std_function.h:590)
+==45834==    by 0x17F004: __invoke_impl<void, ThreadPool::ThreadPool(size_t)::<lambda()> > (invoke.h:61)
+==45834==    by 0x17F004: __invoke<ThreadPool::ThreadPool(size_t)::<lambda()> > (invoke.h:96)
+==45834==    by 0x17F004: _M_invoke<0> (std_thread.h:259)
+==45834==    by 0x17F004: operator() (std_thread.h:266)
+==45834==    by 0x17F004: std::thread::_State_impl<std::thread::_Invoker<std::tuple<ThreadPool::ThreadPool(unsigned long)::{lambda()#1}> > >::_M_run() (std_thread.h:211)
+==45834== 
+==45834== Invalid read of size 8
+==45834==    at 0x13B05A: LocalSearch::~LocalSearch() (LocalSearch.cpp:1320)
+==45834==    by 0x12A7F4: Individu::~Individu() (Individu.cpp:227)
+==45834==    by 0x155B0E: Population::Population(ParamsList*) (Population.cpp:115)
+==45834==    by 0x140DB9: mainIRP(int, char**) (main.cpp:222)
+==45834==    by 0x14110B: main (main.cpp:1725)
+==45834==  Address 0xc2529e0 is 12 bytes after a block of size 4 alloc'd
+==45834==    at 0x4849013: operator new(unsigned long) (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==45834==    by 0x137193: allocate (new_allocator.h:127)
+==45834==    by 0x137193: allocate (alloc_traits.h:464)
+==45834==    by 0x137193: _M_allocate (stl_vector.h:346)
+==45834==    by 0x137193: _M_create_storage (stl_vector.h:361)
+==45834==    by 0x137193: _Vector_base (stl_vector.h:305)
+==45834==    by 0x137193: vector (stl_vector.h:555)
+==45834==    by 0x137193: _Construct<std::vector<int>, const std::vector<int, std::allocator<int> >&> (stl_construct.h:119)
+==45834==    by 0x137193: __uninit_fill_n<std::vector<int>*, long unsigned int, std::vector<int> > (stl_uninitialized.h:237)
+==45834==    by 0x137193: uninitialized_fill_n<std::vector<int>*, long unsigned int, std::vector<int> > (stl_uninitialized.h:297)
+==45834==    by 0x137193: __uninitialized_fill_n_a<std::vector<int>*, long unsigned int, std::vector<int>, std::vector<int> > (stl_uninitialized.h:410)
+==45834==    by 0x137193: _M_fill_initialize (stl_vector.h:1596)
+==45834==    by 0x137193: std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >::vector(unsigned long, std::vector<int, std::allocator<int> > const&, std::allocator<std::vector<int, std::allocator<int> > > const&) (stl_vector.h:525)
+==45834==    by 0x12BC55: Individu::Individu(Params*, double) (Individu.cpp:74)
+==45834==    by 0x12C9DE: operator() (Individu.cpp:216)
+==45834==    by 0x12C9DE: operator() (ScenarioUtils.h:95)
+==45834==    by 0x12C9DE: __invoke_impl<void, BatchRunFunc<Individu::Individu(ParamsList*)::<lambda(int)> >(Individu::Individu(ParamsList*)::<lambda(int)>&&, int, int, bool)::<lambda()>&> (invoke.h:61)
+==45834==    by 0x12C9DE: __invoke<BatchRunFunc<Individu::Individu(ParamsList*)::<lambda(int)> >(Individu::Individu(ParamsList*)::<lambda(int)>&&, int, int, bool)::<lambda()>&> (invoke.h:96)
+==45834==    by 0x12C9DE: __call<void> (functional:420)
+==45834==    by 0x12C9DE: operator()<> (functional:503)
+==45834==    by 0x12C9DE: __invoke_impl<void, std::_Bind<BatchRunFunc<Individu::Individu(ParamsList*)::<lambda(int)> >(Individu::Individu(ParamsList*)::<lambda(int)>&&, int, int, bool)::<lambda()>()>&> (invoke.h:61)
+==45834==    by 0x12C9DE: __invoke_r<void, std::_Bind<BatchRunFunc<Individu::Individu(ParamsList*)::<lambda(int)> >(Individu::Individu(ParamsList*)::<lambda(int)>&&, int, int, bool)::<lambda()>()>&> (invoke.h:111)
+==45834==    by 0x12C9DE: operator() (future:1468)
+==45834==    by 0x12C9DE: operator() (future:1409)
+==45834==    by 0x12C9DE: __invoke_impl<std::unique_ptr<std::__future_base::_Result<void>, std::__future_base::_Result_base::_Deleter>, std::__future_base::_Task_setter<std::unique_ptr<std::__future_base::_Result<void>, std::__future_base::_Result_base::_Deleter>, std::__future_base::_Task_state<std::_Bind<BatchRunFunc<Individu::Individu(ParamsList*)::<lambda(int)> >(Individu::Individu(ParamsList*)::<lambda(int)>&&, int, int, bool)::<lambda()>()>, std::allocator<int>, void()>::_M_run()::<lambda()>, void>&> (invoke.h:61)
+==45834==    by 0x12C9DE: __invoke_r<std::unique_ptr<std::__future_base::_Result_base, std::__future_base::_Result_base::_Deleter>, std::__future_base::_Task_setter<std::unique_ptr<std::__future_base::_Result<void>, std::__future_base::_Result_base::_Deleter>, std::__future_base::_Task_state<std::_Bind<BatchRunFunc<Individu::Individu(ParamsList*)::<lambda(int)> >(Individu::Individu(ParamsList*)::<lambda(int)>&&, int, int, bool)::<lambda()>()>, std::allocator<int>, void()>::_M_run()::<lambda()>, void>&> (invoke.h:116)
+==45834==    by 0x12C9DE: std::_Function_handler<std::unique_ptr<std::__future_base::_Result_base, std::__future_base::_Result_base::_Deleter> (), std::__future_base::_Task_setter<std::unique_ptr<std::__future_base::_Result<void>, std::__future_base::_Result_base::_Deleter>, std::__future_base::_Task_state<std::_Bind<BatchRunFunc<Individu::Individu(ParamsList*)::{lambda(int)#1}>(Individu::Individu(ParamsList*)::{lambda(int)#1}&&, int, int, bool)::{lambda()#1} ()>, std::allocator<int>, void ()>::_M_run()::{lambda()#1}, void> >::_M_invoke(std::_Any_data const&) (std_function.h:291)
+==45834==    by 0x1242C4: operator() (std_function.h:590)
+==45834==    by 0x1242C4: std::__future_base::_State_baseV2::_M_do_set(std::function<std::unique_ptr<std::__future_base::_Result_base, std::__future_base::_Result_base::_Deleter> ()>*, bool*) (future:571)
+==45834==    by 0x12416B: std::once_flag::_Prepare_execution::_Prepare_execution<std::call_once<void (std::__future_base::_State_baseV2::*)(std::function<std::unique_ptr<std::__future_base::_Result_base, std::__future_base::_Result_base::_Deleter> ()>*, bool*), std::__future_base::_State_baseV2*, std::function<std::unique_ptr<std::__future_base::_Result_base, std::__future_base::_Result_base::_Deleter> ()>*, bool*>(std::once_flag&, void (std::__future_base::_State_baseV2::*&&)(std::function<std::unique_ptr<std::__future_base::_Result_base, std::__future_base::_Result_base::_Deleter> ()>*, bool*), std::__future_base::_State_baseV2*&&, std::function<std::unique_ptr<std::__future_base::_Result_base, std::__future_base::_Result_base::_Deleter> ()>*&&, bool*&&)::{lambda()#1}>(void (std::__future_base::_State_baseV2::*&)(std::function<std::unique_ptr<std::__future_base::_Result_base, std::__future_base::_Result_base::_Deleter> ()>*, bool*))::{lambda()#1}::_FUN() (invoke.h:74)
+==45834==    by 0x4F75EE7: __pthread_once_slow (pthread_once.c:116)
+==45834==    by 0x124712: __gthread_once (gthr-default.h:700)
+==45834==    by 0x124712: void std::call_once<void (std::__future_base::_State_baseV2::*)(std::function<std::unique_ptr<std::__future_base::_Result_base, std::__future_base::_Result_base::_Deleter> ()>*, bool*), std::__future_base::_State_baseV2*, std::function<std::unique_ptr<std::__future_base::_Result_base, std::__future_base::_Result_base::_Deleter> ()>*, bool*>(std::once_flag&, void (std::__future_base::_State_baseV2::*&&)(std::function<std::unique_ptr<std::__future_base::_Result_base, std::__future_base::_Result_base::_Deleter> ()>*, bool*), std::__future_base::_State_baseV2*&&, std::function<std::unique_ptr<std::__future_base::_Result_base, std::__future_base::_Result_base::_Deleter> ()>*&&, bool*&&) (mutex:783)
+==45834==    by 0x129851: _M_set_result (future:411)
+==45834==    by 0x129851: std::__future_base::_Task_state<std::_Bind<BatchRunFunc<Individu::Individu(ParamsList*)::{lambda(int)#1}>(Individu::Individu(ParamsList*)::{lambda(int)#1}&&, int, int, bool)::{lambda()#1} ()>, std::allocator<int>, void ()>::_M_run() (future:1471)
+==45834==    by 0x126E54: operator() (future:1604)
+==45834==    by 0x126E54: operator() (ThreadPool.h:56)
+==45834==    by 0x126E54: __invoke_impl<void, ThreadPool::enqueue<BatchRunFunc<Individu::Individu(ParamsList*)::<lambda(int)> >(Individu::Individu(ParamsList*)::<lambda(int)>&&, int, int, bool)::<lambda()> >(BatchRunFunc<Individu::Individu(ParamsList*)::<lambda(int)> >(Individu::Individu(ParamsList*)::<lambda(int)>&&, int, int, bool)::<lambda()>&&)::<lambda()>&> (invoke.h:61)
+==45834==    by 0x126E54: __invoke_r<void, ThreadPool::enqueue<BatchRunFunc<Individu::Individu(ParamsList*)::<lambda(int)> >(Individu::Individu(ParamsList*)::<lambda(int)>&&, int, int, bool)::<lambda()> >(BatchRunFunc<Individu::Individu(ParamsList*)::<lambda(int)> >(Individu::Individu(ParamsList*)::<lambda(int)>&&, int, int, bool)::<lambda()>&&)::<lambda()>&> (invoke.h:111)
+==45834==    by 0x126E54: std::_Function_handler<void (), ThreadPool::enqueue<BatchRunFunc<Individu::Individu(ParamsList*)::{lambda(int)#1}>(Individu::Individu(ParamsList*)::{lambda(int)#1}&&, int, int, bool)::{lambda()#1}>(Individu::Individu(ParamsList*)::{lambda(int)#1}&&)::{lambda()#1}>::_M_invoke(std::_Any_data const&) (std_function.h:290)
+==45834==    by 0x17EFE9: ThreadPool::ThreadPool(unsigned long)::{lambda()#1}::operator()() const (std_function.h:590)
+==45834==    by 0x17F004: __invoke_impl<void, ThreadPool::ThreadPool(size_t)::<lambda()> > (invoke.h:61)
+==45834==    by 0x17F004: __invoke<ThreadPool::ThreadPool(size_t)::<lambda()> > (invoke.h:96)
+==45834==    by 0x17F004: _M_invoke<0> (std_thread.h:259)
+==45834==    by 0x17F004: operator() (std_thread.h:266)
+==45834==    by 0x17F004: std::thread::_State_impl<std::thread::_Invoker<std::tuple<ThreadPool::ThreadPool(unsigned long)::{lambda()#1}> > >::_M_run() (std_thread.h:211)
+==45834== 
+==45834== Use of uninitialised value of size 8
+==45834==    at 0x13B118: __normal_iterator (stl_iterator.h:1028)
+==45834==    by 0x13B118: begin (stl_vector.h:821)
+==45834==    by 0x13B118: empty (stl_vector.h:1008)
+==45834==    by 0x13B118: LocalSearch::~LocalSearch() (LocalSearch.cpp:1335)
+==45834==    by 0x12A7F4: Individu::~Individu() (Individu.cpp:227)
+==45834==    by 0x155B0E: Population::Population(ParamsList*) (Population.cpp:115)
+==45834==    by 0x140DB9: mainIRP(int, char**) (main.cpp:222)
+==45834==    by 0x14110B: main (main.cpp:1725)
+==45834==  Uninitialised value was created by a heap allocation
+==45834==    at 0x4849013: operator new(unsigned long) (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==45834==    by 0x155B47: Population::Population(ParamsList*) (Population.cpp:105)
+==45834==    by 0x140DB9: mainIRP(int, char**) (main.cpp:222)
+==45834==    by 0x14110B: main (main.cpp:1725)
+==45834== 
+==45834== Invalid read of size 8
+==45834==    at 0x13B11F: LocalSearch::~LocalSearch() (LocalSearch.cpp:1335)
+==45834==    by 0x12A7F4: Individu::~Individu() (Individu.cpp:227)
+==45834==    by 0x155B0E: Population::Population(ParamsList*) (Population.cpp:115)
+==45834==    by 0x140DB9: mainIRP(int, char**) (main.cpp:222)
+==45834==    by 0x14110B: main (main.cpp:1725)
+==45834==  Address 0xc252a28 is 4 bytes after a block of size 4 alloc'd
+==45834==    at 0x4849013: operator new(unsigned long) (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==45834==    by 0x137193: allocate (new_allocator.h:127)
+==45834==    by 0x137193: allocate (alloc_traits.h:464)
+==45834==    by 0x137193: _M_allocate (stl_vector.h:346)
+==45834==    by 0x137193: _M_create_storage (stl_vector.h:361)
+==45834==    by 0x137193: _Vector_base (stl_vector.h:305)
+==45834==    by 0x137193: vector (stl_vector.h:555)
+==45834==    by 0x137193: _Construct<std::vector<int>, const std::vector<int, std::allocator<int> >&> (stl_construct.h:119)
+==45834==    by 0x137193: __uninit_fill_n<std::vector<int>*, long unsigned int, std::vector<int> > (stl_uninitialized.h:237)
+==45834==    by 0x137193: uninitialized_fill_n<std::vector<int>*, long unsigned int, std::vector<int> > (stl_uninitialized.h:297)
+==45834==    by 0x137193: __uninitialized_fill_n_a<std::vector<int>*, long unsigned int, std::vector<int>, std::vector<int> > (stl_uninitialized.h:410)
+==45834==    by 0x137193: _M_fill_initialize (stl_vector.h:1596)
+==45834==    by 0x137193: std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >::vector(unsigned long, std::vector<int, std::allocator<int> > const&, std::allocator<std::vector<int, std::allocator<int> > > const&) (stl_vector.h:525)
+==45834==    by 0x12BC55: Individu::Individu(Params*, double) (Individu.cpp:74)
+==45834==    by 0x12C9DE: operator() (Individu.cpp:216)
+==45834==    by 0x12C9DE: operator() (ScenarioUtils.h:95)
+==45834==    by 0x12C9DE: __invoke_impl<void, BatchRunFunc<Individu::Individu(ParamsList*)::<lambda(int)> >(Individu::Individu(ParamsList*)::<lambda(int)>&&, int, int, bool)::<lambda()>&> (invoke.h:61)
+==45834==    by 0x12C9DE: __invoke<BatchRunFunc<Individu::Individu(ParamsList*)::<lambda(int)> >(Individu::Individu(ParamsList*)::<lambda(int)>&&, int, int, bool)::<lambda()>&> (invoke.h:96)
+==45834==    by 0x12C9DE: __call<void> (functional:420)
+==45834==    by 0x12C9DE: operator()<> (functional:503)
+==45834==    by 0x12C9DE: __invoke_impl<void, std::_Bind<BatchRunFunc<Individu::Individu(ParamsList*)::<lambda(int)> >(Individu::Individu(ParamsList*)::<lambda(int)>&&, int, int, bool)::<lambda()>()>&> (invoke.h:61)
+==45834==    by 0x12C9DE: __invoke_r<void, std::_Bind<BatchRunFunc<Individu::Individu(ParamsList*)::<lambda(int)> >(Individu::Individu(ParamsList*)::<lambda(int)>&&, int, int, bool)::<lambda()>()>&> (invoke.h:111)
+==45834==    by 0x12C9DE: operator() (future:1468)
+==45834==    by 0x12C9DE: operator() (future:1409)
+==45834==    by 0x12C9DE: __invoke_impl<std::unique_ptr<std::__future_base::_Result<void>, std::__future_base::_Result_base::_Deleter>, std::__future_base::_Task_setter<std::unique_ptr<std::__future_base::_Result<void>, std::__future_base::_Result_base::_Deleter>, std::__future_base::_Task_state<std::_Bind<BatchRunFunc<Individu::Individu(ParamsList*)::<lambda(int)> >(Individu::Individu(ParamsList*)::<lambda(int)>&&, int, int, bool)::<lambda()>()>, std::allocator<int>, void()>::_M_run()::<lambda()>, void>&> (invoke.h:61)
+==45834==    by 0x12C9DE: __invoke_r<std::unique_ptr<std::__future_base::_Result_base, std::__future_base::_Result_base::_Deleter>, std::__future_base::_Task_setter<std::unique_ptr<std::__future_base::_Result<void>, std::__future_base::_Result_base::_Deleter>, std::__future_base::_Task_state<std::_Bind<BatchRunFunc<Individu::Individu(ParamsList*)::<lambda(int)> >(Individu::Individu(ParamsList*)::<lambda(int)>&&, int, int, bool)::<lambda()>()>, std::allocator<int>, void()>::_M_run()::<lambda()>, void>&> (invoke.h:116)
+==45834==    by 0x12C9DE: std::_Function_handler<std::unique_ptr<std::__future_base::_Result_base, std::__future_base::_Result_base::_Deleter> (), std::__future_base::_Task_setter<std::unique_ptr<std::__future_base::_Result<void>, std::__future_base::_Result_base::_Deleter>, std::__future_base::_Task_state<std::_Bind<BatchRunFunc<Individu::Individu(ParamsList*)::{lambda(int)#1}>(Individu::Individu(ParamsList*)::{lambda(int)#1}&&, int, int, bool)::{lambda()#1} ()>, std::allocator<int>, void ()>::_M_run()::{lambda()#1}, void> >::_M_invoke(std::_Any_data const&) (std_function.h:291)
+==45834==    by 0x1242C4: operator() (std_function.h:590)
+==45834==    by 0x1242C4: std::__future_base::_State_baseV2::_M_do_set(std::function<std::unique_ptr<std::__future_base::_Result_base, std::__future_base::_Result_base::_Deleter> ()>*, bool*) (future:571)
+==45834==    by 0x12416B: std::once_flag::_Prepare_execution::_Prepare_execution<std::call_once<void (std::__future_base::_State_baseV2::*)(std::function<std::unique_ptr<std::__future_base::_Result_base, std::__future_base::_Result_base::_Deleter> ()>*, bool*), std::__future_base::_State_baseV2*, std::function<std::unique_ptr<std::__future_base::_Result_base, std::__future_base::_Result_base::_Deleter> ()>*, bool*>(std::once_flag&, void (std::__future_base::_State_baseV2::*&&)(std::function<std::unique_ptr<std::__future_base::_Result_base, std::__future_base::_Result_base::_Deleter> ()>*, bool*), std::__future_base::_State_baseV2*&&, std::function<std::unique_ptr<std::__future_base::_Result_base, std::__future_base::_Result_base::_Deleter> ()>*&&, bool*&&)::{lambda()#1}>(void (std::__future_base::_State_baseV2::*&)(std::function<std::unique_ptr<std::__future_base::_Result_base, std::__future_base::_Result_base::_Deleter> ()>*, bool*))::{lambda()#1}::_FUN() (invoke.h:74)
+==45834==    by 0x4F75EE7: __pthread_once_slow (pthread_once.c:116)
+==45834==    by 0x124712: __gthread_once (gthr-default.h:700)
+==45834==    by 0x124712: void std::call_once<void (std::__future_base::_State_baseV2::*)(std::function<std::unique_ptr<std::__future_base::_Result_base, std::__future_base::_Result_base::_Deleter> ()>*, bool*), std::__future_base::_State_baseV2*, std::function<std::unique_ptr<std::__future_base::_Result_base, std::__future_base::_Result_base::_Deleter> ()>*, bool*>(std::once_flag&, void (std::__future_base::_State_baseV2::*&&)(std::function<std::unique_ptr<std::__future_base::_Result_base, std::__future_base::_Result_base::_Deleter> ()>*, bool*), std::__future_base::_State_baseV2*&&, std::function<std::unique_ptr<std::__future_base::_Result_base, std::__future_base::_Result_base::_Deleter> ()>*&&, bool*&&) (mutex:783)
+==45834==    by 0x129851: _M_set_result (future:411)
+==45834==    by 0x129851: std::__future_base::_Task_state<std::_Bind<BatchRunFunc<Individu::Individu(ParamsList*)::{lambda(int)#1}>(Individu::Individu(ParamsList*)::{lambda(int)#1}&&, int, int, bool)::{lambda()#1} ()>, std::allocator<int>, void ()>::_M_run() (future:1471)
+==45834==    by 0x126E54: operator() (future:1604)
+==45834==    by 0x126E54: operator() (ThreadPool.h:56)
+==45834==    by 0x126E54: __invoke_impl<void, ThreadPool::enqueue<BatchRunFunc<Individu::Individu(ParamsList*)::<lambda(int)> >(Individu::Individu(ParamsList*)::<lambda(int)>&&, int, int, bool)::<lambda()> >(BatchRunFunc<Individu::Individu(ParamsList*)::<lambda(int)> >(Individu::Individu(ParamsList*)::<lambda(int)>&&, int, int, bool)::<lambda()>&&)::<lambda()>&> (invoke.h:61)
+==45834==    by 0x126E54: __invoke_r<void, ThreadPool::enqueue<BatchRunFunc<Individu::Individu(ParamsList*)::<lambda(int)> >(Individu::Individu(ParamsList*)::<lambda(int)>&&, int, int, bool)::<lambda()> >(BatchRunFunc<Individu::Individu(ParamsList*)::<lambda(int)> >(Individu::Individu(ParamsList*)::<lambda(int)>&&, int, int, bool)::<lambda()>&&)::<lambda()>&> (invoke.h:111)
+==45834==    by 0x126E54: std::_Function_handler<void (), ThreadPool::enqueue<BatchRunFunc<Individu::Individu(ParamsList*)::{lambda(int)#1}>(Individu::Individu(ParamsList*)::{lambda(int)#1}&&, int, int, bool)::{lambda()#1}>(Individu::Individu(ParamsList*)::{lambda(int)#1}&&)::{lambda()#1}>::_M_invoke(std::_Any_data const&) (std_function.h:290)
+==45834==    by 0x17EFE9: ThreadPool::ThreadPool(unsigned long)::{lambda()#1}::operator()() const (std_function.h:590)
+==45834==    by 0x17F004: __invoke_impl<void, ThreadPool::ThreadPool(size_t)::<lambda()> > (invoke.h:61)
+==45834==    by 0x17F004: __invoke<ThreadPool::ThreadPool(size_t)::<lambda()> > (invoke.h:96)
+==45834==    by 0x17F004: _M_invoke<0> (std_thread.h:259)
+==45834==    by 0x17F004: operator() (std_thread.h:266)
+==45834==    by 0x17F004: std::thread::_State_impl<std::thread::_Invoker<std::tuple<ThreadPool::ThreadPool(unsigned long)::{lambda()#1}> > >::_M_run() (std_thread.h:211)
+==45834== 
+==45834== Conditional jump or move depends on uninitialised value(s)
+==45834==    at 0x13B126: LocalSearch::~LocalSearch() (LocalSearch.cpp:1335)
+==45834==    by 0x12A7F4: Individu::~Individu() (Individu.cpp:227)
+==45834==    by 0x155B0E: Population::Population(ParamsList*) (Population.cpp:115)
+==45834==    by 0x140DB9: mainIRP(int, char**) (main.cpp:222)
+==45834==    by 0x14110B: main (main.cpp:1725)
+==45834== 
+==45834== Use of uninitialised value of size 8
+==45834==    at 0x13B1D6: __normal_iterator (stl_iterator.h:1028)
+==45834==    by 0x13B1D6: begin (stl_vector.h:821)
+==45834==    by 0x13B1D6: empty (stl_vector.h:1008)
+==45834==    by 0x13B1D6: LocalSearch::~LocalSearch() (LocalSearch.cpp:1350)
+==45834==    by 0x12A7F4: Individu::~Individu() (Individu.cpp:227)
+==45834==    by 0x155B0E: Population::Population(ParamsList*) (Population.cpp:115)
+==45834==    by 0x140DB9: mainIRP(int, char**) (main.cpp:222)
+==45834==    by 0x14110B: main (main.cpp:1725)
+==45834==  Uninitialised value was created by a heap allocation
+==45834==    at 0x4849013: operator new(unsigned long) (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==45834==    by 0x155B47: Population::Population(ParamsList*) (Population.cpp:105)
+==45834==    by 0x140DB9: mainIRP(int, char**) (main.cpp:222)
+==45834==    by 0x14110B: main (main.cpp:1725)
+==45834== 
+==45834== Invalid read of size 8
+==45834==    at 0x13B1D6: __normal_iterator (stl_iterator.h:1028)
+==45834==    by 0x13B1D6: begin (stl_vector.h:821)
+==45834==    by 0x13B1D6: empty (stl_vector.h:1008)
+==45834==    by 0x13B1D6: LocalSearch::~LocalSearch() (LocalSearch.cpp:1350)
+==45834==    by 0x12A7F4: Individu::~Individu() (Individu.cpp:227)
+==45834==    by 0x155B0E: Population::Population(ParamsList*) (Population.cpp:115)
+==45834==    by 0x140DB9: mainIRP(int, char**) (main.cpp:222)
+==45834==    by 0x14110B: main (main.cpp:1725)
+==45834==  Address 0xc2529f0 is 16 bytes after a block of size 16 in arena "client"
+==45834== 
+==45834== Invalid read of size 8
+==45834==    at 0x13B1DD: LocalSearch::~LocalSearch() (LocalSearch.cpp:1350)
+==45834==    by 0x12A7F4: Individu::~Individu() (Individu.cpp:227)
+==45834==    by 0x155B0E: Population::Population(ParamsList*) (Population.cpp:115)
+==45834==    by 0x140DB9: mainIRP(int, char**) (main.cpp:222)
+==45834==    by 0x14110B: main (main.cpp:1725)
+==45834==  Address 0xc2529f8 is 24 bytes after a block of size 16 in arena "client"
+==45834== 
+==45834== Use of uninitialised value of size 8
+==45834==    at 0x13B1EA: LocalSearch::~LocalSearch() (LocalSearch.cpp:1351)
+==45834==    by 0x12A7F4: Individu::~Individu() (Individu.cpp:227)
+==45834==    by 0x155B0E: Population::Population(ParamsList*) (Population.cpp:115)
+==45834==    by 0x140DB9: mainIRP(int, char**) (main.cpp:222)
+==45834==    by 0x14110B: main (main.cpp:1725)
+==45834==  Uninitialised value was created by a heap allocation
+==45834==    at 0x4849013: operator new(unsigned long) (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==45834==    by 0x155B47: Population::Population(ParamsList*) (Population.cpp:105)
+==45834==    by 0x140DB9: mainIRP(int, char**) (main.cpp:222)
+==45834==    by 0x14110B: main (main.cpp:1725)
+==45834== 
+==45834== Invalid read of size 8
+==45834==    at 0x13B1EA: LocalSearch::~LocalSearch() (LocalSearch.cpp:1351)
+==45834==    by 0x12A7F4: Individu::~Individu() (Individu.cpp:227)
+==45834==    by 0x155B0E: Population::Population(ParamsList*) (Population.cpp:115)
+==45834==    by 0x140DB9: mainIRP(int, char**) (main.cpp:222)
+==45834==    by 0x14110B: main (main.cpp:1725)
+==45834==  Address 0xc2529f8 is 24 bytes after a block of size 16 in arena "client"
+==45834== 
+==45834== Invalid read of size 8
+==45834==    at 0x13B278: LocalSearch::~LocalSearch() (LocalSearch.cpp:1352)
+==45834==    by 0x12A7F4: Individu::~Individu() (Individu.cpp:227)
+==45834==    by 0x155B0E: Population::Population(ParamsList*) (Population.cpp:115)
+==45834==    by 0x140DB9: mainIRP(int, char**) (main.cpp:222)
+==45834==    by 0x14110B: main (main.cpp:1725)
+==45834==  Address 0x0 is not stack'd, malloc'd or (recently) free'd
+==45834== 
+==45834== 
+==45834== Process terminating with default action of signal 11 (SIGSEGV)
+==45834==  Access not within mapped region at address 0x0
+==45834==    at 0x13B278: LocalSearch::~LocalSearch() (LocalSearch.cpp:1352)
+==45834==    by 0x12A7F4: Individu::~Individu() (Individu.cpp:227)
+==45834==    by 0x155B0E: Population::Population(ParamsList*) (Population.cpp:115)
+==45834==    by 0x140DB9: mainIRP(int, char**) (main.cpp:222)
+==45834==    by 0x14110B: main (main.cpp:1725)
+==45834==  If you believe this happened as a result of a stack
+==45834==  overflow in your program's main thread (unlikely but
+==45834==  possible), you can try to increase the size of the
+==45834==  main thread stack using the --main-stacksize= flag.
+==45834==  The main thread stack size used in this run was 8388608.
+==45834== 
+==45834== HEAP SUMMARY:
+==45834==     in use at exit: 4,036,622 bytes in 43,505 blocks
+==45834==   total heap usage: 288,664 allocs, 245,159 frees, 29,654,003 bytes allocated
+==45834== 
+==45834== 352 bytes in 1 blocks are possibly lost in loss record 185 of 331
+==45834==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==45834==    by 0x40147D9: calloc (rtld-malloc.h:44)
+==45834==    by 0x40147D9: allocate_dtv (dl-tls.c:375)
+==45834==    by 0x40147D9: _dl_allocate_tls (dl-tls.c:634)
+==45834==    by 0x4F717B4: allocate_stack (allocatestack.c:430)
+==45834==    by 0x4F717B4: pthread_create@@GLIBC_2.34 (pthread_create.c:647)
+==45834==    by 0x52D1592: grpc_core::Thread::Thread(char const*, void (*)(void*), void*, bool*, grpc_core::Thread::Options const&) (in /usr/lib/x86_64-linux-gnu/libgrpc.so.10.0.0)
+==45834==    by 0x5261961: grpc_core::Executor::SetThreading(bool) (in /usr/lib/x86_64-linux-gnu/libgrpc.so.10.0.0)
+==45834==    by 0x5261F31: grpc_core::Executor::InitAll() (in /usr/lib/x86_64-linux-gnu/libgrpc.so.10.0.0)
+==45834==    by 0x52620A2: grpc_iomgr_init() (in /usr/lib/x86_64-linux-gnu/libgrpc.so.10.0.0)
+==45834==    by 0x52ADB13: grpc_init (in /usr/lib/x86_64-linux-gnu/libgrpc.so.10.0.0)
+==45834==    by 0x48990A2: grpc_impl::ChannelCredentials::ChannelCredentials() (in /usr/lib/x86_64-linux-gnu/libgrpc++.so.1.30.2)
+==45834==    by 0x489954D: grpc_impl::InsecureChannelCredentials() (in /usr/lib/x86_64-linux-gnu/libgrpc++.so.1.30.2)
+==45834==    by 0x136409: InsecureChannelCredentials (credentials.h:91)
+==45834==    by 0x136409: Individu::RunSearchPi(int) (Individu.cpp:1382)
+==45834==    by 0x136EEB: Individu::RunSearchTotal(bool) (Individu.cpp:1306)
+==45834== 
+==45834== 352 bytes in 1 blocks are possibly lost in loss record 186 of 331
+==45834==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==45834==    by 0x40147D9: calloc (rtld-malloc.h:44)
+==45834==    by 0x40147D9: allocate_dtv (dl-tls.c:375)
+==45834==    by 0x40147D9: _dl_allocate_tls (dl-tls.c:634)
+==45834==    by 0x4F717B4: allocate_stack (allocatestack.c:430)
+==45834==    by 0x4F717B4: pthread_create@@GLIBC_2.34 (pthread_create.c:647)
+==45834==    by 0x52D1592: grpc_core::Thread::Thread(char const*, void (*)(void*), void*, bool*, grpc_core::Thread::Options const&) (in /usr/lib/x86_64-linux-gnu/libgrpc.so.10.0.0)
+==45834==    by 0x5261961: grpc_core::Executor::SetThreading(bool) (in /usr/lib/x86_64-linux-gnu/libgrpc.so.10.0.0)
+==45834==    by 0x5261F3D: grpc_core::Executor::InitAll() (in /usr/lib/x86_64-linux-gnu/libgrpc.so.10.0.0)
+==45834==    by 0x52620A2: grpc_iomgr_init() (in /usr/lib/x86_64-linux-gnu/libgrpc.so.10.0.0)
+==45834==    by 0x52ADB13: grpc_init (in /usr/lib/x86_64-linux-gnu/libgrpc.so.10.0.0)
+==45834==    by 0x48990A2: grpc_impl::ChannelCredentials::ChannelCredentials() (in /usr/lib/x86_64-linux-gnu/libgrpc++.so.1.30.2)
+==45834==    by 0x489954D: grpc_impl::InsecureChannelCredentials() (in /usr/lib/x86_64-linux-gnu/libgrpc++.so.1.30.2)
+==45834==    by 0x136409: InsecureChannelCredentials (credentials.h:91)
+==45834==    by 0x136409: Individu::RunSearchPi(int) (Individu.cpp:1382)
+==45834==    by 0x136EEB: Individu::RunSearchTotal(bool) (Individu.cpp:1306)
+==45834== 
+==45834== 352 bytes in 1 blocks are possibly lost in loss record 187 of 331
+==45834==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==45834==    by 0x40147D9: calloc (rtld-malloc.h:44)
+==45834==    by 0x40147D9: allocate_dtv (dl-tls.c:375)
+==45834==    by 0x40147D9: _dl_allocate_tls (dl-tls.c:634)
+==45834==    by 0x4F717B4: allocate_stack (allocatestack.c:430)
+==45834==    by 0x4F717B4: pthread_create@@GLIBC_2.34 (pthread_create.c:647)
+==45834==    by 0x52D1592: grpc_core::Thread::Thread(char const*, void (*)(void*), void*, bool*, grpc_core::Thread::Options const&) (in /usr/lib/x86_64-linux-gnu/libgrpc.so.10.0.0)
+==45834==    by 0x5277FD1: ??? (in /usr/lib/x86_64-linux-gnu/libgrpc.so.10.0.0)
+==45834==    by 0x52ADBEA: grpc_init (in /usr/lib/x86_64-linux-gnu/libgrpc.so.10.0.0)
+==45834==    by 0x48990A2: grpc_impl::ChannelCredentials::ChannelCredentials() (in /usr/lib/x86_64-linux-gnu/libgrpc++.so.1.30.2)
+==45834==    by 0x489954D: grpc_impl::InsecureChannelCredentials() (in /usr/lib/x86_64-linux-gnu/libgrpc++.so.1.30.2)
+==45834==    by 0x136409: InsecureChannelCredentials (credentials.h:91)
+==45834==    by 0x136409: Individu::RunSearchPi(int) (Individu.cpp:1382)
+==45834==    by 0x136EEB: Individu::RunSearchTotal(bool) (Individu.cpp:1306)
+==45834==    by 0x154BC7: Population::education(Individu*) (Population.cpp:810)
+==45834==    by 0x15598A: Population::Population(ParamsList*) (Population.cpp:108)
+==45834== 
+==45834== 352 bytes in 1 blocks are possibly lost in loss record 188 of 331
+==45834==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==45834==    by 0x40147D9: calloc (rtld-malloc.h:44)
+==45834==    by 0x40147D9: allocate_dtv (dl-tls.c:375)
+==45834==    by 0x40147D9: _dl_allocate_tls (dl-tls.c:634)
+==45834==    by 0x4F717B4: allocate_stack (allocatestack.c:430)
+==45834==    by 0x4F717B4: pthread_create@@GLIBC_2.34 (pthread_create.c:647)
+==45834==    by 0x52D1592: grpc_core::Thread::Thread(char const*, void (*)(void*), void*, bool*, grpc_core::Thread::Options const&) (in /usr/lib/x86_64-linux-gnu/libgrpc.so.10.0.0)
+==45834==    by 0x52B059F: grpc_shutdown (in /usr/lib/x86_64-linux-gnu/libgrpc.so.10.0.0)
+==45834==    by 0x489E384: grpc_impl::Channel::~Channel() (in /usr/lib/x86_64-linux-gnu/libgrpc++.so.1.30.2)
+==45834==    by 0x489E43C: grpc_impl::Channel::~Channel() (in /usr/lib/x86_64-linux-gnu/libgrpc++.so.1.30.2)
+==45834==    by 0x12491E: std::_Sp_counted_base<(__gnu_cxx::_Lock_policy)2>::_M_release() (shared_ptr_base.h:168)
+==45834==    by 0x1367DB: ~__shared_count (shared_ptr_base.h:705)
+==45834==    by 0x1367DB: ~__shared_ptr (shared_ptr_base.h:1154)
+==45834==    by 0x1367DB: ~shared_ptr (shared_ptr.h:122)
+==45834==    by 0x1367DB: Individu::RunSearchPi(int) (Individu.cpp:1395)
+==45834==    by 0x136EEB: Individu::RunSearchTotal(bool) (Individu.cpp:1306)
+==45834==    by 0x154BC7: Population::education(Individu*) (Population.cpp:810)
+==45834==    by 0x15598A: Population::Population(ParamsList*) (Population.cpp:108)
+==45834== 
+==45834== 650 bytes in 65 blocks are definitely lost in loss record 205 of 331
+==45834==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==45834==    by 0x58DE614: ??? (in /usr/lib/x86_64-linux-gnu/libcares.so.2.5.1)
+==45834==    by 0x58DA88A: ??? (in /usr/lib/x86_64-linux-gnu/libcares.so.2.5.1)
+==45834==    by 0x58DCB50: ??? (in /usr/lib/x86_64-linux-gnu/libcares.so.2.5.1)
+==45834==    by 0x58DD3E5: ares_getaddrinfo (in /usr/lib/x86_64-linux-gnu/libcares.so.2.5.1)
+==45834==    by 0x58DD5B7: ares_gethostbyname (in /usr/lib/x86_64-linux-gnu/libcares.so.2.5.1)
+==45834==    by 0x51DA059: grpc_dns_lookup_ares_continue_after_check_localhost_and_ip_literals_locked(grpc_ares_request*, char const*, char const*, char const*, grpc_pollset_set*, int, std::shared_ptr<grpc_core::WorkSerializer>) (in /usr/lib/x86_64-linux-gnu/libgrpc.so.10.0.0)
+==45834==    by 0x51DF0D2: ??? (in /usr/lib/x86_64-linux-gnu/libgrpc.so.10.0.0)
+==45834==    by 0x51D7885: ??? (in /usr/lib/x86_64-linux-gnu/libgrpc.so.10.0.0)
+==45834==    by 0x51A0A9E: ??? (in /usr/lib/x86_64-linux-gnu/libgrpc.so.10.0.0)
+==45834==    by 0x5277D13: grpc_core::WorkSerializer::WorkSerializerImpl::DrainQueue() (in /usr/lib/x86_64-linux-gnu/libgrpc.so.10.0.0)
+==45834==    by 0x5277F06: grpc_core::WorkSerializer::Run(std::function<void ()>, grpc_core::DebugLocation const&) (in /usr/lib/x86_64-linux-gnu/libgrpc.so.10.0.0)
+==45834== 
+==45834== 1,408 bytes in 4 blocks are possibly lost in loss record 229 of 331
+==45834==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==45834==    by 0x40147D9: calloc (rtld-malloc.h:44)
+==45834==    by 0x40147D9: allocate_dtv (dl-tls.c:375)
+==45834==    by 0x40147D9: _dl_allocate_tls (dl-tls.c:634)
+==45834==    by 0x4F717B4: allocate_stack (allocatestack.c:430)
+==45834==    by 0x4F717B4: pthread_create@@GLIBC_2.34 (pthread_create.c:647)
+==45834==    by 0x4C83328: std::thread::_M_start_thread(std::unique_ptr<std::thread::_State, std::default_delete<std::thread::_State> >, void (*)()) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30)
+==45834==    by 0x17F250: thread<ThreadPool::ThreadPool(size_t)::<lambda()> > (std_thread.h:143)
+==45834==    by 0x17F250: construct<std::thread, ThreadPool::ThreadPool(size_t)::<lambda()> > (new_allocator.h:162)
+==45834==    by 0x17F250: construct<std::thread, ThreadPool::ThreadPool(size_t)::<lambda()> > (alloc_traits.h:516)
+==45834==    by 0x17F250: void std::vector<std::thread, std::allocator<std::thread> >::_M_realloc_insert<ThreadPool::ThreadPool(unsigned long)::{lambda()#1}>(__gnu_cxx::__normal_iterator<std::thread*, std::vector<std::thread, std::allocator<std::thread> > >, ThreadPool::ThreadPool(unsigned long)::{lambda()#1}&&) (vector.tcc:449)
+==45834==    by 0x17EC42: emplace_back<ThreadPool::ThreadPool(size_t)::<lambda()> > (vector.tcc:121)
+==45834==    by 0x17EC42: ThreadPool (ThreadPool.h:24)
+==45834==    by 0x17EC42: initThreadPool(unsigned long) (ThreadPool.cpp:13)
+==45834==    by 0x141101: main (main.cpp:1721)
+==45834== 
+==45834== 1,408 bytes in 4 blocks are possibly lost in loss record 230 of 331
+==45834==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==45834==    by 0x40147D9: calloc (rtld-malloc.h:44)
+==45834==    by 0x40147D9: allocate_dtv (dl-tls.c:375)
+==45834==    by 0x40147D9: _dl_allocate_tls (dl-tls.c:634)
+==45834==    by 0x4F717B4: allocate_stack (allocatestack.c:430)
+==45834==    by 0x4F717B4: pthread_create@@GLIBC_2.34 (pthread_create.c:647)
+==45834==    by 0x4C83328: std::thread::_M_start_thread(std::unique_ptr<std::thread::_State, std::default_delete<std::thread::_State> >, void (*)()) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30)
+==45834==    by 0x17EB6B: thread<ThreadPool::ThreadPool(size_t)::<lambda()> > (std_thread.h:143)
+==45834==    by 0x17EB6B: construct<std::thread, ThreadPool::ThreadPool(size_t)::<lambda()> > (new_allocator.h:162)
+==45834==    by 0x17EB6B: construct<std::thread, ThreadPool::ThreadPool(size_t)::<lambda()> > (alloc_traits.h:516)
+==45834==    by 0x17EB6B: emplace_back<ThreadPool::ThreadPool(size_t)::<lambda()> > (vector.tcc:115)
+==45834==    by 0x17EB6B: ThreadPool (ThreadPool.h:24)
+==45834==    by 0x17EB6B: initThreadPool(unsigned long) (ThreadPool.cpp:13)
+==45834==    by 0x141101: main (main.cpp:1721)
+==45834== 
+==45834== 37,104 (4,320 direct, 32,784 indirect) bytes in 12 blocks are definitely lost in loss record 309 of 331
+==45834==    at 0x4849013: operator new(unsigned long) (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==45834==    by 0x12E82D: Individu::Individu(ParamsList*) (Individu.cpp:220)
+==45834==    by 0x1558FC: Population::Population(ParamsList*) (Population.cpp:105)
+==45834==    by 0x140DB9: mainIRP(int, char**) (main.cpp:222)
+==45834==    by 0x14110B: main (main.cpp:1725)
+==45834== 
+==45834== LEAK SUMMARY:
+==45834==    definitely lost: 4,970 bytes in 77 blocks
+==45834==    indirectly lost: 32,784 bytes in 576 blocks
+==45834==      possibly lost: 4,224 bytes in 12 blocks
+==45834==    still reachable: 3,994,644 bytes in 42,840 blocks
+==45834==         suppressed: 0 bytes in 0 blocks
+==45834== Reachable blocks (those to which a pointer was found) are not shown.
+==45834== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==45834== 
+==45834== For lists of detected and suppressed errors, rerun with: -s
+==45834== ERROR SUMMARY: 48 errors from 24 contexts (suppressed: 0 from 0)
+timeout: the monitored command dumped core

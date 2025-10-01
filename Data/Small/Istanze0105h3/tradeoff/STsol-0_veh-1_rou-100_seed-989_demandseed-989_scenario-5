@@ -1,0 +1,181 @@
+Total Cost: 28619.3
+
+
+day[1] route[0]: travel time = 748
+ node[ 0 ] -> node[ 5 ] -> node[ 2 ] ->depot
+day[2] route[0]: travel time = 1077
+ node[ 0 ] -> node[ 3 ] -> node[ 4 ] -> node[ 1 ] -> node[ 2 ] ->depot
+day[3] route[0]: travel time = 1056
+ node[ 0 ] -> node[ 3 ] -> node[ 4 ] -> node[ 5 ] ->depot
+day[4] route[0]: travel time = 948
+ node[ 0 ] -> node[ 1 ] -> node[ 2 ] ->depot
+day[5] route[0]: travel time = 1092
+ node[ 0 ] -> node[ 3 ] -> node[ 4 ] -> node[ 1 ] -> node[ 5 ] ->depot
+day[6] route[0]: travel time = 0
+ node[ 0 ] ->depot
+CUSTOMER 1 bounds (0,75) [morning: 35 ,replinishment: 0, everning: 0] [morning: 0 ,replinishment: 75, everning: 49] [morning: 49 ,replinishment: 0, everning: 16] [morning: 16 ,replinishment: 59, everning: 41] [morning: 41 ,replinishment: 34, everning: 41] [morning: 41 ,replinishment: 0, everning: 4] 
+CUSTOMER 2 bounds (0,316) [morning: 150 ,replinishment: 166, everning: 227] [morning: 227 ,replinishment: 89, everning: 179] [morning: 179 ,replinishment: 0, everning: 29] [morning: 29 ,replinishment: 287, everning: 188] [morning: 188 ,replinishment: 0, everning: 69] [morning: 69 ,replinishment: 0, everning: 0] 
+CUSTOMER 3 bounds (0,93) [morning: 45 ,replinishment: 0, everning: 11] [morning: 11 ,replinishment: 82, everning: 35] [morning: 35 ,replinishment: 58, everning: 37] [morning: 37 ,replinishment: 0, everning: 0] [morning: 0 ,replinishment: 93, everning: 41] [morning: 41 ,replinishment: 0, everning: 0] 
+CUSTOMER 4 bounds (0,56) [morning: 25 ,replinishment: 0, everning: 4] [morning: 4 ,replinishment: 52, everning: 37] [morning: 37 ,replinishment: 19, everning: 23] [morning: 23 ,replinishment: 0, everning: 5] [morning: 5 ,replinishment: 51, everning: 38] [morning: 38 ,replinishment: 0, everning: 12] 
+CUSTOMER 5 bounds (0,166) [morning: 80 ,replinishment: 86, everning: 97] [morning: 97 ,replinishment: 0, everning: 27] [morning: 27 ,replinishment: 139, everning: 104] [morning: 104 ,replinishment: 0, everning: 15] [morning: 15 ,replinishment: 151, everning: 73] [morning: 73 ,replinishment: 0, everning: 4] 
+SUPPLIER    [1.0001e+12,1.0001e+12] [1.0002e+12,1.0002e+12] [1.0003e+12,1.0003e+12] [1.0004e+12,1.0004e+12] [1.0005e+12,1.0005e+12] [1.0006e+12,1.0006e+12] 
+ROUTE: 4921
+LOAD: 0SUPPLY: 0
+CLIENT INVENTORY: 83.6978
+CLIENT STOCKOUT: 393.122
+CLIENT STOCKOUT Amount: 110
+COST SUMMARY : OVERALL 5397.82
+5397.82
+5
+Total Time: 207
+PITime: 0
+Best Solution Time: 107
+ 0 1 1 748 252  4 0 5 2 0
+ 0 2 1 1077 298  6 0 3 4 1 2 0
+ 0 3 1 1056 216  5 0 3 4 5 0
+ 0 4 1 948 346  4 0 1 2 0
+ 0 5 1 1092 329  6 0 3 4 1 5 0
+
+
+day[1] route[0]: travel time = 748
+ node[ 0 ] -> node[ 5 ] -> node[ 2 ] ->depot
+day[2] route[0]: travel time = 1092
+ node[ 0 ] -> node[ 3 ] -> node[ 4 ] -> node[ 1 ] -> node[ 5 ] ->depot
+day[3] route[0]: travel time = 646
+ node[ 0 ] -> node[ 2 ] ->depot
+day[4] route[0]: travel time = 1092
+ node[ 0 ] -> node[ 5 ] -> node[ 1 ] -> node[ 4 ] -> node[ 3 ] ->depot
+day[5] route[0]: travel time = 646
+ node[ 0 ] -> node[ 2 ] ->depot
+day[6] route[0]: travel time = 0
+ node[ 0 ] ->depot
+CUSTOMER 1 bounds (0,75) [morning: 35 ,replinishment: 0, everning: 0] [morning: 0 ,replinishment: 75, everning: 53] [morning: 53 ,replinishment: 0, everning: 4] [morning: 4 ,replinishment: 71, everning: 37] [morning: 37 ,replinishment: 0, everning: 5] [morning: 5 ,replinishment: 0, everning: 0] 
+CUSTOMER 2 bounds (0,316) [morning: 150 ,replinishment: 166, everning: 150] [morning: 150 ,replinishment: 0, everning: 4] [morning: 4 ,replinishment: 312, everning: 141] [morning: 141 ,replinishment: 0, everning: 0] [morning: 0 ,replinishment: 316, everning: 189] [morning: 189 ,replinishment: 0, everning: 35] 
+CUSTOMER 3 bounds (0,93) [morning: 45 ,replinishment: 0, everning: 9] [morning: 9 ,replinishment: 84, everning: 67] [morning: 67 ,replinishment: 0, everning: 22] [morning: 22 ,replinishment: 71, everning: 56] [morning: 56 ,replinishment: 0, everning: 18] [morning: 18 ,replinishment: 0, everning: 0] 
+CUSTOMER 4 bounds (0,56) [morning: 25 ,replinishment: 0, everning: 0] [morning: 0 ,replinishment: 56, everning: 31] [morning: 31 ,replinishment: 0, everning: 4] [morning: 4 ,replinishment: 52, everning: 23] [morning: 23 ,replinishment: 0, everning: 4] [morning: 4 ,replinishment: 0, everning: 0] 
+CUSTOMER 5 bounds (0,166) [morning: 80 ,replinishment: 86, everning: 107] [morning: 107 ,replinishment: 59, everning: 106] [morning: 106 ,replinishment: 0, everning: 49] [morning: 49 ,replinishment: 117, everning: 105] [morning: 105 ,replinishment: 0, everning: 38] [morning: 38 ,replinishment: 0, everning: 0] 
+SUPPLIER    [1.0001e+12,1.0001e+12] [1.0002e+12,1.0002e+12] [1.0003e+12,1.0003e+12] [1.0004e+12,1.0004e+12] [1.0005e+12,1.0005e+12] [1.0006e+12,1.0006e+12] 
+ROUTE: 4224
+LOAD: 0SUPPLY: 0
+CLIENT INVENTORY: 79.2015
+CLIENT STOCKOUT: 1475.6
+CLIENT STOCKOUT Amount: 206
+COST SUMMARY : OVERALL 5778.8
+5778.8
+5
+Total Time: 207
+PITime: 0
+Best Solution Time: 107
+ 0 1 1 748 252  4 0 5 2 0
+ 0 2 1 1092 274  6 0 3 4 1 5 0
+ 0 3 1 646 312  3 0 2 0
+ 0 4 1 1092 311  6 0 5 1 4 3 0
+ 0 5 1 646 316  3 0 2 0
+
+
+day[1] route[0]: travel time = 748
+ node[ 0 ] -> node[ 2 ] -> node[ 5 ] ->depot
+day[2] route[0]: travel time = 1092
+ node[ 0 ] -> node[ 5 ] -> node[ 1 ] -> node[ 4 ] -> node[ 3 ] ->depot
+day[3] route[0]: travel time = 646
+ node[ 0 ] -> node[ 2 ] ->depot
+day[4] route[0]: travel time = 963
+ node[ 0 ] -> node[ 2 ] -> node[ 5 ] -> node[ 1 ] ->depot
+day[5] route[0]: travel time = 1092
+ node[ 0 ] -> node[ 5 ] -> node[ 1 ] -> node[ 4 ] -> node[ 3 ] ->depot
+day[6] route[0]: travel time = 0
+ node[ 0 ] ->depot
+CUSTOMER 1 bounds (0,75) [morning: 35 ,replinishment: 0, everning: 13] [morning: 13 ,replinishment: 62, everning: 47] [morning: 47 ,replinishment: 0, everning: 1] [morning: 1 ,replinishment: 74, everning: 28] [morning: 28 ,replinishment: 47, everning: 32] [morning: 32 ,replinishment: 0, everning: 0] 
+CUSTOMER 2 bounds (0,316) [morning: 150 ,replinishment: 166, everning: 140] [morning: 140 ,replinishment: 0, everning: 25] [morning: 25 ,replinishment: 291, everning: 217] [morning: 217 ,replinishment: 99, everning: 141] [morning: 141 ,replinishment: 0, everning: 0] [morning: 0 ,replinishment: 0, everning: 0] 
+CUSTOMER 3 bounds (0,93) [morning: 45 ,replinishment: 0, everning: 12] [morning: 12 ,replinishment: 81, everning: 37] [morning: 37 ,replinishment: 0, everning: 9] [morning: 9 ,replinishment: 0, everning: 0] [morning: 0 ,replinishment: 93, everning: 55] [morning: 55 ,replinishment: 0, everning: 24] 
+CUSTOMER 4 bounds (0,56) [morning: 25 ,replinishment: 0, everning: 0] [morning: 0 ,replinishment: 56, everning: 21] [morning: 21 ,replinishment: 0, everning: 0] [morning: 0 ,replinishment: 0, everning: 0] [morning: 0 ,replinishment: 56, everning: 27] [morning: 27 ,replinishment: 0, everning: 0] 
+CUSTOMER 5 bounds (0,166) [morning: 80 ,replinishment: 86, everning: 94] [morning: 94 ,replinishment: 72, everning: 99] [morning: 99 ,replinishment: 0, everning: 3] [morning: 3 ,replinishment: 163, everning: 89] [morning: 89 ,replinishment: 77, everning: 85] [morning: 85 ,replinishment: 0, everning: 34] 
+SUPPLIER    [1.0001e+12,1.0001e+12] [1.0002e+12,1.0002e+12] [1.0003e+12,1.0003e+12] [1.0004e+12,1.0004e+12] [1.0005e+12,1.0005e+12] [1.0006e+12,1.0006e+12] 
+ROUTE: 4541
+LOAD: 0SUPPLY: 0
+CLIENT INVENTORY: 77.6758
+CLIENT STOCKOUT: 1498.51
+CLIENT STOCKOUT Amount: 326
+COST SUMMARY : OVERALL 6117.19
+6117.19
+5
+Total Time: 207
+PITime: 0
+Best Solution Time: 107
+ 0 1 1 748 252  4 0 2 5 0
+ 0 2 1 1092 271  6 0 5 1 4 3 0
+ 0 3 1 646 291  3 0 2 0
+ 0 4 1 963 336  5 0 2 5 1 0
+ 0 5 1 1092 273  6 0 5 1 4 3 0
+
+
+day[1] route[0]: travel time = 748
+ node[ 0 ] -> node[ 5 ] -> node[ 2 ] ->depot
+day[2] route[0]: travel time = 1092
+ node[ 0 ] -> node[ 3 ] -> node[ 4 ] -> node[ 1 ] -> node[ 5 ] ->depot
+day[3] route[0]: travel time = 646
+ node[ 0 ] -> node[ 2 ] ->depot
+day[4] route[0]: travel time = 963
+ node[ 0 ] -> node[ 2 ] -> node[ 5 ] -> node[ 1 ] ->depot
+day[5] route[0]: travel time = 1056
+ node[ 0 ] -> node[ 3 ] -> node[ 4 ] -> node[ 5 ] -> node[ 2 ] ->depot
+day[6] route[0]: travel time = 0
+ node[ 0 ] ->depot
+CUSTOMER 1 bounds (0,75) [morning: 35 ,replinishment: 0, everning: 0] [morning: 0 ,replinishment: 75, everning: 47] [morning: 47 ,replinishment: 0, everning: 0] [morning: 0 ,replinishment: 75, everning: 47] [morning: 47 ,replinishment: 0, everning: 26] [morning: 26 ,replinishment: 0, everning: 4] 
+CUSTOMER 2 bounds (0,316) [morning: 150 ,replinishment: 166, everning: 105] [morning: 105 ,replinishment: 0, everning: 0] [morning: 0 ,replinishment: 316, everning: 210] [morning: 210 ,replinishment: 106, everning: 224] [morning: 224 ,replinishment: 92, everning: 133] [morning: 133 ,replinishment: 0, everning: 23] 
+CUSTOMER 3 bounds (0,93) [morning: 45 ,replinishment: 0, everning: 0] [morning: 0 ,replinishment: 93, everning: 42] [morning: 42 ,replinishment: 0, everning: 0] [morning: 0 ,replinishment: 0, everning: 0] [morning: 0 ,replinishment: 93, everning: 50] [morning: 50 ,replinishment: 0, everning: 0] 
+CUSTOMER 4 bounds (0,56) [morning: 25 ,replinishment: 0, everning: 0] [morning: 0 ,replinishment: 56, everning: 38] [morning: 38 ,replinishment: 0, everning: 3] [morning: 3 ,replinishment: 0, everning: 0] [morning: 0 ,replinishment: 56, everning: 29] [morning: 29 ,replinishment: 0, everning: 4] 
+CUSTOMER 5 bounds (0,166) [morning: 80 ,replinishment: 86, everning: 59] [morning: 59 ,replinishment: 107, everning: 76] [morning: 76 ,replinishment: 0, everning: 0] [morning: 0 ,replinishment: 166, everning: 89] [morning: 89 ,replinishment: 77, everning: 65] [morning: 65 ,replinishment: 0, everning: 0] 
+SUPPLIER    [1.0001e+12,1.0001e+12] [1.0002e+12,1.0002e+12] [1.0003e+12,1.0003e+12] [1.0004e+12,1.0004e+12] [1.0005e+12,1.0005e+12] [1.0006e+12,1.0006e+12] 
+ROUTE: 4505
+LOAD: 0SUPPLY: 0
+CLIENT INVENTORY: 72.5146
+CLIENT STOCKOUT: 768.866
+CLIENT STOCKOUT Amount: 110
+COST SUMMARY : OVERALL 5346.38
+5346.38
+5
+Total Time: 207
+PITime: 0
+Best Solution Time: 107
+ 0 1 1 748 252  4 0 5 2 0
+ 0 2 1 1092 331  6 0 3 4 1 5 0
+ 0 3 1 646 316  3 0 2 0
+ 0 4 1 963 347  5 0 2 5 1 0
+ 0 5 1 1056 318  6 0 3 4 5 2 0
+
+
+day[1] route[0]: travel time = 748
+ node[ 0 ] -> node[ 5 ] -> node[ 2 ] ->depot
+day[2] route[0]: travel time = 1092
+ node[ 0 ] -> node[ 5 ] -> node[ 1 ] -> node[ 4 ] -> node[ 3 ] ->depot
+day[3] route[0]: travel time = 646
+ node[ 0 ] -> node[ 2 ] ->depot
+day[4] route[0]: travel time = 1077
+ node[ 0 ] -> node[ 3 ] -> node[ 4 ] -> node[ 1 ] -> node[ 2 ] ->depot
+day[5] route[0]: travel time = 970
+ node[ 0 ] -> node[ 3 ] -> node[ 5 ] -> node[ 2 ] ->depot
+day[6] route[0]: travel time = 0
+ node[ 0 ] ->depot
+CUSTOMER 1 bounds (0,75) [morning: 35 ,replinishment: 0, everning: 1] [morning: 1 ,replinishment: 74, everning: 47] [morning: 47 ,replinishment: 0, everning: 14] [morning: 14 ,replinishment: 61, everning: 45] [morning: 45 ,replinishment: 0, everning: 9] [morning: 9 ,replinishment: 0, everning: 0] 
+CUSTOMER 2 bounds (0,316) [morning: 150 ,replinishment: 166, everning: 174] [morning: 174 ,replinishment: 0, everning: 0] [morning: 0 ,replinishment: 316, everning: 202] [morning: 202 ,replinishment: 114, everning: 194] [morning: 194 ,replinishment: 122, everning: 200] [morning: 200 ,replinishment: 0, everning: 42] 
+CUSTOMER 3 bounds (0,93) [morning: 45 ,replinishment: 0, everning: 10] [morning: 10 ,replinishment: 83, everning: 33] [morning: 33 ,replinishment: 0, everning: 0] [morning: 0 ,replinishment: 93, everning: 36] [morning: 36 ,replinishment: 57, everning: 60] [morning: 60 ,replinishment: 0, everning: 16] 
+CUSTOMER 4 bounds (0,56) [morning: 25 ,replinishment: 0, everning: 2] [morning: 2 ,replinishment: 54, everning: 32] [morning: 32 ,replinishment: 0, everning: 4] [morning: 4 ,replinishment: 52, everning: 25] [morning: 25 ,replinishment: 0, everning: 0] [morning: 0 ,replinishment: 0, everning: 0] 
+CUSTOMER 5 bounds (0,166) [morning: 80 ,replinishment: 86, everning: 74] [morning: 74 ,replinishment: 92, everning: 87] [morning: 87 ,replinishment: 0, everning: 7] [morning: 7 ,replinishment: 0, everning: 0] [morning: 0 ,replinishment: 166, everning: 67] [morning: 67 ,replinishment: 0, everning: 0] 
+SUPPLIER    [1.0001e+12,1.0001e+12] [1.0002e+12,1.0002e+12] [1.0003e+12,1.0003e+12] [1.0004e+12,1.0004e+12] [1.0005e+12,1.0005e+12] [1.0006e+12,1.0006e+12] 
+ROUTE: 4533
+LOAD: 0SUPPLY: 0
+CLIENT INVENTORY: 74.2219
+CLIENT STOCKOUT: 1371.92
+CLIENT STOCKOUT Amount: 164
+COST SUMMARY : OVERALL 5979.14
+5979.14
+5
+Total Time: 207
+PITime: 0
+Best Solution Time: 107
+ 0 1 1 748 252  4 0 5 2 0
+ 0 2 1 1092 303  6 0 5 1 4 3 0
+ 0 3 1 646 316  3 0 2 0
+ 0 4 1 1077 320  6 0 3 4 1 2 0
+ 0 5 1 970 345  5 0 3 5 2 0

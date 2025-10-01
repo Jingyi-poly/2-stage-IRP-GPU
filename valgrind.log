@@ -1,0 +1,210 @@
+==18804== Memcheck, a memory error detector
+==18804== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==18804== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==18804== Command: ./irp Data/Small/Istanze0105h3/0.dat -seed 989 -type 38 -veh 1 -stock 100 -demandseed 989 -iter 10 -scenario 30 -control_day_1 1
+==18804== Parent PID: 18802
+==18804== 
+==18804== Conditional jump or move depends on uninitialised value(s)
+==18804==    at 0x154A77: Population::addIndividu(Individu*) (Population.cpp:179)
+==18804==    by 0x155AD9: Population::Population(ParamsList*) (Population.cpp:113)
+==18804==    by 0x140E03: mainIRP(int, char**) (main.cpp:222)
+==18804==    by 0x141155: main (main.cpp:1725)
+==18804==  Uninitialised value was created by a heap allocation
+==18804==    at 0x4849013: operator new(unsigned long) (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==18804==    by 0x155B91: Population::Population(ParamsList*) (Population.cpp:105)
+==18804==    by 0x140E03: mainIRP(int, char**) (main.cpp:222)
+==18804==    by 0x141155: main (main.cpp:1725)
+==18804== 
+==18804== Conditional jump or move depends on uninitialised value(s)
+==18804==    at 0x12A7EB: Individu::~Individu() (Individu.cpp:226)
+==18804==    by 0x155B58: Population::Population(ParamsList*) (Population.cpp:115)
+==18804==    by 0x140E03: mainIRP(int, char**) (main.cpp:222)
+==18804==    by 0x141155: main (main.cpp:1725)
+==18804==  Uninitialised value was created by a heap allocation
+==18804==    at 0x4849013: operator new(unsigned long) (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==18804==    by 0x155B91: Population::Population(ParamsList*) (Population.cpp:105)
+==18804==    by 0x140E03: mainIRP(int, char**) (main.cpp:222)
+==18804==    by 0x141155: main (main.cpp:1725)
+==18804== 
+==18804== Use of uninitialised value of size 8
+==18804==    at 0x13B03B: __normal_iterator (stl_iterator.h:1028)
+==18804==    by 0x13B03B: begin (stl_vector.h:821)
+==18804==    by 0x13B03B: empty (stl_vector.h:1008)
+==18804==    by 0x13B03B: LocalSearch::~LocalSearch() (LocalSearch.cpp:1314)
+==18804==    by 0x12A7F4: Individu::~Individu() (Individu.cpp:227)
+==18804==    by 0x155B58: Population::Population(ParamsList*) (Population.cpp:115)
+==18804==    by 0x140E03: mainIRP(int, char**) (main.cpp:222)
+==18804==    by 0x141155: main (main.cpp:1725)
+==18804==  Uninitialised value was created by a heap allocation
+==18804==    at 0x4849013: operator new(unsigned long) (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==18804==    by 0x155B91: Population::Population(ParamsList*) (Population.cpp:105)
+==18804==    by 0x140E03: mainIRP(int, char**) (main.cpp:222)
+==18804==    by 0x141155: main (main.cpp:1725)
+==18804== 
+==18804== Invalid read of size 8
+==18804==    at 0x13B03B: __normal_iterator (stl_iterator.h:1028)
+==18804==    by 0x13B03B: begin (stl_vector.h:821)
+==18804==    by 0x13B03B: empty (stl_vector.h:1008)
+==18804==    by 0x13B03B: LocalSearch::~LocalSearch() (LocalSearch.cpp:1314)
+==18804==    by 0x12A7F4: Individu::~Individu() (Individu.cpp:227)
+==18804==    by 0x155B58: Population::Population(ParamsList*) (Population.cpp:115)
+==18804==    by 0x140E03: mainIRP(int, char**) (main.cpp:222)
+==18804==    by 0x141155: main (main.cpp:1725)
+==18804==  Address 0x129 is not stack'd, malloc'd or (recently) free'd
+==18804== 
+==18804== 
+==18804== Process terminating with default action of signal 11 (SIGSEGV)
+==18804==  Access not within mapped region at address 0x129
+==18804==    at 0x13B03B: __normal_iterator (stl_iterator.h:1028)
+==18804==    by 0x13B03B: begin (stl_vector.h:821)
+==18804==    by 0x13B03B: empty (stl_vector.h:1008)
+==18804==    by 0x13B03B: LocalSearch::~LocalSearch() (LocalSearch.cpp:1314)
+==18804==    by 0x12A7F4: Individu::~Individu() (Individu.cpp:227)
+==18804==    by 0x155B58: Population::Population(ParamsList*) (Population.cpp:115)
+==18804==    by 0x140E03: mainIRP(int, char**) (main.cpp:222)
+==18804==    by 0x141155: main (main.cpp:1725)
+==18804==  If you believe this happened as a result of a stack
+==18804==  overflow in your program's main thread (unlikely but
+==18804==  possible), you can try to increase the size of the
+==18804==  main thread stack using the --main-stacksize= flag.
+==18804==  The main thread stack size used in this run was 8388608.
+==18804== 
+==18804== HEAP SUMMARY:
+==18804==     in use at exit: 3,846,743 bytes in 40,674 blocks
+==18804==   total heap usage: 261,010 allocs, 220,336 frees, 26,294,904 bytes allocated
+==18804== 
+==18804== 352 bytes in 1 blocks are possibly lost in loss record 189 of 333
+==18804==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==18804==    by 0x40147D9: calloc (rtld-malloc.h:44)
+==18804==    by 0x40147D9: allocate_dtv (dl-tls.c:375)
+==18804==    by 0x40147D9: _dl_allocate_tls (dl-tls.c:634)
+==18804==    by 0x4F717B4: allocate_stack (allocatestack.c:430)
+==18804==    by 0x4F717B4: pthread_create@@GLIBC_2.34 (pthread_create.c:647)
+==18804==    by 0x52D1592: grpc_core::Thread::Thread(char const*, void (*)(void*), void*, bool*, grpc_core::Thread::Options const&) (in /usr/lib/x86_64-linux-gnu/libgrpc.so.10.0.0)
+==18804==    by 0x5261961: grpc_core::Executor::SetThreading(bool) (in /usr/lib/x86_64-linux-gnu/libgrpc.so.10.0.0)
+==18804==    by 0x5261F31: grpc_core::Executor::InitAll() (in /usr/lib/x86_64-linux-gnu/libgrpc.so.10.0.0)
+==18804==    by 0x52620A2: grpc_iomgr_init() (in /usr/lib/x86_64-linux-gnu/libgrpc.so.10.0.0)
+==18804==    by 0x52ADB13: grpc_init (in /usr/lib/x86_64-linux-gnu/libgrpc.so.10.0.0)
+==18804==    by 0x48990A2: grpc_impl::ChannelCredentials::ChannelCredentials() (in /usr/lib/x86_64-linux-gnu/libgrpc++.so.1.30.2)
+==18804==    by 0x489954D: grpc_impl::InsecureChannelCredentials() (in /usr/lib/x86_64-linux-gnu/libgrpc++.so.1.30.2)
+==18804==    by 0x136409: InsecureChannelCredentials (credentials.h:91)
+==18804==    by 0x136409: Individu::RunSearchPi(int) (Individu.cpp:1382)
+==18804==    by 0x136EEB: Individu::RunSearchTotal(bool) (Individu.cpp:1306)
+==18804== 
+==18804== 352 bytes in 1 blocks are possibly lost in loss record 190 of 333
+==18804==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==18804==    by 0x40147D9: calloc (rtld-malloc.h:44)
+==18804==    by 0x40147D9: allocate_dtv (dl-tls.c:375)
+==18804==    by 0x40147D9: _dl_allocate_tls (dl-tls.c:634)
+==18804==    by 0x4F717B4: allocate_stack (allocatestack.c:430)
+==18804==    by 0x4F717B4: pthread_create@@GLIBC_2.34 (pthread_create.c:647)
+==18804==    by 0x52D1592: grpc_core::Thread::Thread(char const*, void (*)(void*), void*, bool*, grpc_core::Thread::Options const&) (in /usr/lib/x86_64-linux-gnu/libgrpc.so.10.0.0)
+==18804==    by 0x5261961: grpc_core::Executor::SetThreading(bool) (in /usr/lib/x86_64-linux-gnu/libgrpc.so.10.0.0)
+==18804==    by 0x5261F3D: grpc_core::Executor::InitAll() (in /usr/lib/x86_64-linux-gnu/libgrpc.so.10.0.0)
+==18804==    by 0x52620A2: grpc_iomgr_init() (in /usr/lib/x86_64-linux-gnu/libgrpc.so.10.0.0)
+==18804==    by 0x52ADB13: grpc_init (in /usr/lib/x86_64-linux-gnu/libgrpc.so.10.0.0)
+==18804==    by 0x48990A2: grpc_impl::ChannelCredentials::ChannelCredentials() (in /usr/lib/x86_64-linux-gnu/libgrpc++.so.1.30.2)
+==18804==    by 0x489954D: grpc_impl::InsecureChannelCredentials() (in /usr/lib/x86_64-linux-gnu/libgrpc++.so.1.30.2)
+==18804==    by 0x136409: InsecureChannelCredentials (credentials.h:91)
+==18804==    by 0x136409: Individu::RunSearchPi(int) (Individu.cpp:1382)
+==18804==    by 0x136EEB: Individu::RunSearchTotal(bool) (Individu.cpp:1306)
+==18804== 
+==18804== 352 bytes in 1 blocks are possibly lost in loss record 191 of 333
+==18804==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==18804==    by 0x40147D9: calloc (rtld-malloc.h:44)
+==18804==    by 0x40147D9: allocate_dtv (dl-tls.c:375)
+==18804==    by 0x40147D9: _dl_allocate_tls (dl-tls.c:634)
+==18804==    by 0x4F717B4: allocate_stack (allocatestack.c:430)
+==18804==    by 0x4F717B4: pthread_create@@GLIBC_2.34 (pthread_create.c:647)
+==18804==    by 0x52D1592: grpc_core::Thread::Thread(char const*, void (*)(void*), void*, bool*, grpc_core::Thread::Options const&) (in /usr/lib/x86_64-linux-gnu/libgrpc.so.10.0.0)
+==18804==    by 0x5277FD1: ??? (in /usr/lib/x86_64-linux-gnu/libgrpc.so.10.0.0)
+==18804==    by 0x5278764: ??? (in /usr/lib/x86_64-linux-gnu/libgrpc.so.10.0.0)
+==18804==    by 0x52D0740: ??? (in /usr/lib/x86_64-linux-gnu/libgrpc.so.10.0.0)
+==18804==    by 0x4F70AC2: start_thread (pthread_create.c:442)
+==18804==    by 0x5001A03: clone (clone.S:100)
+==18804== 
+==18804== 352 bytes in 1 blocks are possibly lost in loss record 192 of 333
+==18804==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==18804==    by 0x40147D9: calloc (rtld-malloc.h:44)
+==18804==    by 0x40147D9: allocate_dtv (dl-tls.c:375)
+==18804==    by 0x40147D9: _dl_allocate_tls (dl-tls.c:634)
+==18804==    by 0x4F717B4: allocate_stack (allocatestack.c:430)
+==18804==    by 0x4F717B4: pthread_create@@GLIBC_2.34 (pthread_create.c:647)
+==18804==    by 0x52D1592: grpc_core::Thread::Thread(char const*, void (*)(void*), void*, bool*, grpc_core::Thread::Options const&) (in /usr/lib/x86_64-linux-gnu/libgrpc.so.10.0.0)
+==18804==    by 0x52B059F: grpc_shutdown (in /usr/lib/x86_64-linux-gnu/libgrpc.so.10.0.0)
+==18804==    by 0x489E384: grpc_impl::Channel::~Channel() (in /usr/lib/x86_64-linux-gnu/libgrpc++.so.1.30.2)
+==18804==    by 0x489E43C: grpc_impl::Channel::~Channel() (in /usr/lib/x86_64-linux-gnu/libgrpc++.so.1.30.2)
+==18804==    by 0x12491E: std::_Sp_counted_base<(__gnu_cxx::_Lock_policy)2>::_M_release() (shared_ptr_base.h:168)
+==18804==    by 0x1367DB: ~__shared_count (shared_ptr_base.h:705)
+==18804==    by 0x1367DB: ~__shared_ptr (shared_ptr_base.h:1154)
+==18804==    by 0x1367DB: ~shared_ptr (shared_ptr.h:122)
+==18804==    by 0x1367DB: Individu::RunSearchPi(int) (Individu.cpp:1395)
+==18804==    by 0x136EEB: Individu::RunSearchTotal(bool) (Individu.cpp:1306)
+==18804==    by 0x154C11: Population::education(Individu*) (Population.cpp:810)
+==18804==    by 0x1559D4: Population::Population(ParamsList*) (Population.cpp:108)
+==18804== 
+==18804== 550 bytes in 55 blocks are definitely lost in loss record 205 of 333
+==18804==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==18804==    by 0x58DE614: ??? (in /usr/lib/x86_64-linux-gnu/libcares.so.2.5.1)
+==18804==    by 0x58DA88A: ??? (in /usr/lib/x86_64-linux-gnu/libcares.so.2.5.1)
+==18804==    by 0x58DCB50: ??? (in /usr/lib/x86_64-linux-gnu/libcares.so.2.5.1)
+==18804==    by 0x58DD3E5: ares_getaddrinfo (in /usr/lib/x86_64-linux-gnu/libcares.so.2.5.1)
+==18804==    by 0x58DD5B7: ares_gethostbyname (in /usr/lib/x86_64-linux-gnu/libcares.so.2.5.1)
+==18804==    by 0x51DA059: grpc_dns_lookup_ares_continue_after_check_localhost_and_ip_literals_locked(grpc_ares_request*, char const*, char const*, char const*, grpc_pollset_set*, int, std::shared_ptr<grpc_core::WorkSerializer>) (in /usr/lib/x86_64-linux-gnu/libgrpc.so.10.0.0)
+==18804==    by 0x51DF0D2: ??? (in /usr/lib/x86_64-linux-gnu/libgrpc.so.10.0.0)
+==18804==    by 0x51D7885: ??? (in /usr/lib/x86_64-linux-gnu/libgrpc.so.10.0.0)
+==18804==    by 0x51A0A9E: ??? (in /usr/lib/x86_64-linux-gnu/libgrpc.so.10.0.0)
+==18804==    by 0x5277D13: grpc_core::WorkSerializer::WorkSerializerImpl::DrainQueue() (in /usr/lib/x86_64-linux-gnu/libgrpc.so.10.0.0)
+==18804==    by 0x5277F06: grpc_core::WorkSerializer::Run(std::function<void ()>, grpc_core::DebugLocation const&) (in /usr/lib/x86_64-linux-gnu/libgrpc.so.10.0.0)
+==18804== 
+==18804== 1,408 bytes in 4 blocks are possibly lost in loss record 230 of 333
+==18804==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==18804==    by 0x40147D9: calloc (rtld-malloc.h:44)
+==18804==    by 0x40147D9: allocate_dtv (dl-tls.c:375)
+==18804==    by 0x40147D9: _dl_allocate_tls (dl-tls.c:634)
+==18804==    by 0x4F717B4: allocate_stack (allocatestack.c:430)
+==18804==    by 0x4F717B4: pthread_create@@GLIBC_2.34 (pthread_create.c:647)
+==18804==    by 0x4C83328: std::thread::_M_start_thread(std::unique_ptr<std::thread::_State, std::default_delete<std::thread::_State> >, void (*)()) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30)
+==18804==    by 0x17F29A: thread<ThreadPool::ThreadPool(size_t)::<lambda()> > (std_thread.h:143)
+==18804==    by 0x17F29A: construct<std::thread, ThreadPool::ThreadPool(size_t)::<lambda()> > (new_allocator.h:162)
+==18804==    by 0x17F29A: construct<std::thread, ThreadPool::ThreadPool(size_t)::<lambda()> > (alloc_traits.h:516)
+==18804==    by 0x17F29A: void std::vector<std::thread, std::allocator<std::thread> >::_M_realloc_insert<ThreadPool::ThreadPool(unsigned long)::{lambda()#1}>(__gnu_cxx::__normal_iterator<std::thread*, std::vector<std::thread, std::allocator<std::thread> > >, ThreadPool::ThreadPool(unsigned long)::{lambda()#1}&&) (vector.tcc:449)
+==18804==    by 0x17EC8C: emplace_back<ThreadPool::ThreadPool(size_t)::<lambda()> > (vector.tcc:121)
+==18804==    by 0x17EC8C: ThreadPool (ThreadPool.h:24)
+==18804==    by 0x17EC8C: initThreadPool(unsigned long) (ThreadPool.cpp:13)
+==18804==    by 0x14114B: main (main.cpp:1721)
+==18804== 
+==18804== 1,408 bytes in 4 blocks are possibly lost in loss record 231 of 333
+==18804==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==18804==    by 0x40147D9: calloc (rtld-malloc.h:44)
+==18804==    by 0x40147D9: allocate_dtv (dl-tls.c:375)
+==18804==    by 0x40147D9: _dl_allocate_tls (dl-tls.c:634)
+==18804==    by 0x4F717B4: allocate_stack (allocatestack.c:430)
+==18804==    by 0x4F717B4: pthread_create@@GLIBC_2.34 (pthread_create.c:647)
+==18804==    by 0x4C83328: std::thread::_M_start_thread(std::unique_ptr<std::thread::_State, std::default_delete<std::thread::_State> >, void (*)()) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30)
+==18804==    by 0x17EBB5: thread<ThreadPool::ThreadPool(size_t)::<lambda()> > (std_thread.h:143)
+==18804==    by 0x17EBB5: construct<std::thread, ThreadPool::ThreadPool(size_t)::<lambda()> > (new_allocator.h:162)
+==18804==    by 0x17EBB5: construct<std::thread, ThreadPool::ThreadPool(size_t)::<lambda()> > (alloc_traits.h:516)
+==18804==    by 0x17EBB5: emplace_back<ThreadPool::ThreadPool(size_t)::<lambda()> > (vector.tcc:115)
+==18804==    by 0x17EBB5: ThreadPool (ThreadPool.h:24)
+==18804==    by 0x17EBB5: initThreadPool(unsigned long) (ThreadPool.cpp:13)
+==18804==    by 0x14114B: main (main.cpp:1721)
+==18804== 
+==18804== 30,920 (3,600 direct, 27,320 indirect) bytes in 10 blocks are definitely lost in loss record 310 of 333
+==18804==    at 0x4849013: operator new(unsigned long) (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==18804==    by 0x12E82D: Individu::Individu(ParamsList*) (Individu.cpp:220)
+==18804==    by 0x155946: Population::Population(ParamsList*) (Population.cpp:105)
+==18804==    by 0x140E03: mainIRP(int, char**) (main.cpp:222)
+==18804==    by 0x141155: main (main.cpp:1725)
+==18804== 
+==18804== LEAK SUMMARY:
+==18804==    definitely lost: 4,150 bytes in 65 blocks
+==18804==    indirectly lost: 27,320 bytes in 480 blocks
+==18804==      possibly lost: 4,224 bytes in 12 blocks
+==18804==    still reachable: 3,811,049 bytes in 40,117 blocks
+==18804==         suppressed: 0 bytes in 0 blocks
+==18804== Reachable blocks (those to which a pointer was found) are not shown.
+==18804== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==18804== 
+==18804== For lists of detected and suppressed errors, rerun with: -s
+==18804== ERROR SUMMARY: 32 errors from 12 contexts (suppressed: 0 from 0)

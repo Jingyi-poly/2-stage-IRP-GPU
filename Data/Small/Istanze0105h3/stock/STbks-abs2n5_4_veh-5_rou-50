@@ -1,0 +1,47 @@
+
+
+day[1] route[0]: travel time = 0
+ node[ 0 ] ->depot
+day[1] route[1]: travel time = 0
+ node[ 0 ] ->depot
+day[1] route[2]: travel time = 0
+ node[ 0 ] ->depot
+day[1] route[3]: travel time = 0
+ node[ 0 ] ->depot
+day[1] route[4]: travel time = 0
+ node[ 0 ] ->depot
+day[2] route[0]: travel time = 70
+ node[ 0 ] -> node[ 3 ] ->depot
+day[2] route[1]: travel time = 0
+ node[ 0 ] ->depot
+day[2] route[2]: travel time = 0
+ node[ 0 ] ->depot
+day[2] route[3]: travel time = 0
+ node[ 0 ] ->depot
+day[2] route[4]: travel time = 0
+ node[ 0 ] ->depot
+day[3] route[0]: travel time = 340
+ node[ 0 ] -> node[ 1 ] ->depot
+day[3] route[1]: travel time = 224
+ node[ 0 ] -> node[ 4 ] ->depot
+day[3] route[2]: travel time = 0
+ node[ 0 ] ->depot
+day[3] route[3]: travel time = 0
+ node[ 0 ] ->depot
+day[3] route[4]: travel time = 0
+ node[ 0 ] ->depot
+CUSTOMER 1 bounds (0,93) [morning: 62 ,replinishment: 0, everning: 31] [morning: 31 ,replinishment: 0, everning: 0] [morning: 0 ,replinishment: 31, everning: 0] 
+CUSTOMER 2 bounds (0,180) [morning: 120 ,replinishment: 0, everning: 60] [morning: 60 ,replinishment: 0, everning: 0] [morning: 0 ,replinishment: 0, everning: 0] 
+CUSTOMER 3 bounds (0,51) [morning: 34 ,replinishment: 0, everning: 17] [morning: 17 ,replinishment: 34, everning: 34] [morning: 34 ,replinishment: 0, everning: 17] 
+CUSTOMER 4 bounds (0,114) [morning: 76 ,replinishment: 0, everning: 38] [morning: 38 ,replinishment: 0, everning: 0] [morning: 0 ,replinishment: 38, everning: 0] 
+CUSTOMER 5 bounds (0,24) [morning: 12 ,replinishment: 0, everning: 0] [morning: 0 ,replinishment: 0, everning: 0] [morning: 0 ,replinishment: 0, everning: 0] 
+SUPPLIER    [620,620] [778,744] [902,833] 
+COST SUMMARY : ROUTE 634 | LOAD 0 | SUPPLY 659.1 | CLIENT 764.49
+COST SUMMARY : OVERALL 2057.59
+2057.59
+3
+Total Time: 62
+Best Solution Time: 62
+ 0 2 1 70 34  3 0 3 0
+ 0 3 1 340 31  3 0 1 0
+ 0 3 1 224 38  3 0 4 0
