@@ -1,4 +1,8 @@
 # Update
+Modified _getInsertionInfo_ in **OUPolicy.cpp**:
+1. When computing cost, considered both detour computed by nodetravail when mutation starts, and the capacity-penalty induced by the corresponding load.
+2. After the update, the objective value of Gurobi version is reduced. Solution is more flexible to use stockout, which tradeoff small amount of shortage for lower cost.
+3. The cost for the ABS-version is not changed, and the cost of large scenarios still has gap from the lower bound.
 
 改变 OUPolicy.cpp 的 getInsertionInfo 函数。具体来说：
 1. 在计算cost时，既考虑mutation开始时nodetravail计算的detour，也考虑对应load可能产生的capacity-penalty，把两者加在一起。
