@@ -15,7 +15,6 @@ void test(int n_test,CommandLine & commandline,std::vector<int> & best_permutati
 	for (int i = 0; i < best_permutation.size(); ++i){
 		std::cout<<best_permutation[i]<<", ";
 	}
-	std::cout<<"\n";
 	try
 	{
 		// Reading the arguments of the program
@@ -24,6 +23,7 @@ void test(int n_test,CommandLine & commandline,std::vector<int> & best_permutati
 		int debug_frequency = commandline.ap.freqPrint;
 		int timeLim = commandline.ap.timeLim;
 		omp_set_num_threads(n_threads); 
+		
 
 		InstanceCVRPLIB cvrp(commandline.pathInstance, commandline.isRoundingInteger);
         // generate scenarios
@@ -37,6 +37,8 @@ void test(int n_test,CommandLine & commandline,std::vector<int> & best_permutati
 
 		
 		std::cout<<"  n clients: "<<params.nbClients<<"\n";
+
+
 
 		double best_penalized_cost = 1.e20;
 		long checked_scen = 0;
@@ -88,13 +90,12 @@ void test(int n_test,CommandLine & commandline,std::vector<int> & best_permutati
 
 int main(int argc, char *argv[])
 {
+	std::chrono::steady_clock::time_point all_begin = std::chrono::steady_clock::now();
 
 	ofstream myfile;
-	std::string logfile = "../anpy/logs/cuda.log";
 	bool debug = false;
 	try
 	{
-  myfile.open (logfile);
 		// Reading the arguments of the program
 		CommandLine commandline(argc, argv);
 		int n_threads = commandline.ap.nthreads;
@@ -102,6 +103,9 @@ int main(int argc, char *argv[])
 		int debug_frequency = commandline.ap.freqPrint;
 		int timeLim = commandline.ap.timeLim;
 		omp_set_num_threads(n_threads); 
+		std::string logfile = "../anpy/logs/"+std::to_string(commandline.ap.n_extra_senarios+1)+"_"+std::to_string(commandline.ap.maxClient)+".log";
+
+		
 
 		// Print all algorithm parameter values
 		if (commandline.verbose) print_algorithm_parameters(commandline.ap);
@@ -118,6 +122,12 @@ int main(int argc, char *argv[])
         params.generate_scenario_demands(n_extra_senarios);
 		params.update_max_vehi();
 		SplitCUDA split(params);
+			// for (auto & client : params.cli) {
+			// 	for (int i = 0; i < params.n_scenarios; ++i){
+			// 		std::cout<<client.demands_scenarios[i]<<",";
+			// 	}
+			// 	std::cout<<"\n";
+			// }
 		std::cout<<"Finished generating scenarios\n";
 
 
@@ -130,7 +140,10 @@ int main(int argc, char *argv[])
 		}
 
 		std::vector<int> best_permutation;
+		std::vector < std::vector < std::vector <int> > > best_chromR_scen(n_extra_senarios+1, std::vector<std::vector<int>>(100));
 		double best_penalized_cost = 1.e20;
+		double best_distance = 1.e20;
+		double best_violation = 1.e20;
 		long checked_scen = 0;
 
 		double gpu1_scds = 0.;
@@ -140,6 +153,7 @@ int main(int argc, char *argv[])
 
 		int iter_count = 0;
 		
+  		myfile.open (logfile);
 	std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
 		do{
 
@@ -180,14 +194,29 @@ int main(int argc, char *argv[])
 
 			// indiv.syn_single_scen_chromR();
 			indiv.evaluateCompleteCost(params);
-			if (best_penalized_cost > indiv.eval.penalizedCost){
+			if (false && best_penalized_cost > indiv.eval.penalizedCost){
 			// if (checked_scen == 1){
 				best_penalized_cost = indiv.eval.penalizedCost;
+				best_distance = indiv.eval.distance;
+				best_violation = indiv.eval.capacityExcess;
 				std::cout<<"*****  New best solution found with cost: "<<best_penalized_cost<<"   pen "<<indiv.eval.capacityExcess<<"  *****\n";
 				best_permutation.clear();
 				for (int i = 0; i < indiv.chromT.size(); i++)
 				{
 					best_permutation.push_back(indiv.chromT[i]);
+				}
+				best_chromR_scen.clear();
+				best_chromR_scen.resize(indiv.chromR_scen.size());
+				for (int s = 0; s < indiv.chromR_scen.size(); ++s){
+					best_chromR_scen[s].resize(indiv.chromR_scen[s].size());
+					for (int r = 0; r < indiv.chromR_scen[s].size(); ++r){
+						if (indiv.chromR_scen[s][r].empty()){
+							continue;
+						}
+						for (int i = 0; i < indiv.chromR_scen[s][r].size(); ++i){
+							best_chromR_scen[s][r].push_back(indiv.chromR_scen[s][r][i]);
+						}
+					}
 				}
 			}
 
@@ -224,9 +253,9 @@ int main(int argc, char *argv[])
 				// std::cout<<"\n";
 			}
 
-			myfile<<(gpu1_scds+gpu2_scds+gpu3_scds)/1.e9<<" "<<best_penalized_cost<<"\n";
+			myfile<<(gpu1_scds+gpu2_scds+gpu3_scds)/1.e9<<" "<<checked_scen<<" "<<best_penalized_cost<<"\n";
 			myfile.flush();
-			if (debug_local) {
+			if (debug_local || true) {
 				std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
 				double scds = std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count()/1000.0;
 				std::cout<<"Elapsed time(T"<<n_threads<<"): "<<scds<<"s\n";
@@ -244,7 +273,6 @@ int main(int argc, char *argv[])
 		} while (std::next_permutation(client_ids.begin(), client_ids.end()) && iter_count < commandline.ap.iterLim);
 	
 	
-		test(999999, commandline, best_permutation);
 
 		
 
@@ -259,9 +287,36 @@ int main(int argc, char *argv[])
 		// 	solver.population.exportCVRPLibFormat(*solver.population.getBestFound(),commandline.pathSolution);
 		// 	solver.population.exportSearchProgress(commandline.pathSolution + ".PG.csv", commandline.pathInstance);
 		// }
-  myfile.close();
+		// for (int s = 0; s < best_chromR_scen.size(); ++s){
+		// 	std::cout<<"Scenario "<<s<<"\n";
+		// 	for (int r = 0; r < best_chromR_scen[s].size(); ++r){
+		// 		if (best_chromR_scen[s][r].empty()){
+		// 			continue;
+		// 		}
+		// 		std::cout<<"  car "<<r<<": ";
+		// 		int ld = 0;
+		// 		for (int i = 0; i < best_chromR_scen[s][r].size(); ++i){
+		// 			ld += params.cli[best_chromR_scen[s][r][i]].demands_scenarios[s];
+		// 			std::cout<<best_chromR_scen[s][r][i]<<"("<<params.cli[best_chromR_scen[s][r][i]].demands_scenarios[s]<<")"<<" -> ";
+		// 		}
+		// 		std::cout<<"    "<<ld<<"\n";
+		// 	}
+		// }
+		std::cout<<"Best Obj:   "<<best_penalized_cost<<"\n";
+		std::cout<<"Distance:   "<<best_distance<<"\n";
+		std::cout<<"     Vio:   "<<best_violation<<"\n";
+
+		
+	
+  		myfile.close();
 	}
+	// test(999999, commandline, best_permutation);
+
 	catch (const string& e) { std::cout << "EXCEPTION | " << e << std::endl; }
 	catch (const std::exception& e) { std::cout << "EXCEPTION | " << e.what() << std::endl; }
+
+	std::chrono::steady_clock::time_point all_end = std::chrono::steady_clock::now();
+	double totaltime = std::chrono::duration_cast<std::chrono::nanoseconds>(all_end - all_begin).count()/1.e9;
+	std::cout<<"Total time: "<<totaltime<<"s\n";
 	return 0;
 }

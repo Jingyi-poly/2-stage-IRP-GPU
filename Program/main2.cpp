@@ -42,7 +42,6 @@ int main(int argc, char *argv[])
 		params.update_max_vehi();
 		std::cout<<"Finished generating scenarios\n";
 
-
 		
 		std::cout<<"  n clients: "<<params.nbClients<<"\n";
 		std::vector<int> client_ids;

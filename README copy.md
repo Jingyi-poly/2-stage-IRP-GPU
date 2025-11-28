@@ -65,6 +65,8 @@ ctest -R bin --verbose
 After building the executable, try an example: 
 ```console
 ./hgs ../Instances/CVRP/X-n157-k13.vrp mySolution.sol -seed 1 -t 30
+./hgs ../Instances/CVRP/X-n157-k13.vrp mySolution.sol -seed 1 -timeLim 3600 -iterLim 500 -nthreads 8 -nextrascen 999 -freqPrint 10
+./hgs_cuda ../Instances/CVRP/X-n129-k18.vrp mySolution.sol -seed 1 -timeLim 3600 -iterLim 500 -nextrascen 999 -freqPrint 10
 ```
 
 The following options are supported:

@@ -121,7 +121,7 @@ Params::Params(
 	// A reasonable scale for the initial values of the penalties
 	penaltyDuration = 1;
 	penaltyCapacity = std::max<double>(0.1, std::min<double>(1000., maxDist / maxDemand));
-
+	std::cout<<"USING PEN::: "<<penaltyCapacity<<"   D: "<<maxDist<<"   DEMAND: "<<maxDemand<<"\n\n\n\n";
 	if (verbose)
 		std::cout << "----- INSTANCE SUCCESSFULLY LOADED WITH " << nbClients << " CLIENTS AND " << nbVehicles << " VEHICLES" << std::endl;
 }
@@ -146,6 +146,7 @@ void Params::generate_scenario_demands(int n_extra_senarios){
 	std::cout<<"Generating "<<n_extra_senarios<<" extra scenarios\n";
 	int max_demand = -1;
 	int min_demand = 1e+8;
+	int avg = 0;
 	std::vector< double > current_demands_sum(n_scenarios,nbVehicles * vehicleCapacity);
 	std::cout<<"Max cap/veh "<<vehicleCapacity<<"  with "<<nbVehicles<<"cars\n";
 
@@ -157,7 +158,10 @@ void Params::generate_scenario_demands(int n_extra_senarios){
 		if (min_demand > client.demand){
 			min_demand = client.demand;
 		}
+		avg += client.demand;
+		client.demands_scenarios.push_back(client.demand);
 	}
+	avg = avg / cli.size();
 	if (min_demand <= 0){
 		min_demand = 1.0;
 	}
@@ -168,7 +172,8 @@ void Params::generate_scenario_demands(int n_extra_senarios){
 	// std::uniform_int_distribution<int> distribution(vehicleCapacity/3, vehicleCapacity);
 	// std::uniform_int_distribution<int> distribution(1, vehicleCapacity/4);
 	// std::uniform_int_distribution<int> distribution(vehicleCapacity*0.2, vehicleCapacity/2);
-	std::uniform_int_distribution<int> distribution(1, vehicleCapacity);
+	std::uniform_int_distribution<int> distribution(1, avg);
+	std::uniform_int_distribution<int> distribution2(1, avg);
 
 	int remain_client = cli.size();
 	// for (auto & client : cli) {
@@ -176,9 +181,16 @@ void Params::generate_scenario_demands(int n_extra_senarios){
 	// 	client.demands_scenarios.push_back(client.demand);
 	// 	for (int i = 0; i < n_extra_senarios; ++i){
 	for (int i = 0; i < n_extra_senarios; ++i){
+		int client_counter = 0;
 		for (auto & client : cli) {
 			// int randomNum = (rand() % elap) + min_demand;
 			int randomNum = distribution(generator);
+			if (i % 10 == 0){
+				randomNum += distribution2(generator);
+			}
+			if (client_counter == 0){
+				randomNum = client.demand;
+			}
 			// randomNum = vehicleCapacity/1.3;
 			// if (current_demands_sum[i] - randomNum < remain_client){
 			// 	randomNum = current_demands_sum[i] - remain_client;
@@ -190,10 +202,32 @@ void Params::generate_scenario_demands(int n_extra_senarios){
 			// std::cout<<"Client "<<cli.size() - remain_client<<" at Scenario "<<i<<"   load: "<<randomNum<<"  remain cap "<<current_demands_sum[i]<<"\n";
 			current_demands_sum[i] -= randomNum;
 			client.demands_scenarios.push_back(randomNum);
+			// std::cout<<"    after load remain cap "<<client.demands_scenarios[i]<<"\n";
 			totalDemands[i+1] += randomNum;
+			client_counter += 1;
 		}
 	}
 
+	if (false){
+		std::ofstream myfile;
+		std::string logfile = "../baseline/scenarios"+std::to_string(n_extra_senarios+1)+"_"+std::to_string(cli.size()-1)+".txt";
+  		myfile.open (logfile);
+		int cc = 0;
+		for (auto & client : cli) {
+			myfile<<cc<<":";
+			for (int i = 0; i < n_scenarios; ++i){
+				myfile<<client.demands_scenarios[i]<<",";
+			}
+			// myfile<<"|"<<client.serviceDuration;
+			myfile<<"\n";
+			cc+=1;
+		}
+		myfile.flush();
+  		myfile.close();
+	}
+
+	// int k;
+	// std::cin>>k;
 }
 
 
@@ -244,13 +278,31 @@ void Params::generate_scenario_demands_dev(int n_extra_senarios){
 			// }
 			// if (cli.size() - remain_client <3  && i == 2){
 
-			// std::cout<<"Client "<<cli.size() - remain_client<<" at Scenario "<<i<<"   load: "<<randomNum<<"  remain cap "<<current_demands_sum[i]<<"\n";
+			std::cout<<"Client "<<cli.size() - remain_client<<" at Scenario "<<i<<"   load: "<<randomNum<<"  remain cap "<<current_demands_sum[i]<<"\n";
 			// }
 			current_demands_sum[i] -= randomNum;
 			client.demands_scenarios.push_back(randomNum);
 			totalDemands[i+1] += randomNum;
 		}
 	}
+
+	if (false){
+		std::ofstream myfile;
+		std::string logfile = "../baseline/scenarios.txt";
+  		myfile.open (logfile);
+		for (int c_id = 0; c_id < cli.size(); ++c_id){
+			myfile<<c_id<<":";
+			Client client = cli[c_id];
+			for (int i = 0; i < n_scenarios; ++i){
+				myfile<<client.demands_scenarios[i]<<",";
+			}
+			myfile<<"\n";
+		}
+		myfile.flush();
+  		myfile.close();
+	}
+
+
 	checkrandom();
 }
 

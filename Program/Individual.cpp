@@ -129,11 +129,28 @@ void Individual::evaluateCompleteCost(const Params & params)
 	eval = EvalIndivMultiScen();
 	resetEval(params);
 
-
+		// for (auto &c : params.cli){
+		// 	for (int i = 0; i < params.n_scenarios;++i){
+		// 		std::cout<<" "<<c.demands_scenarios[i];
+		// 	}
+		// 	std::cout<<"\n";
+		// }
+		// std::cout<<params.n_scenarios<<"\n";
 
 	for (int s = 0; s < params.n_scenarios; ++s){
-
 		EvalIndiv scen_eval = EvalIndiv();
+		// for (int r = 0; r < params.nbVehicles; r++)
+		// {
+		// 	if (chromR_scen[s][r].empty()){
+		// 		continue;
+		// 	}
+		// 	std::cout<<"Scenario "<<s<<"   Vehicle "<<r<<"\n     ";
+		// 	for (int i = 0; i < (int)chromR_scen[s][r].size(); i++)
+		// 	{
+		// 		std::cout<<chromR_scen[s][r][i]<<" <- ";
+		// 	}
+		// 	std::cout<<"\n";
+		// }
 		for (int r = 0; r < params.nbVehicles; r++)
 		{
 
@@ -150,6 +167,7 @@ void Individual::evaluateCompleteCost(const Params & params)
 				for (int i = 1; i < (int)chromR_scen[s][r].size(); i++)
 				{
 					distance += params.timeCost[chromR_scen[s][r][i-1]][chromR_scen[s][r][i]];
+					// std::cout<<chromR_scen[s][r][i-1]<<" to "<<chromR_scen[s][r][i]<<"  dist: "<<params.timeCost[chromR_scen[s][r][i-1]][chromR_scen[s][r][i]]<<"\n";
 					// load += params.cli[chromR_scen[s][r][i]].demand;
 					load += params.cli[chromR_scen[s][r][i]].demands_scenarios[s];
 					service += params.cli[chromR_scen[s][r][i]].serviceDuration;

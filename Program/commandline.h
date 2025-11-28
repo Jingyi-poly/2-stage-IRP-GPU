@@ -94,7 +94,7 @@ public:
 				else if (std::string(argv[i]) == "-iterLim")
 					ap.iterLim = atoi(argv[i+1]);
 				else if (std::string(argv[i]) == "-timeLim")
-					ap.iterLim = atoi(argv[i+1]);
+					ap.timeLim = atoi(argv[i+1]);
 				else if (std::string(argv[i]) == "-maxClient")
 					ap.maxClient = atoi(argv[i+1]);
 				else if (std::string(argv[i]) == "-penaltyDecrease")
