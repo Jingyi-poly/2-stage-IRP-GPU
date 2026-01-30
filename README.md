@@ -33,18 +33,42 @@ OUIRP-GPU/
 │   ├── solver/       # Inventory solvers (OU-Policy, Lot-Sizing DP)
 │   ├── search/       # Local search (2-opt, Relocate, SWAP)
 │   └── utils/        # Utilities (RNG, ThreadPool, CLI)
-├── src/              # Source implementations
+├── src/              # Source implementations (~12,700 lines)
+│   ├── core/         # Genetic algorithm implementation (3,129 lines)
+│   ├── model/        # Data structures and models (2,227 lines)
+│   ├── solver/       # Inventory optimization solvers (4,192 lines)
+│   ├── search/       # Local search operators (2,535 lines)
+│   └── utils/        # Utility functions (676 lines)
 ├── rpc/              # gRPC server for GPU acceleration
-│   ├── server.py     # Python gRPC server
+│   ├── server.py     # Python gRPC server implementation
 │   ├── gpu_solver.py # PyTorch-based GPU DP solver
-│   └── irp.proto     # Protocol buffer definitions
+│   ├── irp.proto     # Protocol buffer definitions
+│   ├── irp.pb.cc/h   # Generated C++ protobuf code
+│   ├── irp_pb2.py    # Generated Python protobuf code
+│   ├── start_server.sh  # Server startup script
+│   └── test_client.py   # gRPC client test
 ├── Data/             # Benchmark instances
 │   ├── Small/        # Small instances (5-20 customers)
 │   └── Big/          # Large instances (50+ customers)
 ├── docs/             # Documentation
-├── examples/         # Usage examples
+│   ├── architecture.md  # Module structure and dependencies
+│   └── module_guide.md  # API usage and examples
 ├── scripts/          # Utility scripts
-└── main.cpp          # Main entry point
+│   ├── build.sh      # Build automation
+│   ├── check_dependencies.sh  # Dependency verification
+│   ├── gpu_server_ctl.sh      # GPU server management
+│   ├── install_dependencies.sh # Dependency installation
+│   ├── run.sh        # Quick run script
+│   ├── run_scenarios.sh       # Batch scenario processing
+│   └── setup_conda_env.sh     # Conda environment setup
+├── tests/            # Testing documentation
+│   └── README.md     # Test history and guidelines
+├── examples/         # Usage examples
+│   └── basic_run.sh  # Basic usage example
+├── main.cpp          # Main entry point (181 lines)
+├── CMakeLists.txt    # CMake build configuration
+├── environment.yml   # Conda environment specification
+└── requirements.txt  # Python dependencies
 ```
 
 ## Requirements
@@ -52,17 +76,49 @@ OUIRP-GPU/
 ### C++ Dependencies
 - C++17 compatible compiler (GCC 7+, Clang 5+, MSVC 2017+)
 - CMake 3.10+
-- gRPC and Protocol Buffers (optional, for distributed computing)
+- gRPC and Protocol Buffers (required for distributed computing)
+  - grpc++ >= 1.50.0
+  - protobuf >= 4.21.0
 - pthread
 
 ### Python Dependencies (Optional, for GPU acceleration)
 - Python 3.10+
-- PyTorch (with CUDA support for GPU)
-- grpcio, grpcio-tools, protobuf
+- PyTorch >= 2.0.0 (with CUDA support for GPU)
+- grpcio >= 1.50.0
+- grpcio-tools >= 1.50.0
+- protobuf >= 4.21.0
+- numpy >= 1.21.0
+
+### System Requirements
+- Linux, macOS, or Windows with WSL2
+- For GPU acceleration: NVIDIA GPU with CUDA support
 
 ## Installation
 
-### Building from Source
+### Quick Start with Scripts
+
+The project includes utility scripts for easy setup:
+
+```bash
+# Check dependencies
+./scripts/check_dependencies.sh
+
+# Install dependencies (Ubuntu/Debian)
+./scripts/install_dependencies.sh
+
+# Setup Python environment with conda
+./scripts/setup_conda_env.sh
+
+# Build the project
+./scripts/build.sh
+
+# Run a basic example
+./examples/basic_run.sh
+```
+
+### Manual Installation
+
+#### Building from Source
 
 ```bash
 # Clone the repository
@@ -77,15 +133,30 @@ make -j$(nproc)
 # The executable 'irp' will be created in the project root
 ```
 
-### Installing Python Dependencies (Optional)
+#### Installing Python Dependencies
 
+**Option 1: Using conda (recommended)**
 ```bash
-# Using conda (recommended)
 conda env create -f environment.yml
 conda activate irp-env
+```
 
-# Or using pip
+**Option 2: Using pip**
+```bash
 pip install -r requirements.txt
+
+# For GPU support, install PyTorch with CUDA:
+pip install torch --index-url https://download.pytorch.org/whl/cu118
+```
+
+### Verifying Installation
+
+```bash
+# Check C++ dependencies
+./scripts/check_dependencies.sh
+
+# Test basic execution
+./irp Data/Small/Istanze0105h3/abs4n5_2.dat -seed 42 -type 38 -veh 3
 ```
 
 ## Usage
@@ -184,6 +255,22 @@ pip install grpcio grpcio-tools protobuf torch
 
 #### 2. Start gRPC Server
 
+**Option A: Using the management script (recommended)**
+```bash
+# Start server
+./scripts/gpu_server_ctl.sh start
+
+# Check server status
+./scripts/gpu_server_ctl.sh status
+
+# Stop server
+./scripts/gpu_server_ctl.sh stop
+
+# Restart server
+./scripts/gpu_server_ctl.sh restart
+```
+
+**Option B: Manual start**
 ```bash
 # Start server in background
 cd rpc
@@ -275,6 +362,7 @@ See `Data/Small/` for example instances.
 - [Architecture Overview](docs/architecture.md) - Detailed module structure and dependencies
 - [Module Guide](docs/module_guide.md) - API usage and code examples
 - [gRPC Setup](rpc/README_GRPC.md) - Distributed computing configuration
+- [Testing Documentation](tests/README.md) - Test history and guidelines
 
 ## Citation
 
