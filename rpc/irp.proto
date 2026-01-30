@@ -1,0 +1,58 @@
+syntax = "proto3";
+
+package irp;
+
+// CapaCostFunc 对应的 Protobuf 消息
+message CapaCostFunc {
+    double threshold = 1;  // 阈值
+    double cost = 2;  // 定值
+    double slope = 3;  // 斜率
+    double intercept = 4;  // 截距
+}
+
+// ControlDayOne 对应的 Protobuf 消息
+message ControlDayOne {
+    bool day_1_delivery = 1;  // 第一天下单的标志
+    double day_1_cost = 2;  // 第一天下单成本
+}
+
+// ScenarioInfo 对应的 Protobuf 消息
+message ScenarioInfo {
+    int32 scenario_id = 1;  // 场景ID
+    repeated double daily_demands = 2;  // 每日需求量
+    repeated double daily_delivery_costs = 3;  // 每日配送成本
+    repeated CapaCostFunc daily_capa_penalty_costs = 4;  // 每日超载惩罚成本
+    double day_1_cost = 5;  // 第一天下单成本
+    double total_cost = 6;  // 总成本
+    repeated bool daily_plans = 7;  // 每日计划
+    repeated double daily_quantities = 8;  // 每日数量
+    optional int32 start_inventory = 9;  // 新增：每个场景的初始库存
+    bool actual_day_1_delivery = 10;  // 新增：GPU实际选择的第一天配送决策
+}
+
+// OuReq 对应的 Protobuf 消息
+message OuReq {
+    int32 client_id = 1;  // 客户ID
+    int32 nb_days = 2;  // 天数
+    int32 nb_scenario = 3;  // 场景数
+    int32 max_inventory = 4;  // 最大库存
+    int32 start_inventory = 5;  // 初始库存
+    double inventory_cost = 6;  // 库存成本
+    double stockout_cost = 7;  // 缺货成本
+    double supplier_minus_cost = 8;  // 供应商减量成本
+    int32 control_day_1 = 9;  // 控制第一天
+    ControlDayOne control_day_1_info = 10;  // 控制第一天信息
+    repeated ScenarioInfo scenario_infos = 11;  // 场景信息
+}
+
+// OuResp 对应的 Protobuf 消息
+message OuResp {
+    repeated ScenarioInfo scenario_info_results = 1;  // 场景结果
+}
+
+// gRPC 服务定义
+service IrpService {
+    // 处理优化请求
+    rpc ProcessOptimization(OuReq) returns (OuResp);
+}
+

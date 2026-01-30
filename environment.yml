@@ -1,0 +1,15 @@
+name: irp-env
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.10
+  - pip
+  - numpy
+  - pandas
+  - matplotlib
+  - pip:
+    - grpcio>=1.50.0
+    - grpcio-tools>=1.50.0
+    - protobuf>=4.21.0
+    - torch

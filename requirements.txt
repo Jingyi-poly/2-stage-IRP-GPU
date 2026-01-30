@@ -1,0 +1,18 @@
+# HGSADC-IRP Python Dependencies
+# For GPU acceleration and gRPC server
+
+# Core dependencies
+numpy>=1.21.0
+
+# gRPC for distributed computing
+grpcio>=1.50.0
+grpcio-tools>=1.50.0
+protobuf>=4.21.0
+
+# PyTorch for GPU acceleration
+# Install with CUDA support for GPU: pip install torch --index-url https://download.pytorch.org/whl/cu118
+torch>=2.0.0
+
+# Optional: for visualization and analysis
+# matplotlib>=3.5.0
+# pandas>=1.4.0
