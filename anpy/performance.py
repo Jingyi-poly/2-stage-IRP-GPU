@@ -23,6 +23,13 @@ plt.figure(figsize=(10, 7), dpi=150)  # Slightly larger figure to accommodate mo
 plt.rcParams['font.family'] = 'Times New Roman'
 plt.rcParams['axes.edgecolor'] = 'black'
 plt.rcParams['axes.linewidth'] = 1.2
+plt.rcParams.update({
+    'font.size': 34,        # base font size
+    'axes.titlesize': 34,   # title
+    'xtick.labelsize': 16,  # x ticks
+    'ytick.labelsize': 16,  # y ticks
+    'legend.fontsize': 20   # legend
+})
 
 # Plot lines with different markers and styles
 plt.plot(scenes, single_thread, 's-', color='#1f77b4', linewidth=1.5, markersize=6, label='Non-matrix (Single-thread)')
@@ -34,46 +41,151 @@ plt.plot(scenes, gpu_accel, 'o-', color='#2ca02c', linewidth=1.5, markersize=6, 
 plt.yscale('log')
 
 # Set labels and title
-plt.xlabel('Scenarios', fontsize=11, labelpad=8)
-plt.ylabel('Seconds', fontsize=11, labelpad=8)
-plt.title('Performance', fontsize=12, pad=12)
+plt.xlabel('Scenarios', fontsize=22, labelpad=8,fontweight='bold',)
+plt.ylabel('Seconds', fontsize=22, labelpad=8,fontweight='bold',)
+plt.title('Performance', fontsize=26, pad=12,fontweight='bold',)
 
 # Add speedup annotations above GPU line
-for i, (x, y, label_s, label_m, label_c) in enumerate(zip(scenes, gpu_accel, speedup_labels_single, speedup_labels_multi, speedup_labels_cpu_matrix)):
-    # Position annotations above GPU line with vertical offset to avoid overlap
-    y_pos = y * 15  # Increased vertical offset to accommodate more annotations
-    offset = 0 if i % 2 == 0 else -0.3  # Slight vertical alternation
-    offset = -0.6
-    # Add speedup relative to single-thread
-    plt.annotate(f"{label_s} vs single",
-                 (x, y_pos * (0.08)),
-                 ha='center', va='bottom', fontsize=9,
-                 bbox=dict(boxstyle="round,pad=0.2", fc=(0.8, 0.9, 0.8), ec="none", alpha=0.7))
+# for i, (x, y, label_s, label_m, label_c) in enumerate(zip(scenes, gpu_accel, speedup_labels_single, speedup_labels_multi, speedup_labels_cpu_matrix)):
+#     # Position annotations above GPU line with vertical offset to avoid overlap
+#     y_pos = y * 15  # Increased vertical offset to accommodate more annotations
+#     offset = 0 if i % 2 == 0 else -0.3  # Slight vertical alternation
+#     offset = -0.6
+#     # Add speedup relative to single-thread
+#     plt.annotate(f"{label_s} vs single",
+#                  (x, y_pos * (0.08)),
+#                  ha='center', va='bottom', fontsize=9,
+#                  bbox=dict(boxstyle="round,pad=0.2", fc=(0.8, 0.9, 0.8), ec="none", alpha=0.7))
     
-    # Add speedup relative to multi-thread
-    plt.annotate(f"{label_m} vs multi",
-                 (x, y_pos * (0.05)),
-                 ha='center', va='bottom', fontsize=9,
-                 bbox=dict(boxstyle="round,pad=0.2", fc=(0.9, 0.8, 0.8), ec="none", alpha=0.7))
+#     # Add speedup relative to multi-thread
+#     plt.annotate(f"{label_m} vs multi",
+#                  (x, y_pos * (0.05)),
+#                  ha='center', va='bottom', fontsize=9,
+#                  bbox=dict(boxstyle="round,pad=0.2", fc=(0.9, 0.8, 0.8), ec="none", alpha=0.7))
+
     
-    # Add speedup relative to CPU matrix (new)
-    # plt.annotate(f"{label_c} vs CPU matrix",
-    #              (x, y_pos * (0.4 + offset)),
-    #              ha='center', va='bottom', fontsize=7,
-    #              bbox=dict(boxstyle="round,pad=0.2", fc=(0.8, 0.8, 0.9), ec="none", alpha=0.7))
+#     # Add speedup relative to CPU matrix (new)
+#     # plt.annotate(f"{label_c} vs CPU matrix",
+#     #              (x, y_pos * (0.4 + offset)),
+#     #              ha='center', va='bottom', fontsize=7,
+#     #              bbox=dict(boxstyle="round,pad=0.2", fc=(0.8, 0.8, 0.9), ec="none", alpha=0.7))
+
+
+plt.annotate("Matrix (GPU)",              # text to show
+    fontsize = 15,
+    color="green",
+    fontweight='bold',
+    xy=(scenes[2], gpu_accel[2]),    # point *on* the plot to point at
+    xytext=(scenes[2]+10000,  gpu_accel[2]-7),  # where to put the text
+    bbox=dict(                      # <-- rounded box around the text
+        boxstyle="round,pad=0.3",   # "round" or "round4", etc.
+        fc="white",                 # facecolor
+        ec="green",                 # edgecolor
+        linewidth=2.5,
+        alpha=0.9                   # transparency
+    ),
+    arrowprops=dict(
+        arrowstyle="->",
+        linewidth=2,
+        color="green"
+    )
+)
+plt.annotate("Matrix (CPU)",              # text to show
+    fontsize = 15,
+    color="red",
+    fontweight='bold',
+    xy=(scenes[2], cpu_matrix[2]),    # point *on* the plot to point at
+    xytext=(scenes[2]+50000,  cpu_matrix[2]-42),  # where to put the text
+    bbox=dict(                      # <-- rounded box around the text
+        boxstyle="round,pad=0.3",   # "round" or "round4", etc.
+        fc="white",                 # facecolor
+        ec="red",                 # edgecolor
+        linewidth=2.5,
+        alpha=0.9                   # transparency
+    ),
+    arrowprops=dict(
+        arrowstyle="->",
+        linewidth=2,
+        color="red"
+    )
+)
+plt.annotate("Non-matrix (Multi-thread)",              # text to show
+    fontsize = 15,
+    color="orange",
+    fontweight='bold',
+    xy=(scenes[2], cpu_matrix[2]),    # point *on* the plot to point at
+    xytext=(scenes[2]+150000,  cpu_matrix[2]),  # where to put the text
+    bbox=dict(                      # <-- rounded box around the text
+        boxstyle="round,pad=0.3",   # "round" or "round4", etc.
+        fc="white",                 # facecolor
+        ec="orange",                 # edgecolor
+        linewidth=2.5,
+        alpha=0.9                   # transparency
+    ),
+    arrowprops=dict(
+        arrowstyle="->",
+        linewidth=2,
+        color="orange"
+    )
+)
+
+
+plt.annotate("Non-matrix (Single-thread)",              # text to show
+    fontsize = 15,
+    color="blue",
+    fontweight='bold',
+    xy=(scenes[2], single_thread[2]),    # point *on* the plot to point at
+    xytext=(scenes[2]+10000,  single_thread[2]+2000),  # where to put the text
+    bbox=dict(                      # <-- rounded box around the text
+        boxstyle="round,pad=0.3",   # "round" or "round4", etc.
+        fc="white",                 # facecolor
+        ec="blue",                 # edgecolor
+        linewidth=2.5,
+        alpha=0.9                   # transparency
+    ),
+    arrowprops=dict(
+        arrowstyle="->",
+        linewidth=2,
+        color="blue"
+    )
+)
+
+
+
+if False:
+    ppos = scenes[-1]*0.62
+    plt.annotate("Matrix(CPU) and\nNon-matrix(Multi-thread)\nshare the same implementation",              # text to show
+        fontsize = 15,
+        color="white",
+        fontweight='bold',
+        xy=(ppos, 5),    # point *on* the plot to point at
+        xytext=(ppos,  5),  # where to put the text
+        bbox=dict(                      # <-- rounded box around the text
+            boxstyle="round,pad=0.3",   # "round" or "round4", etc.
+            fc="grey",                 # facecolor
+            ec="black",                 # edgecolor
+            linewidth=2,
+            alpha=0.9                   # transparency
+        )
+    )
+
+
+
 
 # Add grid and legend
 plt.grid(True, which='both', linestyle='--', alpha=0.7)
 
 # Adjust legend position to accommodate more lines
-plt.legend(fontsize=9, frameon=True, loc='lower right', 
-           bbox_to_anchor=(0.98, 0.02), framealpha=0.8)
+# plt.legend(fontsize=14, frameon=True, loc='lower right', 
+#            bbox_to_anchor=(0.98, 0.02), framealpha=0.8)
 
 # Set axis limits and ticks
 plt.xlim(1000 , 1010000)
 plt.ylim(3, 5000)  # Adjust to accommodate annotations
-plt.xticks(scenes, fontsize=9)
-plt.yticks(fontsize=9)
+
+plt.ticklabel_format(axis='x', style='plain', useOffset=False)
+plt.xticks([50000,500000,1000000], fontsize=16,fontweight='bold',)
+plt.yticks(fontsize=16,fontweight='bold',)
 
 # Add minor tick locator for better grid
 plt.minorticks_on()
