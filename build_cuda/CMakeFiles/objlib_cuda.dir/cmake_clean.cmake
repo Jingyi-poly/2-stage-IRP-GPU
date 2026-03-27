@@ -5,6 +5,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/objlib_cuda.dir/Program/C_Interface.cpp.o.d"
   "CMakeFiles/objlib_cuda.dir/Program/Genetic.cpp.o"
   "CMakeFiles/objlib_cuda.dir/Program/Genetic.cpp.o.d"
+  "CMakeFiles/objlib_cuda.dir/Program/GeneticHGS.cpp.o"
+  "CMakeFiles/objlib_cuda.dir/Program/GeneticHGS.cpp.o.d"
   "CMakeFiles/objlib_cuda.dir/Program/Individual.cpp.o"
   "CMakeFiles/objlib_cuda.dir/Program/Individual.cpp.o.d"
   "CMakeFiles/objlib_cuda.dir/Program/InstanceCVRPLIB.cpp.o"

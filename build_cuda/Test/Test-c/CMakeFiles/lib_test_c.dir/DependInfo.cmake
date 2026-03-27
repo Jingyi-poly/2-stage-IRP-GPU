@@ -8,12 +8,12 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/mnt/sda2/git/HGS-CVRP/Test/Test-c/test.c" "Test/Test-c/CMakeFiles/lib_test_c.dir/test.c.o" "gcc" "Test/Test-c/CMakeFiles/lib_test_c.dir/test.c.o.d"
+  "/mnt/sda2/git/2-stage-IRP-GPU/Test/Test-c/test.c" "Test/Test-c/CMakeFiles/lib_test_c.dir/test.c.o" "gcc" "Test/Test-c/CMakeFiles/lib_test_c.dir/test.c.o.d"
   )
 
 # Targets to which this target links.
 set(CMAKE_TARGET_LINKED_INFO_FILES
-  "/mnt/sda2/git/HGS-CVRP/build_cuda/CMakeFiles/lib_static.dir/DependInfo.cmake"
+  "/mnt/sda2/git/2-stage-IRP-GPU/build_cuda/CMakeFiles/lib_static.dir/DependInfo.cmake"
   )
 
 # Fortran module output directory.

@@ -22,3 +22,8 @@ To run the code, you can find command templates as follows:
 ```
 ./hgs_cuda ../Instances/CVRP/X-n106-k14.vrp mySolution.sol -seed 1 -t 30 -nthreads 8 -nextrascen 4999 -freqPrint 1 -iterLim 1
 ```
+
+
+./hgs ../Instances/CVRP/X-n106-k14.vrp mySolution.sol -seed 1 -t 300 -nthreads 8 -nextrascen 99999 -freqPrint 1 -iterLim 100 -optionalVisit 1;
+./hgs ../Instances/CVRP/X-n106-k14.vrp mySolution.sol -seed 1 -t 300 -nthreads 1 -nextrascen 99999 -freqPrint 1 -iterLim 100 -optionalVisit 1;
+./hgs_cuda ../Instances/CVRP/X-n106-k14.vrp mySolution.sol -seed 1 -t 300 -nthreads 8 -nextrascen 99999 -freqPrint 1 -iterLim 100 -optionalVisit 1;

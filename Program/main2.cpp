@@ -1,6 +1,5 @@
-#include "Genetic.h"
+#include "GeneticHGS.h"
 #include "commandline.h"
-#include "LocalSearch.h"
 #include "Split.h"
 #include "InstanceCVRPLIB.h"
 #include <chrono>
@@ -8,194 +7,124 @@
 
 using namespace std;
 
-
 int main(int argc, char *argv[])
 {
-	bool debug = false;
+	auto tAllStart = std::chrono::steady_clock::now();
 
-	ofstream myfile;
 	try
 	{
-		// Reading the arguments of the program
 		CommandLine commandline(argc, argv);
 		int n_threads = commandline.ap.nthreads;
-		int n_extra_senarios = commandline.ap.n_extra_senarios;
-		int debug_frequency = commandline.ap.freqPrint;
-		int timeLim = commandline.ap.timeLim;
-		omp_set_num_threads(n_threads); 
-	std::string logfile = "../anpy/logs/cpu"+std::to_string(n_threads)+".log";
-  myfile.open (logfile);
+		omp_set_num_threads(n_threads);
 
-		// Print all algorithm parameter values
 		if (commandline.verbose) print_algorithm_parameters(commandline.ap);
+		if (commandline.verbose)
+			std::cout << "----- READING INSTANCE: " << commandline.pathInstance << std::endl;
 
-		// Reading the data file and initializing some data structures
-		if (commandline.verbose) std::cout << "----- READING INSTANCE: " << commandline.pathInstance << std::endl;
 		InstanceCVRPLIB cvrp(commandline.pathInstance, commandline.isRoundingInteger);
 
+		Params params(cvrp.x_coords, cvrp.y_coords, cvrp.dist_mtx, cvrp.service_time, cvrp.demands,
+					  cvrp.vehicleCapacity, cvrp.durationLimit, commandline.nbVeh,
+					  cvrp.isDurationConstraint, commandline.verbose, commandline.ap);
 
-        // generate scenarios
-
-		Params params(cvrp.x_coords,cvrp.y_coords,cvrp.dist_mtx,cvrp.service_time,cvrp.demands,
-			          cvrp.vehicleCapacity,cvrp.durationLimit,commandline.nbVeh,cvrp.isDurationConstraint,commandline.verbose,commandline.ap);
-        params.generate_scenario_demands(n_extra_senarios);
+		params.generate_scenario_demands(commandline.ap.n_extra_senarios);
 		params.update_max_vehi();
-		std::cout<<"Finished generating scenarios\n";
+		params.generate_skip_penalties();
+		const int fullNbClients = params.nbClients;
+		std::cout << "Finished generating scenarios  (n_scen=" << params.n_scenarios
+				  << "  n_cli=" << params.nbClients << ")  [CPU mode, T" << n_threads << "]" << std::endl;
 
-		
-		std::cout<<"  n clients: "<<params.nbClients<<"\n";
-		std::vector<int> client_ids;
-		for (int i = 1; i < params.nbClients + 1; i++)
-		{
-			client_ids.push_back(i);
-		}
+		// CPU evaluation function — OpenMP parallel Split across scenarios
+		auto cpuEval = [&params, n_threads, fullNbClients](Individual & indiv) {
+			std::vector<int> fullChromT;
+			bool useOptional = params.ap.optionalVisit && !indiv.clientVisited.empty();
+			int nVisited = fullNbClients;
 
-		std::vector<int> best_permutation;
-		double best_penalized_cost = 1.e20;
-		long checked_scen = 0;
-
-		int iter_count = 0;
-		double split_total_time = 0;
-
-	std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
-		do{
-			bool debug_local = debug;
-			checked_scen += 1;
-			if (checked_scen % debug_frequency == 0){
-				debug_local = true;
+			if (useOptional)
+			{
+				fullChromT = indiv.chromT;
+				indiv.chromT.clear();
+				for (int c : fullChromT)
+					if (indiv.clientVisited[c])
+						indiv.chromT.push_back(c);
+				nVisited = (int)indiv.chromT.size();
+				if (nVisited == 0)
+				{
+					indiv.eval = EvalIndivMultiScen();
+					indiv.resetEval(params);
+					double skipCost = 0.0;
+					for (int c = 1; c <= fullNbClients; c++)
+						skipCost += params.cli[c].skipPenalty;
+					indiv.eval.penalizedCost = skipCost;
+					indiv.chromT = fullChromT;
+					return;
+				}
+				params.nbClients = nVisited;
 			}
-			if (debug_local) std::cout<<"\n\n  Starting "<<checked_scen<<"th permutation\n";
-			// create individual, then split
-			Individual indiv(params);
-			// need to assign the chromT
-			indiv.chromT.clear();
-			for (int i = 0; i < client_ids.size(); i++){
-				indiv.chromT.push_back(client_ids[i]);
-			}
-			// do split
-			// std::vector<std::vector < std::vector <int>>> current_chromR_res(params.n_scenarios);
-			// std::vector<Split> splits(params.n_scenarios,params);
-			std::vector<double> split_time(params.n_scenarios,true);
-			if (n_threads > 1){
-			std::chrono::steady_clock::time_point split_begin = std::chrono::steady_clock::now();
+
+			if (n_threads > 1)
+			{
 				#pragma omp parallel for
-				for (int s = 0; s < params.n_scenarios; s++){
+				for (int s = 0; s < params.n_scenarios; s++)
+				{
 					Split split(params);
-					// Split split = splits[s];
-					// current_chromR_res[s] = split.generalSplitReturn(indiv, params.nbVehicles, s);
 					split.generalSplit(indiv, params.nbVehicles, s);
-			std::chrono::steady_clock::time_point split_end = std::chrono::steady_clock::now();
-			split_time[s] = std::chrono::duration_cast<std::chrono::nanoseconds>(split_end - split_begin).count()/1.e9;
-
-
-					bool res1 = split.generateChromR(indiv, s) == 0;
-					if (!res1){
-						std::cout<<"!\n!\n!\n"<<res1<<"  need to use another split\n";
-					}
-				}
-				double this_split_time = 0;
-				for (int s = 0; s < params.n_scenarios; ++s){
-					if (this_split_time < split_time[s]){
-						this_split_time = split_time[s];
-					}
-				}
-				split_total_time += this_split_time;
-			}else{
-				for (int s = 0; s < params.n_scenarios; s++){
-	std::chrono::steady_clock::time_point split_begin = std::chrono::steady_clock::now();
-					Split split(params);
-					// Split split = splits[s];
-					// current_chromR_res[s] = split.generalSplitReturn(indiv, params.nbVehicles, s);
-					split.generalSplit(indiv, params.nbVehicles, s);
-					std::chrono::steady_clock::time_point split_end = std::chrono::steady_clock::now();
-					split_total_time += std::chrono::duration_cast<std::chrono::nanoseconds>(split_end - split_begin).count()/1.e9;
-					// split.generateChromR(indiv, s);
-					bool res1 = split.generateChromR(indiv, s) == 0;
-					if (!res1){
-						std::cout<<"!\n!\n!\n"<<res1<<"  need to use another split\n";
-					}
+					split.generateChromR(indiv, s);
 				}
 			}
-			// indiv.syn_single_scen_chromR();
+			else
+			{
+				for (int s = 0; s < params.n_scenarios; s++)
+				{
+					Split split(params);
+					split.generalSplit(indiv, params.nbVehicles, s);
+					split.generateChromR(indiv, s);
+				}
+			}
 			indiv.evaluateCompleteCost(params);
 
-			if (debug_local) {
-				std::cout<<"EvalIndiv.penalizedCost   "<<indiv.eval.penalizedCost<<" / "<<best_penalized_cost<<"\n";
-				// for (int s = 0; s < params.n_scenarios; ++s){
-				// 	std::cout<<indiv.eval.penalizedCostScen[s]<<", ";
-				// }
-				// std::cout<<"\n";
-				std::cout<<"EvalIndiv.nbRoutes   "<<indiv.eval.nbRoutes<<"\n";
-				// for (int s = 0; s < params.n_scenarios; ++s){
-				// 	std::cout<<indiv.eval.nbRoutesScen[s]<<", ";
-				// }
-				// std::cout<<"\n";
-				std::cout<<"EvalIndiv.distance   "<<indiv.eval.distance<<"\n";
-				// for (int s = 0; s < params.n_scenarios; ++s){
-				// 	std::cout<<indiv.eval.distanceScen[s]<<", ";
-				// }
-				// std::cout<<"\n";
-				std::cout<<"EvalIndiv.capacityExcess   "<<indiv.eval.capacityExcess<<"\n";
-				// for (int s = 0; s < params.n_scenarios; ++s){
-				// 	std::cout<<indiv.eval.capacityExcessScen[s]<<", ";
-				// }
-				// std::cout<<"\n";
-				std::cout<<"EvalIndiv.durationExcess   "<<indiv.eval.durationExcess<<"\n";
-				// for (int s = 0; s < params.n_scenarios; ++s){
-				// 	std::cout<<indiv.eval.durationExcessScen[s]<<", ";
-				// }
-				// std::cout<<"\n";
-				std::cout<<"EvalIndiv.isFeasible   "<<indiv.eval.isFeasible<<"\n";
-				// for (int s = 0; s < params.n_scenarios; ++s){
-				// 	std::cout<<indiv.eval.isFeasibleScen[s]<<", ";
-				// }
-				// std::cout<<"\n";
+			if (useOptional)
+			{
+				double skipCost = 0.0;
+				for (int c = 1; c <= fullNbClients; c++)
+					if (!indiv.clientVisited[c])
+						skipCost += params.cli[c].skipPenalty;
+				indiv.eval.penalizedCost += skipCost;
+				params.nbClients = fullNbClients;
+				indiv.chromT = fullChromT;
 			}
+		};
 
-			if (best_penalized_cost > indiv.eval.penalizedCost){
-				best_penalized_cost = indiv.eval.penalizedCost;
-				if (debug_local) std::cout<<"*****  New best solution found with cost: "<<best_penalized_cost<<"  *****\n";
-				for (int i = 0; i < indiv.chromT.size(); i++)
-				{
-					best_permutation.push_back(indiv.chromT[i]);
-				}
-			}
+		std::string logfile = "../anpy/logs/cpu" + std::to_string(n_threads) + ".log";
+		std::ofstream myfile(logfile);
 
-			myfile<<split_total_time<<" "<<best_penalized_cost<<"\n";
-			
-			if (debug_local) {
-				std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
-				double scds = std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count()/1000.0;
-				std::cout<<"Elapsed time(T"<<n_threads<<"): "<<scds<<"s\n";
-				std::cout<<"    Avg time(T"<<n_threads<<"): "<<split_total_time*1000 / checked_scen<<"s/kperm\n";
-				if (timeLim > 0 && timeLim <=scds){
-					std::cout<<"Time out\n";
-					break;
-				}
-			}
-			iter_count += 1;
-		// } while (std::next_permutation(client_ids.begin(), client_ids.end()));
-		} while (std::next_permutation(client_ids.begin(), client_ids.end()) && iter_count < commandline.ap.iterLim);
-	
-	
-
-
-		
-
-		// Running HGS
-		// Genetic solver(params);
-		// solver.run();
-		
-		// // Exporting the best solution
-		// if (solver.population.getBestFound() != NULL)
-		// {
-		// 	if (params.verbose) std::cout << "----- WRITING BEST SOLUTION IN : " << commandline.pathSolution << std::endl;
-		// 	solver.population.exportCVRPLibFormat(*solver.population.getBestFound(),commandline.pathSolution);
-		// 	solver.population.exportSearchProgress(commandline.pathSolution + ".PG.csv", commandline.pathInstance);
-		// }
+		GeneticHGS solver(params, cpuEval);
+		solver.run(&myfile);
 		myfile.close();
+
+		const Individual * best = solver.getBestFound();
+		if (best)
+		{
+			std::cout << "\n===== BEST SOLUTION =====" << std::endl;
+			std::cout << "  penalizedCost: " << best->eval.penalizedCost << std::endl;
+			std::cout << "  avg distance:  " << best->eval.distance / params.n_scenarios << std::endl;
+			std::cout << "  avg capExcess: " << best->eval.capacityExcess / params.n_scenarios << std::endl;
+			std::cout << "  isFeasible:    " << best->eval.isFeasible << std::endl;
+			std::cout << "  nbRoutes:      " << best->eval.nbRoutes << std::endl;
+			if (params.ap.optionalVisit && !best->clientVisited.empty())
+			{
+				int nVis = 0;
+				for (int c = 1; c <= fullNbClients; c++)
+					if (best->clientVisited[c]) nVis++;
+				std::cout << "  visited/total: " << nVis << "/" << fullNbClients << std::endl;
+			}
+		}
 	}
-	catch (const string& e) { std::cout << "EXCEPTION | " << e << std::endl; }
-	catch (const std::exception& e) { std::cout << "EXCEPTION | " << e.what() << std::endl; }
+	catch (const string & e) { std::cout << "EXCEPTION | " << e << std::endl; }
+	catch (const std::exception & e) { std::cout << "EXCEPTION | " << e.what() << std::endl; }
+
+	auto tAllEnd = std::chrono::steady_clock::now();
+	double totaltime = std::chrono::duration_cast<std::chrono::nanoseconds>(tAllEnd - tAllStart).count() / 1.e9;
+	std::cout << "Total time: " << totaltime << "s" << std::endl;
 	return 0;
 }

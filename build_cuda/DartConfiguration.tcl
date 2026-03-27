@@ -4,8 +4,8 @@
 
 
 # Configuration directories and files
-SourceDirectory: /mnt/sda2/git/HGS-CVRP
-BuildDirectory: /mnt/sda2/git/HGS-CVRP/build_cuda
+SourceDirectory: /mnt/sda2/git/2-stage-IRP-GPU
+BuildDirectory: /mnt/sda2/git/2-stage-IRP-GPU/build_cuda
 
 # Where to place the cost data store
 CostDataFile: 
@@ -26,7 +26,7 @@ SubmitURL: http://
 NightlyStartTime: 00:00:00 EDT
 
 # Commands for the build/test/submit cycle
-ConfigureCommand: "/usr/bin/cmake" "/mnt/sda2/git/HGS-CVRP"
+ConfigureCommand: "/usr/bin/cmake" "/mnt/sda2/git/2-stage-IRP-GPU"
 MakeCommand: /usr/bin/cmake --build . --config "${CTEST_CONFIGURATION_TYPE}"
 DefaultCTestConfigurationType: Release
 

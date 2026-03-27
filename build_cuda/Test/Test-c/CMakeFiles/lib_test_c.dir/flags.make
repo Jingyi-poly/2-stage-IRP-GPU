@@ -4,7 +4,7 @@
 # compile C with /usr/bin/cc
 C_DEFINES = 
 
-C_INCLUDES = -I/usr/local/cuda/include -I/mnt/sda2/git/HGS-CVRP/Program
+C_INCLUDES = -I/usr/local/cuda/include -I/mnt/sda2/git/2-stage-IRP-GPU/Program
 
 C_FLAGS = -std=gnu99
 

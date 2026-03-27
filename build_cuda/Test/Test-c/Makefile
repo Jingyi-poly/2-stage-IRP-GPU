@@ -57,10 +57,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /mnt/sda2/git/HGS-CVRP
+CMAKE_SOURCE_DIR = /mnt/sda2/git/2-stage-IRP-GPU
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /mnt/sda2/git/HGS-CVRP/build_cuda
+CMAKE_BINARY_DIR = /mnt/sda2/git/2-stage-IRP-GPU/build_cuda
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -142,14 +142,14 @@ install/strip/fast: preinstall/fast
 
 # The main all target
 all: cmake_check_build_system
-	cd /mnt/sda2/git/HGS-CVRP/build_cuda && $(CMAKE_COMMAND) -E cmake_progress_start /mnt/sda2/git/HGS-CVRP/build_cuda/CMakeFiles /mnt/sda2/git/HGS-CVRP/build_cuda/Test/Test-c//CMakeFiles/progress.marks
-	cd /mnt/sda2/git/HGS-CVRP/build_cuda && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 Test/Test-c/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /mnt/sda2/git/HGS-CVRP/build_cuda/CMakeFiles 0
+	cd /mnt/sda2/git/2-stage-IRP-GPU/build_cuda && $(CMAKE_COMMAND) -E cmake_progress_start /mnt/sda2/git/2-stage-IRP-GPU/build_cuda/CMakeFiles /mnt/sda2/git/2-stage-IRP-GPU/build_cuda/Test/Test-c//CMakeFiles/progress.marks
+	cd /mnt/sda2/git/2-stage-IRP-GPU/build_cuda && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 Test/Test-c/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /mnt/sda2/git/2-stage-IRP-GPU/build_cuda/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	cd /mnt/sda2/git/HGS-CVRP/build_cuda && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 Test/Test-c/clean
+	cd /mnt/sda2/git/2-stage-IRP-GPU/build_cuda && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 Test/Test-c/clean
 .PHONY : clean
 
 # The main clean target
@@ -158,22 +158,22 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	cd /mnt/sda2/git/HGS-CVRP/build_cuda && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 Test/Test-c/preinstall
+	cd /mnt/sda2/git/2-stage-IRP-GPU/build_cuda && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 Test/Test-c/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	cd /mnt/sda2/git/HGS-CVRP/build_cuda && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 Test/Test-c/preinstall
+	cd /mnt/sda2/git/2-stage-IRP-GPU/build_cuda && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 Test/Test-c/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	cd /mnt/sda2/git/HGS-CVRP/build_cuda && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	cd /mnt/sda2/git/2-stage-IRP-GPU/build_cuda && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
 # Convenience name for target.
 Test/Test-c/CMakeFiles/lib_test_c.dir/rule:
-	cd /mnt/sda2/git/HGS-CVRP/build_cuda && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 Test/Test-c/CMakeFiles/lib_test_c.dir/rule
+	cd /mnt/sda2/git/2-stage-IRP-GPU/build_cuda && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 Test/Test-c/CMakeFiles/lib_test_c.dir/rule
 .PHONY : Test/Test-c/CMakeFiles/lib_test_c.dir/rule
 
 # Convenience name for target.
@@ -182,7 +182,7 @@ lib_test_c: Test/Test-c/CMakeFiles/lib_test_c.dir/rule
 
 # fast build rule for target.
 lib_test_c/fast:
-	cd /mnt/sda2/git/HGS-CVRP/build_cuda && $(MAKE) $(MAKESILENT) -f Test/Test-c/CMakeFiles/lib_test_c.dir/build.make Test/Test-c/CMakeFiles/lib_test_c.dir/build
+	cd /mnt/sda2/git/2-stage-IRP-GPU/build_cuda && $(MAKE) $(MAKESILENT) -f Test/Test-c/CMakeFiles/lib_test_c.dir/build.make Test/Test-c/CMakeFiles/lib_test_c.dir/build
 .PHONY : lib_test_c/fast
 
 test.o: test.c.o
@@ -190,7 +190,7 @@ test.o: test.c.o
 
 # target to build an object file
 test.c.o:
-	cd /mnt/sda2/git/HGS-CVRP/build_cuda && $(MAKE) $(MAKESILENT) -f Test/Test-c/CMakeFiles/lib_test_c.dir/build.make Test/Test-c/CMakeFiles/lib_test_c.dir/test.c.o
+	cd /mnt/sda2/git/2-stage-IRP-GPU/build_cuda && $(MAKE) $(MAKESILENT) -f Test/Test-c/CMakeFiles/lib_test_c.dir/build.make Test/Test-c/CMakeFiles/lib_test_c.dir/test.c.o
 .PHONY : test.c.o
 
 test.i: test.c.i
@@ -198,7 +198,7 @@ test.i: test.c.i
 
 # target to preprocess a source file
 test.c.i:
-	cd /mnt/sda2/git/HGS-CVRP/build_cuda && $(MAKE) $(MAKESILENT) -f Test/Test-c/CMakeFiles/lib_test_c.dir/build.make Test/Test-c/CMakeFiles/lib_test_c.dir/test.c.i
+	cd /mnt/sda2/git/2-stage-IRP-GPU/build_cuda && $(MAKE) $(MAKESILENT) -f Test/Test-c/CMakeFiles/lib_test_c.dir/build.make Test/Test-c/CMakeFiles/lib_test_c.dir/test.c.i
 .PHONY : test.c.i
 
 test.s: test.c.s
@@ -206,7 +206,7 @@ test.s: test.c.s
 
 # target to generate assembly for a file
 test.c.s:
-	cd /mnt/sda2/git/HGS-CVRP/build_cuda && $(MAKE) $(MAKESILENT) -f Test/Test-c/CMakeFiles/lib_test_c.dir/build.make Test/Test-c/CMakeFiles/lib_test_c.dir/test.c.s
+	cd /mnt/sda2/git/2-stage-IRP-GPU/build_cuda && $(MAKE) $(MAKESILENT) -f Test/Test-c/CMakeFiles/lib_test_c.dir/build.make Test/Test-c/CMakeFiles/lib_test_c.dir/test.c.s
 .PHONY : test.c.s
 
 # Help Target
@@ -237,6 +237,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	cd /mnt/sda2/git/HGS-CVRP/build_cuda && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd /mnt/sda2/git/2-stage-IRP-GPU/build_cuda && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 

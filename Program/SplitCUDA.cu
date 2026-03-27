@@ -1,6 +1,7 @@
 #include "SplitCUDA.h"
 
 #include <chrono>
+#include <cstring>
 
 
 // inline double propagate(int i, int j, int k)
@@ -60,15 +61,13 @@ __global__ void init_with_value( int * tensor, int n, int m, double value) {
 }
 
 __global__ void init_with_value_nnz( double * tensor, int nnz, double value) {
-	int i = blockIdx.x * blockDim.x + threadIdx.x;
-	if (i < nnz){
+	for (int i = blockIdx.x * blockDim.x + threadIdx.x; i < nnz; i += blockDim.x * gridDim.x){
 		tensor[i] = value;
 	}
 }
 
 __global__ void init_with_value_nnz_int( int * tensor, int nnz, int value) {
-	int i = blockIdx.x * blockDim.x + threadIdx.x;
-	if (i < nnz){
+	for (int i = blockIdx.x * blockDim.x + threadIdx.x; i < nnz; i += blockDim.x * gridDim.x){
 		tensor[i] = value;
 	}
 }
@@ -277,93 +276,24 @@ void SplitCUDA::generate_split(){
 
 
 void SplitCUDA::reconstruct_from_pred(Individual & indiv){
-	double part1 = 0.;
-	double part2 = 0.;
-	double part3 = 0.;
 	cudaCheck(cudaDeviceSynchronize(), "Kernel sync 2");
-	
-		// omp_set_num_threads(10); 
-	// int pred_host[m];
-	// #pragma omp parallel for
+	cudaMemcpy(pred_host, pred, (size_t)n_scen * m * sizeof(int), cudaMemcpyDeviceToHost);
+
+	#pragma omp parallel for schedule(static)
 	for (int idx_scen = 0; idx_scen < n_scen; ++idx_scen){
-		int offset = idx_scen * m;
-
-	// std::cout<<"----------SCEN "<<idx_scen<<"--------------\n";
-	// for (int i = 0; i < m; ++i){
-	// 	std::cout<<pred[i + offset]<<" . ";
-	// }
-	// std::cout<<"\n";
-
-
-		// std::chrono::steady_clock::time_point t1 = std::chrono::steady_clock::now();
-    	// cudaMemcpy(&pred_host, pred + idx_scen * m * n, m * n * sizeof(int), cudaMemcpyDeviceToHost);
-    	// cudaMemcpy(&pred_host, pred + idx_scen * m, m * sizeof(int), cudaMemcpyDeviceToHost);
-		// cudaCheck(cudaDeviceSynchronize(), "Kernel sync 3 ");
-		// std::chrono::steady_clock::time_point t2 = std::chrono::steady_clock::now();
-		// part1 += std::chrono::duration_cast<std::chrono::nanoseconds>(t2 - t1).count();
-
-		// Filling the chromR structure
 		for (int k = params.nbVehicles - 1; k >= maxVehicles_host[idx_scen]; k--)
 			indiv.chromR_scen[idx_scen][k].clear();
-		std::chrono::steady_clock::time_point t3 = std::chrono::steady_clock::now();
-		// part2 += std::chrono::duration_cast<std::chrono::nanoseconds>(t3 - t2).count();
 
 		int end = params.nbClients;
-		// std::cout<<end<<" -> ";
 		for (int k = maxVehicles_host[idx_scen] - 1; k >= 0; k--)
 		{
 			indiv.chromR_scen[idx_scen][k].clear();
-			// pred[i_scenario * (nm) + 0 * n_vehi + ic]
-			// int begin = pred_host[end];
-			int begin = pred[idx_scen*m + end];
-			for (int ii = begin; ii < end; ii++){
+			int begin = pred_host[idx_scen*m + end];
+			for (int ii = begin; ii < end; ii++)
 				indiv.chromR_scen[idx_scen][k].push_back(indiv.chromT[ii]);
-			}
-
 			end = begin;
-			// std::cout<<end<<" -> ";
 		}
-		std::chrono::steady_clock::time_point t4 = std::chrono::steady_clock::now();
-		part3 += std::chrono::duration_cast<std::chrono::nanoseconds>(t4 - t3).count();
 	}
-
-	
-	// int g;
-	// std::cin>>g;
-
-	// std::cout<<"----===============----\n";
-	// for (int idx_scen = 0; idx_scen < params.n_scenarios; ++idx_scen){
-	// 	std::cout<<"----------SCEN "<<idx_scen<<"--------------\n";
-	// 	for (int i = 0; i < indiv.chromR_scen[idx_scen].size(); ++i){
-	// 		for (int t : indiv.chromR_scen[idx_scen][i]){
-	// 			std::cout<< t<<" -> ";
-	// 		}
-	// 		if (indiv.chromR_scen[idx_scen][i].size()!=0){
-
-	// 		std::cout<<"\n";
-	// 		}
-	// 	}
-	// 	// for (int i = 0; i < ){
-	// 	// 	pred[i*n_scen + idx_scen];
-	// 	// }
-	// 	std::cout<<"------------------------\n";
-	// }
-	// int g;
-	// std::cin>>g;
-
-	// printf("\n\n\n         reconstruct time part1: %f\n         reconstruct time part2: %f\n        reconstruct time part3: %f\n\n\n\n",part1/1.e9,part2/1.e9,part3/1.e9);
-
-	// for (int idx_scen = 0; idx_scen < n_scen; ++idx_scen){
-	// 	for (int i = 0; i < indiv.chromR_scen[idx_scen].size(); ++i){
-	// 		for (int t : indiv.chromR_scen[idx_scen][i]){
-	// 			std::cout<< t<<" -> ";
-	// 		}
-	// 		std::cout<<"\n";
-	// 	}
-	// 	std::cout<<"------------------------\n";
-	// }
-	// int g;
-	// std::cin>>g;
 }
 
 
@@ -381,14 +311,14 @@ __global__ void print_vec(const double* input_data, int n) {
 void SplitCUDA::reset(){
 	int size = n_scen * m;
 	int nthreads = 1024;
-	dim3 threads( nthreads);
-	dim3 blocks(1024);
+	dim3 threads(nthreads);
+	dim3 blocks((size + nthreads - 1) / nthreads);
 	init_with_value_nnz_int<<<blocks, threads>>>(myDeque,size,0);
+	init_with_value_nnz_int<<<blocks, threads>>>(pred,size,0);
 
-	size = n_scen * m * n;
-	threads = dim3( nthreads);
-	blocks = dim3(1024);
-	init_with_value_nnz<<<blocks, threads>>>(potential,n_scen * m,1.e30);
+	int pot_size = n_scen * m;
+	dim3 pot_blocks((pot_size + nthreads - 1) / nthreads);
+	init_with_value_nnz<<<pot_blocks, dim3(nthreads)>>>(potential,pot_size,1.e30);
 	cudaCheck(cudaDeviceSynchronize(), "Kernel sync 4");
 
 
@@ -429,99 +359,37 @@ void check(double * tensor, const double * original, int n, int m, int i){
 
 void SplitCUDA::preprocess(Individual & indiv, int nbMaxVehicles)
 {
-	// Do not apply Split with fewer vehicles than the trivial (LP) bin packing bound
-	double * maxV_local = new double[n_scen];
-	for (int i = 0; i < n_scen; i++){
-		maxV_local[i] = std::max<int>(nbMaxVehicles, std::ceil(params.totalDemand/params.vehicleCapacity));
-		maxVehicles_host[i] = (int) maxV_local[i];
-	}
-	// cudaMemcpy(maxVehicles,  maxV_local, n_scen * sizeof(double), cudaMemcpyHostToDevice);
-	// Initialization of the data structures for the linear split algorithms
-	// Direct application of the code located at https://github.com/vidalt/Split-Library
-	// cliSplit:{nbClients * n_scen}
-	double * copy_serviceTime = new double[m];
-	double * copy_d0_x = new double[m];
-	double * copy_dx_0 = new double[m];
-	double * copy_dnext = new double[m];
-	double * copy_sumService = new double[m];
-	double * copy_sumDistance = new double[m];
-	double * copy_sumLoad = new double[m];
+	int maxV = std::max<int>(nbMaxVehicles, (int)std::ceil(params.totalDemand / params.vehicleCapacity));
+	for (int i = 0; i < n_scen; i++)
+		maxVehicles_host[i] = maxV;
+
+	std::vector<double> copy_d0_x(m, 0.0);
+	std::vector<double> copy_dx_0(m, 0.0);
+	std::vector<double> copy_dnext(m, 0.0);
+	std::vector<double> copy_sumDistance(m, 0.0);
+
 	for (int i = 1; i <= params.nbClients; i++)
 	{
-		// cliSplit[i].demand = params.cli[indiv.chromT[i - 1]].demands_scenarios[idx_scen];
-		cudaMemcpy(cliSplit_demand + i * n_scen,  params.cli[indiv.chromT[i - 1]].demands_scenarios.data(), n_scen * sizeof(double), cudaMemcpyHostToDevice);
-		// if (i > 3){
-		// 	dim3 threads(2);
-		// 	dim3 blocks(2);
-		// 	print_vec<<<blocks, threads>>>(cliSplit_demand + i * n_scen, n_scen);
-		// 	for (int z = 0; z < n_scen; ++z){
-		// 		printf("%f, ",params.cli[indiv.chromT[i - 1]].demands_scenarios[z]);
-		// 	}
-		// 	std::cout<<"\n";
-		// 	int jj;
-		// 	std::cin>>jj;
-		// }
-		// check(cliSplit_demand + i * n_scen, params.cli[indiv.chromT[i - 1]].demands_scenarios.data(), 0, n_scen, 0);
-		// double local_h_potential[n_scen];
-		// cudaMemcpy(&local_h_potential, cliSplit_demand + i * n_scen,  n_scen * sizeof(double), cudaMemcpyDeviceToHost);
-		// for (int kk = 0; kk < n_scen; ++kk){
-		// 	std::cout<<local_h_potential[kk]<<"  "<<params.cli[indiv.chromT[i - 1]].demands_scenarios[kk]<<"\n";
-		// }
-		// int g; std::cin>>g;
-		// cliSplit[i].serviceTime = params.cli[indiv.chromT[i - 1]].serviceDuration;
-		copy_serviceTime[i] = params.cli[indiv.chromT[i - 1]].serviceDuration;
-		// cliSplit[i].d0_x = params.timeCost[0][indiv.chromT[i - 1]];
+		const double * src = params.cli[indiv.chromT[i - 1]].demands_scenarios.data();
+		std::memcpy(demand_host.data() + (size_t)i * n_scen, src, n_scen * sizeof(double));
+
 		copy_d0_x[i] = params.timeCost[0][indiv.chromT[i - 1]];
-		// cliSplit[i].dx_0 = params.timeCost[indiv.chromT[i - 1]][0];
 		copy_dx_0[i] = params.timeCost[indiv.chromT[i - 1]][0];
 
 		if (i < params.nbClients) copy_dnext[i] = params.timeCost[indiv.chromT[i - 1]][indiv.chromT[i]];
 		else copy_dnext[i] = -1.e30;
 
-		copy_sumService[i] = copy_sumService[i - 1] + copy_serviceTime[i];
 		copy_sumDistance[i] = copy_sumDistance[i - 1] + copy_dnext[i - 1];
 	}
-	cudaMemcpy(cliSplit_serviceTime,  copy_serviceTime, m * sizeof(double), cudaMemcpyHostToDevice);
-	cudaMemcpy(cliSplit_d0_x, copy_d0_x, m * sizeof(double), cudaMemcpyHostToDevice);
-	cudaMemcpy(cliSplit_dx_0, copy_dx_0, m * sizeof(double), cudaMemcpyHostToDevice);
-	cudaMemcpy(cliSplit_dnext, copy_dnext, m * sizeof(double), cudaMemcpyHostToDevice);
-	cudaMemcpy(sumService, copy_sumService, m * sizeof(double), cudaMemcpyHostToDevice);
-	cudaMemcpy(sumDistance, copy_sumDistance, m * sizeof(double), cudaMemcpyHostToDevice);
 
+	cudaMemcpy(cliSplit_demand, demand_host.data(), (size_t)m * n_scen * sizeof(double), cudaMemcpyHostToDevice);
+	cudaMemcpy(cliSplit_d0_x, copy_d0_x.data(), m * sizeof(double), cudaMemcpyHostToDevice);
+	cudaMemcpy(cliSplit_dx_0, copy_dx_0.data(), m * sizeof(double), cudaMemcpyHostToDevice);
+	cudaMemcpy(sumDistance, copy_sumDistance.data(), m * sizeof(double), cudaMemcpyHostToDevice);
 
-	// sumLoad[i] = sumLoad[i - 1] + cliSplit[i].demand;
 	int n_threads = 1024;
-	// std::cin>>g;
 	dim3 threads(n_threads);
-	dim3 blocks(n_threads);
-		// sumLoad[i] = sumLoad[i - 1] + cliSplit[i].demand;
-		// sumService[i] = sumService[i - 1] + cliSplit[i].serviceTime;
-		// sumDistance[i] = sumDistance[i - 1] + cliSplit[i - 1].dnext;
-	// printMat(m, n_scen, cliSplit_demand);
-	// std::cout<<"Pringint cliSplit_demand\n";
-	// std::cin>>g;
-	accumulation_row<<<blocks, threads>>>(cliSplit_demand, sumLoad,  m,  n_scen);
-	// printMat(m, n_scen, sumLoad);
-	// std::cout<<"Pringint sumload\n";
-	// int g;
-	// std::cin>>g;
-	
-	// std::cout<<"n threads: "<<n_threads<<"   nblock: "<<nblock<<"\n";
-	// std::cout<<"Pringint process of accu\n";
-	// std::cin>>g;
+	dim3 blocks((n_scen + n_threads - 1) / n_threads);
+	accumulation_row<<<blocks, threads>>>(cliSplit_demand, sumLoad, m, n_scen);
 	cudaCheck(cudaDeviceSynchronize(), "Kernel sync 5");
-
-	// printMat(m, n_scen, sumLoad);
-	// std::cout<<"Pringint sumload\n";
-	// std::cin>>g;
-
-	
-
-
-	// We first try the simple split, and then the Split with limited fleet if this is not successful
-	// if (splitSimple(indiv, idx_scen) == 0) {
-	// 	splitLF(indiv, idx_scen);
-	// 	std::cout<<"Used extra step for idx: "<<idx_scen<<"\n";
-	// }
-	// std::cout<<"Finished Preprocessing split\n";
 }

@@ -31,6 +31,9 @@ struct AlgorithmParameters default_algorithm_parameters() {
 	ap.timeLim = -1;
 	ap.maxClient = -1;
 
+	ap.optionalVisit = 0;
+	ap.skipPenScale = 1.0;
+
 	return ap;
 }
 

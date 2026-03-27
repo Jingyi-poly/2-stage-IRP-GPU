@@ -1,4 +1,4 @@
-# Install script for directory: /mnt/sda2/git/HGS-CVRP/Test/Test-c
+# Install script for directory: /mnt/sda2/git/2-stage-IRP-GPU/Test/Test-c
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

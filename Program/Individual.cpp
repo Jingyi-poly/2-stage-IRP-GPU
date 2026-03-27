@@ -47,12 +47,15 @@
 
 // }
 void Individual::resetEval(const Params & params){
-	eval.penalizedCostScen = std::vector <double>(params.n_scenarios);
-	eval.nbRoutesScen = std::vector <int>(params.n_scenarios);
-	eval.distanceScen = std::vector <double>(params.n_scenarios);
-	eval.capacityExcessScen = std::vector <double>(params.n_scenarios);
-	eval.durationExcessScen = std::vector <double>(params.n_scenarios);
-	eval.isFeasibleScen = std::vector <bool>(params.n_scenarios, true);
+	int ns = params.n_scenarios;
+	if ((int)eval.penalizedCostScen.size() != ns) {
+		eval.penalizedCostScen.resize(ns);
+		eval.nbRoutesScen.resize(ns);
+		eval.distanceScen.resize(ns);
+		eval.capacityExcessScen.resize(ns);
+		eval.durationExcessScen.resize(ns);
+		eval.isFeasibleScen.resize(ns);
+	}
 }
 
 void Individual::evaluateCompleteCost(const Params & params,bool debug)
@@ -129,87 +132,79 @@ void Individual::evaluateCompleteCost(const Params & params)
 	eval = EvalIndivMultiScen();
 	resetEval(params);
 
-		// for (auto &c : params.cli){
-		// 	for (int i = 0; i < params.n_scenarios;++i){
-		// 		std::cout<<" "<<c.demands_scenarios[i];
-		// 	}
-		// 	std::cout<<"\n";
-		// }
-		// std::cout<<params.n_scenarios<<"\n";
+	double totalPenCost = 0.0, totalDist = 0.0, totalCapEx = 0.0, totalDurEx = 0.0;
+	int maxRoutes = 0;
+	bool allFeasible = true;
 
+	#pragma omp parallel for schedule(static) reduction(+:totalPenCost,totalDist,totalCapEx,totalDurEx) reduction(max:maxRoutes)
 	for (int s = 0; s < params.n_scenarios; ++s){
-		EvalIndiv scen_eval = EvalIndiv();
-		// for (int r = 0; r < params.nbVehicles; r++)
-		// {
-		// 	if (chromR_scen[s][r].empty()){
-		// 		continue;
-		// 	}
-		// 	std::cout<<"Scenario "<<s<<"   Vehicle "<<r<<"\n     ";
-		// 	for (int i = 0; i < (int)chromR_scen[s][r].size(); i++)
-		// 	{
-		// 		std::cout<<chromR_scen[s][r][i]<<" <- ";
-		// 	}
-		// 	std::cout<<"\n";
-		// }
+		double scenDist = 0.0, scenCapEx = 0.0, scenDurEx = 0.0;
+		int scenRoutes = 0;
+
 		for (int r = 0; r < params.nbVehicles; r++)
 		{
-
 			if (!chromR_scen[s][r].empty())
 			{
-				double distance = params.timeCost[0][chromR_scen[s][r][0]];
-				double service = params.cli[chromR_scen[s][r][0]].serviceDuration;
-				// double load = params.cli[chromR_scen[s][r][0]].demand;
-				double load = params.cli[chromR_scen[s][r][0]].demands_scenarios[s];
-				// std::vector<double> load;
-				// load.push_back(params.cli[chromR_scen[s][r][0]].demands_scenarios[s]);
-				predecessors[chromR_scen[s][r][0]] = 0;
-				
-				for (int i = 1; i < (int)chromR_scen[s][r].size(); i++)
+				const auto & route = chromR_scen[s][r];
+				double distance = params.timeCost[0][route[0]];
+				double load = params.cli[route[0]].demands_scenarios[s];
+				double service = params.cli[route[0]].serviceDuration;
+
+				for (int i = 1; i < (int)route.size(); i++)
 				{
-					distance += params.timeCost[chromR_scen[s][r][i-1]][chromR_scen[s][r][i]];
-					// std::cout<<chromR_scen[s][r][i-1]<<" to "<<chromR_scen[s][r][i]<<"  dist: "<<params.timeCost[chromR_scen[s][r][i-1]][chromR_scen[s][r][i]]<<"\n";
-					// load += params.cli[chromR_scen[s][r][i]].demand;
-					load += params.cli[chromR_scen[s][r][i]].demands_scenarios[s];
-					service += params.cli[chromR_scen[s][r][i]].serviceDuration;
-					predecessors[chromR_scen[s][r][i]] = chromR_scen[s][r][i-1];
-					successors[chromR_scen[s][r][i-1]] = chromR_scen[s][r][i];
+					distance += params.timeCost[route[i-1]][route[i]];
+					load += params.cli[route[i]].demands_scenarios[s];
+					service += params.cli[route[i]].serviceDuration;
 				}
-				successors[chromR_scen[s][r][chromR_scen[s][r].size()-1]] = 0;
-				distance += params.timeCost[chromR_scen[s][r][chromR_scen[s][r].size()-1]][0];
-				scen_eval.distance += distance;
-				scen_eval.nbRoutes++;
-				if (load > params.vehicleCapacity) {
-					scen_eval.capacityExcess += load - params.vehicleCapacity;
-					// std::cout<<"Scen "<<s<<" load penalty: "<< load - params.vehicleCapacity<<"\n";
-				}
-				if (distance + service > params.durationLimit) scen_eval.durationExcess += distance + service - params.durationLimit;
-		// std::cout<<"Vehicle "<<r<<"   load: "<<load<<" / "<<params.vehicleCapacity<<"  excess: "<<scen_eval.capacityExcess<<"\n";
+				distance += params.timeCost[route.back()][0];
+				scenDist += distance;
+				scenRoutes++;
+				if (load > params.vehicleCapacity)
+					scenCapEx += load - params.vehicleCapacity;
+				if (distance + service > params.durationLimit)
+					scenDurEx += distance + service - params.durationLimit;
 			}
 		}
-		// int j;std::cin>>j;
-		scen_eval.penalizedCost = scen_eval.distance + scen_eval.capacityExcess*params.penaltyCapacity + scen_eval.durationExcess*params.penaltyDuration;
-		scen_eval.isFeasible = (scen_eval.capacityExcess < MY_EPSILON && scen_eval.durationExcess < MY_EPSILON);
 
-		eval.penalizedCost += scen_eval.penalizedCost;
-		// eval.penalizedCost = std::max( eval.penalizedCost,scen_eval.penalizedCost);
-		// eval.penalizedCost = std::min( eval.penalizedCost,scen_eval.penalizedCost);
-		eval.distance += scen_eval.distance;
-		eval.capacityExcess += scen_eval.capacityExcess;
-		eval.durationExcess += scen_eval.durationExcess;
-		eval.isFeasible = eval.isFeasible && scen_eval.isFeasible;
-		if (scen_eval.nbRoutes > eval.nbRoutes){
-			eval.nbRoutes = scen_eval.nbRoutes;
-		}
-		
-		eval.penalizedCostScen[s] = scen_eval.penalizedCost;
-		eval.nbRoutesScen[s] = scen_eval.nbRoutes;
-		eval.distanceScen[s] = scen_eval.distance;
-		eval.capacityExcessScen[s] = scen_eval.capacityExcess;
-		eval.durationExcessScen[s] = scen_eval.durationExcess;
-		eval.isFeasibleScen[s] = scen_eval.isFeasible;
+		double scenPenCost = scenDist + scenCapEx * params.penaltyCapacity + scenDurEx * params.penaltyDuration;
+
+		totalPenCost += scenPenCost;
+		totalDist += scenDist;
+		totalCapEx += scenCapEx;
+		totalDurEx += scenDurEx;
+		if (scenRoutes > maxRoutes) maxRoutes = scenRoutes;
+
+		eval.penalizedCostScen[s] = scenPenCost;
+		eval.nbRoutesScen[s] = scenRoutes;
+		eval.distanceScen[s] = scenDist;
+		eval.capacityExcessScen[s] = scenCapEx;
+		eval.durationExcessScen[s] = scenDurEx;
+		eval.isFeasibleScen[s] = (scenCapEx < MY_EPSILON && scenDurEx < MY_EPSILON);
 	}
-	eval.penalizedCost = eval.penalizedCost / params.n_scenarios;
-	
+
+	eval.penalizedCost = totalPenCost / params.n_scenarios;
+	eval.distance = totalDist;
+	eval.capacityExcess = totalCapEx;
+	eval.durationExcess = totalDurEx;
+	eval.nbRoutes = maxRoutes;
+	eval.isFeasible = (totalCapEx < MY_EPSILON && totalDurEx < MY_EPSILON);
+
+	// Set successors/predecessors from the last scenario for diversity calculation
+	int lastS = params.n_scenarios - 1;
+	for (int r = 0; r < params.nbVehicles; r++)
+	{
+		if (!chromR_scen[lastS][r].empty())
+		{
+			const auto & route = chromR_scen[lastS][r];
+			predecessors[route[0]] = 0;
+			for (int i = 1; i < (int)route.size(); i++)
+			{
+				predecessors[route[i]] = route[i-1];
+				successors[route[i-1]] = route[i];
+			}
+			successors[route.back()] = 0;
+		}
+	}
 }
 
 Individual::Individual(Params & params)
@@ -222,7 +217,10 @@ Individual::Individual(Params & params)
 	chromT = std::vector <int>(params.nbClients);
 	for (int i = 0; i < params.nbClients; i++) chromT[i] = i + 1;
 	std::shuffle(chromT.begin(), chromT.end(), params.ran);
-	eval.penalizedCost = 1.e30;	
+	eval.penalizedCost = 1.e30;
+
+	if (params.ap.optionalVisit)
+		clientVisited = std::vector<bool>(params.nbClients + 1, true);
 }
 
 Individual::Individual(Params & params, std::string fileName) : Individual(params)

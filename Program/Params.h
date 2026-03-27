@@ -49,6 +49,7 @@ struct Client
 	double demand;			// Demand
 	std::vector<double> demands_scenarios;
 	int polarAngle;			// Polar angle of the client around the depot, measured in degrees and truncated for convenience
+	double skipPenalty = 0.0;
 };
 
 class Params
@@ -102,6 +103,7 @@ public:
 
 	void generate_scenario_demands(int n_extra_senarios);
 	void generate_scenario_demands_dev(int n_extra_senarios);
+	void generate_skip_penalties();
 
 	void update_max_vehi(){
 		for (int s = 0; s < n_scenarios; ++s){

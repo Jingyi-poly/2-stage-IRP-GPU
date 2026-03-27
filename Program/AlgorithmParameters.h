@@ -32,6 +32,9 @@ struct AlgorithmParameters {
 	int iterLim;
 	int timeLim;
 	int maxClient;
+
+	int optionalVisit;
+	double skipPenScale;
 };
 
 #ifdef __cplusplus

@@ -1,4 +1,4 @@
-# Install script for directory: /mnt/sda2/git/HGS-CVRP
+# Install script for directory: /mnt/sda2/git/2-stage-IRP-GPU
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -44,7 +44,7 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("/mnt/sda2/git/HGS-CVRP/build_cuda/Test/Test-c/cmake_install.cmake")
+  include("/mnt/sda2/git/2-stage-IRP-GPU/build_cuda/Test/Test-c/cmake_install.cmake")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
@@ -54,7 +54,7 @@ if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_
          FILE "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/liblib.so"
          RPATH "")
   endif()
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE SHARED_LIBRARY FILES "/mnt/sda2/git/HGS-CVRP/build_cuda/liblib.so")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE SHARED_LIBRARY FILES "/mnt/sda2/git/2-stage-IRP-GPU/build_cuda/liblib.so")
   if(EXISTS "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/liblib.so" AND
      NOT IS_SYMLINK "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/liblib.so")
     if(CMAKE_INSTALL_DO_STRIP)
@@ -73,7 +73,7 @@ if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_
          FILE "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/bin/hgs"
          RPATH "")
   endif()
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/bin" TYPE EXECUTABLE FILES "/mnt/sda2/git/HGS-CVRP/build_cuda/hgs")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/bin" TYPE EXECUTABLE FILES "/mnt/sda2/git/2-stage-IRP-GPU/build_cuda/hgs")
   if(EXISTS "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/bin/hgs" AND
      NOT IS_SYMLINK "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/bin/hgs")
     if(CMAKE_INSTALL_DO_STRIP)
@@ -89,7 +89,7 @@ if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_
          FILE "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib_cuda/libhgscvrp.so"
          RPATH "")
   endif()
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib_cuda" TYPE SHARED_LIBRARY FILES "/mnt/sda2/git/HGS-CVRP/build_cuda/libhgscvrp.so")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib_cuda" TYPE SHARED_LIBRARY FILES "/mnt/sda2/git/2-stage-IRP-GPU/build_cuda/libhgscvrp.so")
   if(EXISTS "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib_cuda/libhgscvrp.so" AND
      NOT IS_SYMLINK "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib_cuda/libhgscvrp.so")
     if(CMAKE_INSTALL_DO_STRIP)
@@ -108,7 +108,7 @@ if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_
          FILE "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/bin_cuda/hgs_cuda"
          RPATH "")
   endif()
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/bin_cuda" TYPE EXECUTABLE FILES "/mnt/sda2/git/HGS-CVRP/build_cuda/hgs_cuda")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/bin_cuda" TYPE EXECUTABLE FILES "/mnt/sda2/git/2-stage-IRP-GPU/build_cuda/hgs_cuda")
   if(EXISTS "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/bin_cuda/hgs_cuda" AND
      NOT IS_SYMLINK "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/bin_cuda/hgs_cuda")
     if(CMAKE_INSTALL_DO_STRIP)
@@ -119,8 +119,8 @@ endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/include" TYPE FILE FILES
-    "/mnt/sda2/git/HGS-CVRP/Program/AlgorithmParameters.h"
-    "/mnt/sda2/git/HGS-CVRP/Program/C_Interface.h"
+    "/mnt/sda2/git/2-stage-IRP-GPU/Program/AlgorithmParameters.h"
+    "/mnt/sda2/git/2-stage-IRP-GPU/Program/C_Interface.h"
     )
 endif()
 
@@ -132,5 +132,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/mnt/sda2/git/HGS-CVRP/build_cuda/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/mnt/sda2/git/2-stage-IRP-GPU/build_cuda/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

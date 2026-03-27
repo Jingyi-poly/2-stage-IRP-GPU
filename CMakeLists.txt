@@ -12,6 +12,7 @@ find_package(OpenMP REQUIRED)
 set(
         src_files
         Program/Genetic.cpp
+        Program/GeneticHGS.cpp
         Program/Individual.cpp
         Program/LocalSearch.cpp
         Program/Params.cpp
@@ -24,6 +25,7 @@ set(
 set(
         src_cuda_files
         Program/Genetic.cpp
+        Program/GeneticHGS.cpp
         Program/Individual.cpp
         Program/LocalSearch.cpp
         Program/Params.cpp

@@ -3,8 +3,7 @@
 
 CMakeFiles/bin.dir/Program/main2.cpp.o: ../Program/main2.cpp \
   /usr/include/stdc-predef.h \
-  ../Program/Genetic.h \
-  ../Program/Population.h \
+  ../Program/GeneticHGS.h \
   ../Program/Individual.h \
   ../Program/Params.h \
   ../Program/CircleSector.h \
@@ -277,28 +276,25 @@ CMakeFiles/bin.dir/Program/main2.cpp.o: ../Program/main2.cpp \
   /usr/include/c++/11/bits/stl_numeric.h \
   /usr/include/c++/11/bit \
   /usr/include/c++/11/pstl/glue_numeric_defs.h \
-  ../Program/LocalSearch.h \
-  ../Program/Split.h \
-  ../Program/commandline.h \
-  ../Program/InstanceCVRPLIB.h \
   /usr/include/c++/11/chrono \
   /usr/include/c++/11/ratio \
   /usr/include/c++/11/ctime \
   /usr/include/c++/11/bits/parse_numbers.h \
+  ../Program/commandline.h \
+  ../Program/Split.h \
+  ../Program/InstanceCVRPLIB.h \
   /usr/lib/gcc/x86_64-linux-gnu/11/include/omp.h
 
+
+../Program/Split.h:
+
+../Program/commandline.h:
 
 /usr/include/c++/11/bits/parse_numbers.h:
 
 /usr/include/c++/11/ctime:
 
 /usr/include/c++/11/ratio:
-
-../Program/commandline.h:
-
-../Program/Split.h:
-
-../Program/LocalSearch.h:
 
 /usr/include/c++/11/bit:
 
@@ -324,7 +320,7 @@ CMakeFiles/bin.dir/Program/main2.cpp.o: ../Program/main2.cpp \
 
 /usr/include/c++/11/bits/refwrap.h:
 
-/usr/include/c++/11/bits/invoke.h:
+/usr/include/stdlib.h:
 
 /usr/include/c++/11/bits/string_view.tcc:
 
@@ -346,6 +342,8 @@ CMakeFiles/bin.dir/Program/main2.cpp.o: ../Program/main2.cpp \
 
 /usr/include/c++/11/bits/stl_iterator_base_types.h:
 
+/usr/include/c++/11/tr1/poly_laguerre.tcc:
+
 /usr/include/x86_64-linux-gnu/bits/thread-shared-types.h:
 
 /usr/include/c++/11/ext/new_allocator.h:
@@ -366,10 +364,6 @@ CMakeFiles/bin.dir/Program/main2.cpp.o: ../Program/main2.cpp \
 
 /usr/include/x86_64-linux-gnu/c++/11/bits/gthr-default.h:
 
-/usr/include/x86_64-linux-gnu/bits/endian.h:
-
-/usr/include/x86_64-linux-gnu/gnu/stubs.h:
-
 /usr/include/c++/11/backward/binders.h:
 
 /usr/include/x86_64-linux-gnu/bits/time.h:
@@ -383,6 +377,10 @@ CMakeFiles/bin.dir/Program/main2.cpp.o: ../Program/main2.cpp \
 /usr/include/x86_64-linux-gnu/bits/endianness.h:
 
 /usr/include/c++/11/tr1/modified_bessel_func.tcc:
+
+/usr/include/x86_64-linux-gnu/bits/endian.h:
+
+/usr/include/x86_64-linux-gnu/gnu/stubs.h:
 
 /usr/include/c++/11/pstl/glue_numeric_defs.h:
 
@@ -448,15 +446,33 @@ CMakeFiles/bin.dir/Program/main2.cpp.o: ../Program/main2.cpp \
 
 /usr/include/asm-generic/errno-base.h:
 
+/usr/include/c++/11/ext/numeric_traits.h:
+
+../Program/AlgorithmParameters.h:
+
+/usr/include/features.h:
+
 /usr/include/c++/11/bits/stringfwd.h:
+
+/usr/include/c++/11/bits/stl_function.h:
+
+/usr/include/c++/11/bits/memoryfwd.h:
 
 /usr/include/c++/11/unordered_set:
 
 /usr/include/x86_64-linux-gnu/bits/types/FILE.h:
 
+/usr/include/stdc-predef.h:
+
+/usr/include/c++/11/bits/alloc_traits.h:
+
 /usr/include/x86_64-linux-gnu/c++/11/bits/cpu_defines.h:
 
 /usr/include/x86_64-linux-gnu/bits/timesize.h:
+
+/usr/include/x86_64-linux-gnu/bits/types/__sigset_t.h:
+
+/usr/include/x86_64-linux-gnu/bits/long-double.h:
 
 /usr/include/x86_64-linux-gnu/bits/types/struct_timeval.h:
 
@@ -472,23 +488,41 @@ CMakeFiles/bin.dir/Program/main2.cpp.o: ../Program/main2.cpp \
 
 ../Program/main2.cpp:
 
-/usr/include/c++/11/bits/alloc_traits.h:
+../Program/GeneticHGS.h:
 
-/usr/include/stdc-predef.h:
+/usr/include/x86_64-linux-gnu/bits/stdint-uintn.h:
 
-../Program/AlgorithmParameters.h:
+/usr/include/x86_64-linux-gnu/bits/types/struct_timespec.h:
 
-/usr/include/features.h:
+/usr/include/x86_64-linux-gnu/bits/types/__locale_t.h:
 
-/usr/include/c++/11/ext/numeric_traits.h:
+/usr/include/x86_64-linux-gnu/bits/wchar.h:
 
-/usr/include/c++/11/bits/memoryfwd.h:
+/usr/include/x86_64-linux-gnu/bits/local_lim.h:
 
-/usr/include/c++/11/bits/stl_function.h:
+/usr/include/x86_64-linux-gnu/bits/types/struct_itimerspec.h:
 
-/usr/include/x86_64-linux-gnu/bits/types/__sigset_t.h:
+/usr/include/c++/11/bits/range_access.h:
 
-/usr/include/x86_64-linux-gnu/bits/long-double.h:
+/usr/include/x86_64-linux-gnu/bits/floatn.h:
+
+/usr/include/c++/11/functional:
+
+/usr/include/linux/errno.h:
+
+/usr/include/c++/11/ext/string_conversions.h:
+
+/usr/include/c++/11/list:
+
+/usr/include/c++/11/bits/exception_ptr.h:
+
+/usr/include/x86_64-linux-gnu/bits/stdio_lim.h:
+
+/usr/include/x86_64-linux-gnu/bits/timex.h:
+
+/usr/include/c++/11/bits/invoke.h:
+
+/usr/include/c++/11/tr1/special_function_util.h:
 
 /usr/include/c++/11/bits/stl_set.h:
 
@@ -510,39 +544,13 @@ CMakeFiles/bin.dir/Program/main2.cpp.o: ../Program/main2.cpp \
 
 /usr/include/x86_64-linux-gnu/bits/wordsize.h:
 
-/usr/include/x86_64-linux-gnu/bits/types/locale_t.h:
-
-/usr/include/x86_64-linux-gnu/bits/wctype-wchar.h:
-
-/usr/include/x86_64-linux-gnu/bits/types/struct_itimerspec.h:
+/usr/lib/gcc/x86_64-linux-gnu/11/include/stdarg.h:
 
 /usr/include/c++/11/debug/assertions.h:
 
-/usr/lib/gcc/x86_64-linux-gnu/11/include/stdarg.h:
+/usr/include/x86_64-linux-gnu/bits/types/locale_t.h:
 
-/usr/include/c++/11/functional:
-
-/usr/include/linux/errno.h:
-
-/usr/include/c++/11/ext/string_conversions.h:
-
-/usr/include/c++/11/list:
-
-/usr/include/c++/11/bits/exception_ptr.h:
-
-/usr/include/x86_64-linux-gnu/bits/stdio_lim.h:
-
-/usr/include/x86_64-linux-gnu/bits/timex.h:
-
-/usr/include/c++/11/tr1/special_function_util.h:
-
-/usr/include/x86_64-linux-gnu/bits/floatn.h:
-
-/usr/include/c++/11/bits/range_access.h:
-
-/usr/include/x86_64-linux-gnu/bits/wchar.h:
-
-/usr/include/x86_64-linux-gnu/bits/local_lim.h:
+/usr/include/x86_64-linux-gnu/bits/wctype-wchar.h:
 
 /usr/include/x86_64-linux-gnu/sys/single_threaded.h:
 
@@ -561,22 +569,6 @@ CMakeFiles/bin.dir/Program/main2.cpp.o: ../Program/main2.cpp \
 /usr/include/c++/11/bits/ostream_insert.h:
 
 /usr/include/x86_64-linux-gnu/bits/types/__fpos_t.h:
-
-/usr/include/c++/11/tr1/poly_laguerre.tcc:
-
-../Program/Population.h:
-
-/usr/include/c++/11/bits/locale_classes.h:
-
-/usr/include/x86_64-linux-gnu/gnu/stubs-64.h:
-
-/usr/include/c++/11/tr1/gamma.tcc:
-
-/usr/include/x86_64-linux-gnu/bits/stdint-uintn.h:
-
-/usr/include/x86_64-linux-gnu/bits/types/struct_timespec.h:
-
-/usr/include/x86_64-linux-gnu/bits/types/__locale_t.h:
 
 /usr/include/ctype.h:
 
@@ -631,8 +623,6 @@ CMakeFiles/bin.dir/Program/main2.cpp.o: ../Program/main2.cpp \
 /usr/include/c++/11/bits/std_function.h:
 
 /usr/include/c++/11/bits/stl_tempbuf.h:
-
-/usr/include/stdlib.h:
 
 /usr/include/x86_64-linux-gnu/bits/waitflags.h:
 
@@ -728,6 +718,12 @@ CMakeFiles/bin.dir/Program/main2.cpp.o: ../Program/main2.cpp \
 
 /usr/include/c++/11/bits/nested_exception.h:
 
+/usr/include/c++/11/bits/locale_classes.h:
+
+/usr/include/x86_64-linux-gnu/gnu/stubs-64.h:
+
+/usr/include/c++/11/tr1/gamma.tcc:
+
 /usr/include/c++/11/bits/locale_classes.tcc:
 
 /usr/include/c++/11/iostream:
@@ -784,8 +780,6 @@ CMakeFiles/bin.dir/Program/main2.cpp.o: ../Program/main2.cpp \
 
 /usr/include/x86_64-linux-gnu/c++/11/bits/c++io.h:
 
-../Program/Genetic.h:
-
 /usr/include/c++/11/bits/fstream.tcc:
 
 /usr/include/c++/11/sstream:
@@ -816,9 +810,9 @@ CMakeFiles/bin.dir/Program/main2.cpp.o: ../Program/main2.cpp \
 
 /usr/include/c++/11/limits:
 
-/usr/include/x86_64-linux-gnu/bits/pthread_stack_min-dynamic.h:
-
 /usr/include/x86_64-linux-gnu/c++/11/bits/c++config.h:
+
+/usr/include/x86_64-linux-gnu/bits/pthread_stack_min-dynamic.h:
 
 /usr/include/c++/11/tr1/legendre_function.tcc:
 

@@ -306,3 +306,16 @@ void Params::generate_scenario_demands_dev(int n_extra_senarios){
 	checkrandom();
 }
 
+void Params::generate_skip_penalties()
+{
+	if (!ap.optionalVisit) return;
+	cli[0].skipPenalty = 0.0;
+	for (int i = 1; i <= nbClients; i++)
+	{
+		double basePen = timeCost[0][i] * ap.skipPenScale;
+		std::uniform_real_distribution<double> dist(0.5 * basePen, 1.5 * basePen);
+		cli[i].skipPenalty = dist(generator);
+	}
+	if (verbose)
+		std::cout << "----- GENERATED SKIP PENALTIES (scale=" << ap.skipPenScale << ")" << std::endl;
+}

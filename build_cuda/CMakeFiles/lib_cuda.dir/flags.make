@@ -5,13 +5,13 @@
 # compile CXX with /usr/bin/c++
 CUDA_DEFINES = -Dlib_cuda_EXPORTS
 
-CUDA_INCLUDES = -I/usr/local/cuda/include -I/mnt/sda2/git/HGS-CVRP/Program
+CUDA_INCLUDES = -I/usr/local/cuda/include -I/mnt/sda2/git/2-stage-IRP-GPU/Program
 
 CUDA_FLAGS =  --generate-code=arch=compute_75,code=[compute_75,sm_75] -Xcompiler=-fPIC
 
 CXX_DEFINES = -Dlib_cuda_EXPORTS
 
-CXX_INCLUDES = -I/usr/local/cuda/include -I/mnt/sda2/git/HGS-CVRP/Program
+CXX_INCLUDES = -I/usr/local/cuda/include -I/mnt/sda2/git/2-stage-IRP-GPU/Program
 
 CXX_FLAGS = -fPIC
 

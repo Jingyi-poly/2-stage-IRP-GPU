@@ -72,7 +72,8 @@ class SplitCUDA
   //  std::vector < std::vector < double > > potential;  // Potential vector
   double * potential;
   // std::vector < std::vector < int > > pred;  // Indice of the predecessor in an optimal path
-  int * pred;  // Indice of the predecessor in an optimal path
+  int * pred;
+  int * pred_host;
   // std::vector <double> sumDistance; // sumDistance[i] for i > 1 contains the sum of distances : sum_{k=1}^{i-1} d_{k,k+1}
   double * sumDistance;
   // std::vector <double> sumLoad; // sumLoad[i] for i >= 1 contains the sum of loads : sum_{k=1}^{i} q_k
@@ -82,6 +83,7 @@ class SplitCUDA
 
   double * totalDemands;
   int * myDeque;
+  std::vector<double> demand_host;
 
   //  // To be called with i < j only
   //  // Computes the cost of propagating the label i until j
@@ -202,6 +204,9 @@ public:
   void generate_split();
   void reconstruct_from_pred(Individual & indiv);
 
+  int getOriginalM() const { return params.nbClients + 1; }
+  void setActiveClients(int nCli) { m = nCli + 1; }
+
   // Constructor
 //   SplitCUDA(const Params & params): params(params)
 //     {
@@ -225,7 +230,9 @@ public:
       cudaMalloc(&potential, n_scen * m * sizeof(double));
       // cudaMalloc(&pred, n_scen * m * sizeof(int));
       // cudaMalloc(&pred, n_scen * m * sizeof(int));
-      cudaMallocManaged(&pred, n_scen * m * sizeof(int));
+      cudaMalloc(&pred, n_scen * m * sizeof(int));
+      pred_host = new int[(size_t)n_scen * m];
+      demand_host.resize((size_t)m * n_scen, 0.0);
       cudaMalloc(&sumLoad, n_scen * m * sizeof(double));
       cudaMalloc(&sumDistance, m * sizeof(double));
       cudaMalloc(&sumService, m * sizeof(double));

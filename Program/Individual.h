@@ -63,7 +63,8 @@ public:
   std::vector < int > successors ;											// For each node, the successor in the solution (can be the depot 0)
   std::vector < int > predecessors ;										// For each node, the predecessor in the solution (can be the depot 0)
   std::multiset < std::pair < double, Individual* > > indivsPerProximity ;	// The other individuals in the population, ordered by increasing proximity (the set container follows a natural ordering based on the first value of the pair)
-  double biasedFitness;														// Biased fitness of the solution
+  double biasedFitness;
+  std::vector<bool> clientVisited;														// Biased fitness of the solution
 
   // Measuring cost and feasibility of an Individual from the information of chromR (needs chromR filled and access to Params)
   void evaluateCompleteCost(const Params & params);

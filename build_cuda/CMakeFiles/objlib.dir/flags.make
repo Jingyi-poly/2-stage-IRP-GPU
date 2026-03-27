@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/c++
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/usr/local/cuda/include -I/mnt/sda2/git/HGS-CVRP/Program
+CXX_INCLUDES = -I/usr/local/cuda/include -I/mnt/sda2/git/2-stage-IRP-GPU/Program
 
 CXX_FLAGS = -fPIC
 
