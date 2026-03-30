@@ -7,11 +7,11 @@ CUDA_DEFINES =
 
 CUDA_INCLUDES = -I/usr/local/cuda/include -I/mnt/sda2/git/2-stage-IRP-GPU/Program
 
-CUDA_FLAGS =  --generate-code=arch=compute_75,code=[compute_75,sm_75] -Xcompiler=-fPIC
+CUDA_FLAGS = -O3 -DNDEBUG --generate-code=arch=compute_75,code=[compute_75,sm_75] -Xcompiler=-fPIC
 
 CXX_DEFINES = 
 
 CXX_INCLUDES = -I/usr/local/cuda/include -I/mnt/sda2/git/2-stage-IRP-GPU/Program
 
-CXX_FLAGS = -fPIC
+CXX_FLAGS = -O3 -DNDEBUG -fPIC
 

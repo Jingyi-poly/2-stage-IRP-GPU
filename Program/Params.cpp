@@ -208,22 +208,28 @@ void Params::generate_scenario_demands(int n_extra_senarios){
 		}
 	}
 
-	if (false){
-		std::ofstream myfile;
-		std::string logfile = "../baseline/scenarios"+std::to_string(n_extra_senarios+1)+"_"+std::to_string(cli.size()-1)+".txt";
-  		myfile.open (logfile);
-		int cc = 0;
-		for (auto & client : cli) {
-			myfile<<cc<<":";
-			for (int i = 0; i < n_scenarios; ++i){
-				myfile<<client.demands_scenarios[i]<<",";
+	if (ap.exportScenarios){
+		std::string logfile = "scenarios_" + std::to_string(n_scenarios)
+							  + "_" + std::to_string(nbClients) + ".bin";
+		std::ofstream out(logfile, std::ios::binary);
+		int nc = nbClients;
+		int ns = n_scenarios;
+		out.write(reinterpret_cast<char*>(&nc), sizeof(int));
+		out.write(reinterpret_cast<char*>(&ns), sizeof(int));
+		out.write(reinterpret_cast<char*>(&vehicleCapacity), sizeof(double));
+		out.write(reinterpret_cast<char*>(&penaltyCapacity), sizeof(double));
+		for (int c = 0; c <= nbClients; c++)
+			out.write(reinterpret_cast<char*>(cli[c].demands_scenarios.data()),
+					  n_scenarios * sizeof(double));
+		for (int c = 0; c <= nbClients; c++)
+			out.write(reinterpret_cast<char*>(&cli[c].skipPenalty), sizeof(double));
+		for (int i = 0; i <= nbClients; i++)
+			for (int j = 0; j <= nbClients; j++){
+				double d = timeCost[i][j];
+				out.write(reinterpret_cast<char*>(&d), sizeof(double));
 			}
-			// myfile<<"|"<<client.serviceDuration;
-			myfile<<"\n";
-			cc+=1;
-		}
-		myfile.flush();
-  		myfile.close();
+		out.close();
+		std::cout << "----- EXPORTED SCENARIOS TO " << logfile << std::endl;
 	}
 
 	// int k;

@@ -100,6 +100,9 @@ int main(int argc, char *argv[])
 			std::cout << "  avg capExcess: " << best->eval.capacityExcess / params.n_scenarios << std::endl;
 			std::cout << "  isFeasible:    " << best->eval.isFeasible << std::endl;
 			std::cout << "  nbRoutes:      " << best->eval.nbRoutes << std::endl;
+			std::cout << "  chromT:";
+			for (int c : best->chromT) std::cout << " " << c;
+			std::cout << std::endl;
 			if (params.ap.optionalVisit && !best->clientVisited.empty())
 			{
 				int nVis = 0;

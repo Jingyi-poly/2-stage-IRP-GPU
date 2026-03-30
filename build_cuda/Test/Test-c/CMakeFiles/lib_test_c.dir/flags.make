@@ -6,5 +6,5 @@ C_DEFINES =
 
 C_INCLUDES = -I/usr/local/cuda/include -I/mnt/sda2/git/2-stage-IRP-GPU/Program
 
-C_FLAGS = -std=gnu99
+C_FLAGS = -O3 -DNDEBUG -std=gnu99
 

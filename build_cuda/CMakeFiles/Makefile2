@@ -71,6 +71,7 @@ all: CMakeFiles/lib_static.dir/all
 all: CMakeFiles/lib_static_cuda.dir/all
 all: CMakeFiles/bin.dir/all
 all: CMakeFiles/bin_cuda.dir/all
+all: CMakeFiles/pctsp_exact.dir/all
 all: Test/Test-c/all
 .PHONY : all
 
@@ -87,6 +88,7 @@ clean: CMakeFiles/lib_static.dir/clean
 clean: CMakeFiles/lib_static_cuda.dir/clean
 clean: CMakeFiles/bin.dir/clean
 clean: CMakeFiles/bin_cuda.dir/clean
+clean: CMakeFiles/pctsp_exact.dir/clean
 clean: CMakeFiles/Experimental.dir/clean
 clean: CMakeFiles/Nightly.dir/clean
 clean: CMakeFiles/Continuous.dir/clean
@@ -340,6 +342,32 @@ bin_cuda: CMakeFiles/bin_cuda.dir/rule
 CMakeFiles/bin_cuda.dir/clean:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/bin_cuda.dir/build.make CMakeFiles/bin_cuda.dir/clean
 .PHONY : CMakeFiles/bin_cuda.dir/clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/pctsp_exact.dir
+
+# All Build rule for target.
+CMakeFiles/pctsp_exact.dir/all: CMakeFiles/lib_static.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/pctsp_exact.dir/build.make CMakeFiles/pctsp_exact.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/pctsp_exact.dir/build.make CMakeFiles/pctsp_exact.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/mnt/sda2/git/2-stage-IRP-GPU/build_cuda/CMakeFiles --progress-num=32,33,34 "Built target pctsp_exact"
+.PHONY : CMakeFiles/pctsp_exact.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/pctsp_exact.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /mnt/sda2/git/2-stage-IRP-GPU/build_cuda/CMakeFiles 14
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/pctsp_exact.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /mnt/sda2/git/2-stage-IRP-GPU/build_cuda/CMakeFiles 0
+.PHONY : CMakeFiles/pctsp_exact.dir/rule
+
+# Convenience name for target.
+pctsp_exact: CMakeFiles/pctsp_exact.dir/rule
+.PHONY : pctsp_exact
+
+# clean rule for target.
+CMakeFiles/pctsp_exact.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/pctsp_exact.dir/build.make CMakeFiles/pctsp_exact.dir/clean
+.PHONY : CMakeFiles/pctsp_exact.dir/clean
 
 #=============================================================================
 # Target rules for target CMakeFiles/Experimental.dir

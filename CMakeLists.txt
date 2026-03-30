@@ -75,6 +75,13 @@ if(CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR)
     set_target_properties(bin_cuda PROPERTIES OUTPUT_NAME hgs_cuda CUDA_ARCHITECTURES 75)
 
 
+    # PCTSP Exact Solver (requires Gurobi)
+    set(GUROBI_HOME "/opt/gurobi1201/linux64")
+    add_executable(pctsp_exact Program/main_pctsp.cpp Program/PCTSPExact.cpp)
+    target_include_directories(pctsp_exact PRIVATE ${GUROBI_HOME}/include)
+    target_link_libraries(pctsp_exact PRIVATE lib_static OpenMP::OpenMP_CXX
+        ${GUROBI_HOME}/lib/libgurobi_c++.a ${GUROBI_HOME}/lib/libgurobi120.so)
+
     # Test Executable
 
     include(CTest)

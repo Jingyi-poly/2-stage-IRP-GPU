@@ -27,12 +27,14 @@ struct AlgorithmParameters default_algorithm_parameters() {
 	ap.useSwapStar = 1;
 
 
+	ap.freqPrint = 500;
 	ap.iterLim = 1;
 	ap.timeLim = -1;
 	ap.maxClient = -1;
 
 	ap.optionalVisit = 0;
 	ap.skipPenScale = 1.0;
+	ap.exportScenarios = 0;
 
 	return ap;
 }

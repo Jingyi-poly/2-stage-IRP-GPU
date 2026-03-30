@@ -101,6 +101,8 @@ public:
 				ap.optionalVisit = atoi(argv[i+1]);
 			else if (std::string(argv[i]) == "-skipPenScale")
 				ap.skipPenScale = atof(argv[i+1]);
+			else if (std::string(argv[i]) == "-exportScenarios")
+				ap.exportScenarios = atoi(argv[i+1]);
 			else if (std::string(argv[i]) == "-penaltyDecrease")
 					ap.penaltyDecrease = atof(argv[i+1]);
 				else

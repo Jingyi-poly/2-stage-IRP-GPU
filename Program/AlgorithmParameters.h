@@ -35,6 +35,7 @@ struct AlgorithmParameters {
 
 	int optionalVisit;
 	double skipPenScale;
+	int exportScenarios;
 };
 
 #ifdef __cplusplus

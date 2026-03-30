@@ -6,5 +6,5 @@ CXX_DEFINES = -Dlib_EXPORTS
 
 CXX_INCLUDES = -I/usr/local/cuda/include -I/mnt/sda2/git/2-stage-IRP-GPU/Program
 
-CXX_FLAGS = -fPIC
+CXX_FLAGS = -O3 -DNDEBUG -fPIC
 

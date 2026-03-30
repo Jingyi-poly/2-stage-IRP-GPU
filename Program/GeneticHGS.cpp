@@ -311,10 +311,11 @@ void GeneticHGS::run(std::ostream * logStream)
 		double t = elapsed();
 		if (params.ap.timeLim > 0 && t >= params.ap.timeLim)
 		{
-			if (params.verbose) std::cout << "Time limit reached at iter " << iter << std::endl;
+			if (params.verbose) std::cout << "Time limit reached at iter " << iter
+				<< "  T=" << t << "s" << std::endl;
 			break;
 		}
-		if (params.ap.iterLim > 0 && iter > params.ap.iterLim)
+		if (params.ap.timeLim <= 0 && params.ap.iterLim > 0 && iter > params.ap.iterLim)
 		{
 			if (params.verbose) std::cout << "Iteration limit reached." << std::endl;
 			break;
