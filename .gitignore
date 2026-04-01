@@ -1,5 +1,13 @@
 # Build directory
 build
+build_*
+
+# Python
+__pycache__/
+*.pyc
+
+# macOS
+.DS_Store
 
 # Test build files
 Test/CMakeFiles/
@@ -59,4 +67,3 @@ baseline/*.txt
 *.ilp
 *.sol
 *.lp
-build_*

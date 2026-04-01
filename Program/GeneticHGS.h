@@ -13,9 +13,9 @@
 class GeneticHGS
 {
 public:
-	using EvalFunc = std::function<void(Individual &)>;
+	using EvalFunc = std::function<void(std::vector<Individual*>&)>;
 
-	GeneticHGS(Params & params, EvalFunc evaluator);
+	GeneticHGS(Params & params, EvalFunc evaluator, int batchSize = 1, bool gpuMode = false);
 	~GeneticHGS();
 
 	void run(std::ostream * logStream = nullptr);
@@ -24,10 +24,13 @@ public:
 private:
 	Params & params;
 	EvalFunc evaluator;
+	int batchSize;
+	bool gpuMode;
 
 	std::vector<Individual *> population;
 	Individual bestSolution;
 
+	void evaluateBatch(std::vector<Individual*>& batch);
 	void evaluateIndividual(Individual & indiv);
 
 	// OX Crossover (identical to classic HGS)

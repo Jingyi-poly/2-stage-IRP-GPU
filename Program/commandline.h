@@ -95,15 +95,17 @@ public:
 					ap.iterLim = atoi(argv[i+1]);
 				else if (std::string(argv[i]) == "-timeLim")
 					ap.timeLim = atoi(argv[i+1]);
-			else if (std::string(argv[i]) == "-maxClient")
-				ap.maxClient = atoi(argv[i+1]);
-			else if (std::string(argv[i]) == "-optionalVisit")
-				ap.optionalVisit = atoi(argv[i+1]);
-			else if (std::string(argv[i]) == "-skipPenScale")
-				ap.skipPenScale = atof(argv[i+1]);
-			else if (std::string(argv[i]) == "-exportScenarios")
-				ap.exportScenarios = atoi(argv[i+1]);
-			else if (std::string(argv[i]) == "-penaltyDecrease")
+				else if (std::string(argv[i]) == "-maxClient")
+					ap.maxClient = atoi(argv[i+1]);
+				else if (std::string(argv[i]) == "-optionalVisit")
+					ap.optionalVisit = atoi(argv[i+1]);
+				else if (std::string(argv[i]) == "-skipPenScale")
+					ap.skipPenScale = atof(argv[i+1]);
+				else if (std::string(argv[i]) == "-exportScenarios")
+					ap.exportScenarios = atoi(argv[i+1]);
+					else if (std::string(argv[i]) == "-gpuBatchSize")
+					ap.gpuBatchSize = atoi(argv[i+1]);
+				else if (std::string(argv[i]) == "-penaltyDecrease")
 					ap.penaltyDecrease = atof(argv[i+1]);
 				else
 				{

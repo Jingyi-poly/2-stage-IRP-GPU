@@ -95,10 +95,15 @@ int main(int argc, char *argv[])
 			}
 		};
 
+		auto cpuBatchEval = [&cpuEval](std::vector<Individual*>& batch) {
+			for (auto* indiv : batch)
+				cpuEval(*indiv);
+		};
+
 		std::string logfile = "../anpy/logs/cpu" + std::to_string(n_threads) + ".log";
 		std::ofstream myfile(logfile);
 
-		GeneticHGS solver(params, cpuEval);
+		GeneticHGS solver(params, cpuBatchEval);
 		solver.run(&myfile);
 		myfile.close();
 

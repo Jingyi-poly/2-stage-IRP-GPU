@@ -6,6 +6,7 @@
 #include "Individual.h"
 #include <cuda_runtime.h>
 #include <omp.h>
+#include <cstring>
 
 
 struct ClientSplitCUDA
@@ -61,6 +62,7 @@ class SplitCUDA
   std::vector<int> maxVehicles_host;
 
   int n,m,n_scen;
+  int maxBatchSize;
 
   /* Auxiliary data structures to run the Linear Split algorithm */
   // std::vector < ClientSplitCUDA > cliSplit;
@@ -83,7 +85,21 @@ class SplitCUDA
 
   double * totalDemands;
   int * myDeque;
-  std::vector<double> demand_host;
+  double * demand_host;
+  double * host_d0_x;
+  double * host_dx_0;
+  double * host_sumDistance;
+  cudaStream_t stream;
+
+  // GPU eval members
+  double * d_timeCost;      // [m_full * m_full] distance matrix on device
+  int * d_chromT;           // [maxBatchSize * nbClients] chromT on device
+  int * h_chromT;           // pinned host chromT staging
+  double * d_evalResults;   // [maxBatchSize * n_scen * 4] per-scen results (dist,capEx,durEx,nRoutes)
+  double * h_evalResults;   // pinned host for results
+  int m_full;               // original m = nbClients+1 (never changes with setActiveClients)
+
+
 
   //  // To be called with i < j only
   //  // Computes the cost of propagating the label i until j
@@ -204,6 +220,15 @@ public:
   void generate_split();
   void reconstruct_from_pred(Individual & indiv);
 
+  void reset_batch(int batchSize);
+  void preprocess_batch(std::vector<Individual*>& indivs, int nbMaxVehicles);
+  void generate_split_batch(int batchSize);
+  void reconstruct_from_pred_batch(std::vector<Individual*>& indivs);
+  int getMaxBatchSize() const { return maxBatchSize; }
+
+  void evaluateOnGPU_batch(std::vector<Individual*>& indivs);
+  void deriveSuccessorsPredecessors_batch(std::vector<Individual*>& indivs);
+
   int getOriginalM() const { return params.nbClients + 1; }
   void setActiveClients(int nCli) { m = nCli + 1; }
 
@@ -218,40 +243,66 @@ public:
 //         // potential = std::vector < std::vector <double> >(params.nbVehicles + 1, std::vector <double>(params.nbClients + 1,1.e30));
 //         // pred = std::vector < std::vector <int> >(params.nbVehicles + 1, std::vector <int>(params.nbClients + 1,0));
 //     }
-    SplitCUDA(const Params & params): params(params)
+    SplitCUDA(const Params & params, int batchSz = 1): params(params)
     {
       n = params.nbVehicles + 1;
       m = params.nbClients + 1;
       n_scen = params.n_scenarios;
-      // Structures of the linear Split
-      // allocate memory
-      // cudaMalloc(&potential, n_scen * m * n * sizeof(double));
-      // cudaMalloc(&pred, n_scen * m * n * sizeof(int));
-      cudaMalloc(&potential, n_scen * m * sizeof(double));
-      // cudaMalloc(&pred, n_scen * m * sizeof(int));
-      // cudaMalloc(&pred, n_scen * m * sizeof(int));
-      cudaMalloc(&pred, n_scen * m * sizeof(int));
-      pred_host = new int[(size_t)n_scen * m];
-      demand_host.resize((size_t)m * n_scen, 0.0);
-      cudaMalloc(&sumLoad, n_scen * m * sizeof(double));
-      cudaMalloc(&sumDistance, m * sizeof(double));
+      maxBatchSize = batchSz;
+      size_t B = (size_t)maxBatchSize;
+      size_t nst = B * n_scen;
+      cudaMalloc(&potential, nst * m * sizeof(double));
+      cudaMalloc(&pred, nst * m * sizeof(int));
+      cudaMallocHost(&pred_host, nst * m * sizeof(int));
+      cudaMallocHost(&demand_host, (size_t)m * nst * sizeof(double));
+      std::memset(demand_host, 0, (size_t)m * nst * sizeof(double));
+      cudaMallocHost(&host_d0_x, B * m * sizeof(double));
+      cudaMallocHost(&host_dx_0, B * m * sizeof(double));
+      cudaMallocHost(&host_sumDistance, B * m * sizeof(double));
+      cudaMalloc(&sumLoad, nst * m * sizeof(double));
+      cudaMalloc(&sumDistance, B * m * sizeof(double));
       cudaMalloc(&sumService, m * sizeof(double));
-      // clisplit
-      cudaMalloc(&cliSplit_demand, n_scen * m * sizeof(double));
+      cudaMalloc(&cliSplit_demand, nst * m * sizeof(double));
       cudaMalloc(&cliSplit_serviceTime, m * sizeof(double));
-      cudaMalloc(&cliSplit_d0_x, m * sizeof(double));
-      cudaMalloc(&cliSplit_dx_0, m * sizeof(double));
+      cudaMalloc(&cliSplit_d0_x, B * m * sizeof(double));
+      cudaMalloc(&cliSplit_dx_0, B * m * sizeof(double));
       cudaMalloc(&cliSplit_dnext, m * sizeof(double));
-      // move total demands to device
       cudaMalloc(&totalDemands, n_scen * sizeof(double));
       copy_vec(params.totalDemands, totalDemands, n_scen);
-      // move max_vehicles to device
-      // cudaMalloc(&maxVehicles, n_scen * sizeof(int));
-      maxVehicles_host = std::vector <int>(n_scen);
-      cudaCheck(cudaDeviceSynchronize(), "Kernel sync");
-			// std::cout<<"Finished allocating for SplitCUDA\n";
-      cudaMalloc(&myDeque, n_scen * m * sizeof(int));
-    } 
+      maxVehicles_host = std::vector<int>(nst);
+      cudaStreamCreate(&stream);
+      cudaMalloc(&myDeque, nst * m * sizeof(int));
+
+      // GPU eval buffers
+      m_full = m;
+      cudaMalloc(&d_timeCost, (size_t)m * m * sizeof(double));
+      // Flatten and upload timeCost
+      std::vector<double> flat_tc((size_t)m * m);
+      for (int i = 0; i < m; i++)
+        for (int j = 0; j < m; j++)
+          flat_tc[i * m + j] = params.timeCost[i][j];
+      cudaMemcpy(d_timeCost, flat_tc.data(), m * m * sizeof(double), cudaMemcpyHostToDevice);
+
+      int nbCli = m - 1;
+      cudaMalloc(&d_chromT, B * nbCli * sizeof(int));
+      cudaMallocHost(&h_chromT, B * nbCli * sizeof(int));
+      cudaMalloc(&d_evalResults, nst * 4 * sizeof(double));
+      cudaMallocHost(&h_evalResults, nst * 4 * sizeof(double));
+    }
+
+    ~SplitCUDA() {
+      cudaStreamDestroy(stream);
+      cudaFreeHost(pred_host);
+      cudaFreeHost(demand_host);
+      cudaFreeHost(host_d0_x);
+      cudaFreeHost(host_dx_0);
+      cudaFreeHost(host_sumDistance);
+      cudaFree(d_timeCost);
+      cudaFree(d_chromT);
+      cudaFreeHost(h_chromT);
+      cudaFree(d_evalResults);
+      cudaFreeHost(h_evalResults);
+    }
 
     void reset();
 

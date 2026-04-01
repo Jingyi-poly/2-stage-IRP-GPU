@@ -31,54 +31,99 @@ int main(int argc, char *argv[])
 		params.generate_skip_penalties();
 		const int fullNbClients = params.nbClients;
 
-		SplitCUDA splitCuda(params);
+		const int gpuBatchSize = commandline.ap.gpuBatchSize;
+		SplitCUDA splitCuda(params, gpuBatchSize);
 		std::cout << "Finished generating scenarios  (n_scen=" << params.n_scenarios
 				  << "  n_cli=" << params.nbClients << ")  [GPU mode]" << std::endl;
 
-		// GPU evaluation function
-		auto gpuEval = [&splitCuda, &params, fullNbClients](Individual & indiv) {
-			std::vector<int> fullChromT;
-			bool useOptional = params.ap.optionalVisit && !indiv.clientVisited.empty();
-			int nVisited = fullNbClients;
+		// GPU batch evaluation function
+		auto gpuEval = [&splitCuda, &params, fullNbClients](std::vector<Individual*>& batch) {
+			int B = (int)batch.size();
+			bool useOptional = params.ap.optionalVisit;
 
+			// Pre-process optional visit filtering per individual
+			std::vector<std::vector<int>> savedChromT;
+			std::vector<int> emptyIndices;
 			if (useOptional)
 			{
-				fullChromT = indiv.chromT;
-				indiv.chromT.clear();
-				for (int c : fullChromT)
-					if (indiv.clientVisited[c])
-						indiv.chromT.push_back(c);
-				nVisited = (int)indiv.chromT.size();
-				if (nVisited == 0)
+				savedChromT.resize(B);
+				for (int b = 0; b < B; b++)
 				{
-					indiv.eval = EvalIndivMultiScen();
-					indiv.resetEval(params);
-					double skipCost = 0.0;
-					for (int c = 1; c <= fullNbClients; c++)
-						skipCost += params.cli[c].skipPenalty;
-					indiv.eval.penalizedCost = skipCost;
-					indiv.chromT = fullChromT;
-					return;
+					Individual & indiv = *batch[b];
+					if (indiv.clientVisited.empty()) continue;
+					savedChromT[b] = indiv.chromT;
+					indiv.chromT.clear();
+					for (int c : savedChromT[b])
+						if (indiv.clientVisited[c])
+							indiv.chromT.push_back(c);
+					if (indiv.chromT.empty())
+					{
+						indiv.eval = EvalIndivMultiScen();
+						indiv.resetEval(params);
+						double skipCost = 0.0;
+						for (int c = 1; c <= fullNbClients; c++)
+							skipCost += params.cli[c].skipPenalty;
+						indiv.eval.penalizedCost = skipCost;
+						indiv.chromT = savedChromT[b];
+						emptyIndices.push_back(b);
+					}
 				}
-				params.nbClients = nVisited;
-				splitCuda.setActiveClients(nVisited);
 			}
 
-			splitCuda.reset();
-			splitCuda.preprocess(indiv, params.nbVehicles);
-			splitCuda.generate_split();
-			splitCuda.reconstruct_from_pred(indiv);
-			indiv.evaluateCompleteCost(params);
+			// Build the non-empty batch for GPU
+			std::vector<Individual*> gpuBatch;
+			gpuBatch.reserve(B);
+			for (int b = 0; b < B; b++)
+			{
+				bool isEmpty = false;
+				for (int idx : emptyIndices)
+					if (idx == b) { isEmpty = true; break; }
+				if (!isEmpty)
+					gpuBatch.push_back(batch[b]);
+			}
+
+			if (!gpuBatch.empty())
+			{
+				int Bg = (int)gpuBatch.size();
+				if (useOptional)
+				{
+					for (auto* indiv : gpuBatch)
+					{
+						int nVisited = (int)indiv->chromT.size();
+						params.nbClients = nVisited;
+						splitCuda.setActiveClients(nVisited);
+						std::vector<Individual*> single = {indiv};
+						splitCuda.reset_batch(1);
+						splitCuda.preprocess_batch(single, params.nbVehicles);
+						splitCuda.generate_split_batch(1);
+						splitCuda.evaluateOnGPU_batch(single);
+					}
+				}
+				else
+				{
+					splitCuda.reset_batch(Bg);
+					splitCuda.preprocess_batch(gpuBatch, params.nbVehicles);
+					splitCuda.generate_split_batch(Bg);
+					splitCuda.evaluateOnGPU_batch(gpuBatch);
+				}
+			}
 
 			if (useOptional)
 			{
-				double skipCost = 0.0;
-				for (int c = 1; c <= fullNbClients; c++)
-					if (!indiv.clientVisited[c])
-						skipCost += params.cli[c].skipPenalty;
-				indiv.eval.penalizedCost += skipCost;
+				for (int b = 0; b < B; b++)
+				{
+					Individual & indiv = *batch[b];
+					if (!savedChromT[b].empty())
+					{
+						double skipCost = 0.0;
+						for (int c = 1; c <= fullNbClients; c++)
+							if (!indiv.clientVisited[c])
+								skipCost += params.cli[c].skipPenalty;
+						indiv.eval.penalizedCost += skipCost;
+						indiv.chromT = savedChromT[b];
+					}
+				}
 				params.nbClients = fullNbClients;
-				indiv.chromT = fullChromT;
 				splitCuda.setActiveClients(fullNbClients);
 			}
 		};
@@ -87,7 +132,7 @@ int main(int argc, char *argv[])
 							  + std::to_string(commandline.ap.maxClient) + ".log";
 		std::ofstream myfile(logfile);
 
-		GeneticHGS solver(params, gpuEval);
+		GeneticHGS solver(params, gpuEval, gpuBatchSize, true);
 		solver.run(&myfile);
 		myfile.close();
 

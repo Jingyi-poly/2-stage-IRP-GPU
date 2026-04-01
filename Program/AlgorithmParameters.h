@@ -36,6 +36,7 @@ struct AlgorithmParameters {
 	int optionalVisit;
 	double skipPenScale;
 	int exportScenarios;
+	int gpuBatchSize;
 };
 
 #ifdef __cplusplus

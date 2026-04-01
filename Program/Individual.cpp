@@ -223,6 +223,23 @@ Individual::Individual(Params & params)
 		clientVisited = std::vector<bool>(params.nbClients + 1, true);
 }
 
+
+Individual::Individual(Params & params, bool skipScenAlloc)
+{
+	successors = std::vector <int>(params.nbClients + 1);
+	predecessors = std::vector <int>(params.nbClients + 1);
+	chromR = std::vector < std::vector <int> >(params.nbVehicles);
+	if (!skipScenAlloc)
+		chromR_scen = std::vector < std::vector < std::vector <int> > >(params.n_scenarios, std::vector < std::vector <int> >(params.nbVehicles));
+
+	chromT = std::vector <int>(params.nbClients);
+	for (int i = 0; i < params.nbClients; i++) chromT[i] = i + 1;
+	std::shuffle(chromT.begin(), chromT.end(), params.ran);
+	eval.penalizedCost = 1.e30;
+
+	if (params.ap.optionalVisit)
+		clientVisited = std::vector<bool>(params.nbClients + 1, true);
+}
 Individual::Individual(Params & params, std::string fileName) : Individual(params)
 {
 	double readCost;

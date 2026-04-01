@@ -35,6 +35,7 @@ struct AlgorithmParameters default_algorithm_parameters() {
 	ap.optionalVisit = 0;
 	ap.skipPenScale = 1.0;
 	ap.exportScenarios = 0;
+	ap.gpuBatchSize = 16;
 
 	return ap;
 }

@@ -4,8 +4,8 @@
 #include <numeric>
 #include <cmath>
 
-GeneticHGS::GeneticHGS(Params & params, EvalFunc evaluator)
-	: params(params), evaluator(std::move(evaluator)), bestSolution(params)
+GeneticHGS::GeneticHGS(Params & params, EvalFunc evaluator, int batchSize, bool gpuMode)
+	: params(params), evaluator(std::move(evaluator)), batchSize(batchSize), gpuMode(gpuMode), bestSolution(params)
 {
 	bestSolution.eval.penalizedCost = 1.e30;
 }
@@ -16,9 +16,15 @@ GeneticHGS::~GeneticHGS()
 		delete indiv;
 }
 
+void GeneticHGS::evaluateBatch(std::vector<Individual*>& batch)
+{
+	evaluator(batch);
+}
+
 void GeneticHGS::evaluateIndividual(Individual & indiv)
 {
-	evaluator(indiv);
+	std::vector<Individual*> batch = {&indiv};
+	evaluateBatch(batch);
 }
 
 // ───────────────────── Crossover ─────────────────────
@@ -277,20 +283,29 @@ void GeneticHGS::run(std::ostream * logStream)
 	// --- Initial population ---
 	if (params.verbose) std::cout << "----- BUILDING INITIAL POPULATION" << std::endl;
 	int initSize = 4 * params.ap.mu;
-	for (int i = 0; i < initSize; i++)
+	for (int i = 0; i < initSize; i += batchSize)
 	{
-		Individual randomIndiv(params);
-		if (params.ap.optionalVisit && i >= initSize * 4 / 5)
+		int curBatch = std::min(batchSize, initSize - i);
+		std::vector<Individual*> batch(curBatch);
+		for (int b = 0; b < curBatch; b++)
 		{
-			std::uniform_real_distribution<double> skipProb(0.1, 0.3);
-			double pSkip = skipProb(params.ran);
-			std::uniform_real_distribution<double> coin(0.0, 1.0);
-			for (int c = 1; c <= params.nbClients; c++)
-				if (coin(params.ran) < pSkip)
-					randomIndiv.clientVisited[c] = false;
+			batch[b] = new Individual(params, gpuMode);
+			if (params.ap.optionalVisit && (i + b) >= initSize * 4 / 5)
+			{
+				std::uniform_real_distribution<double> skipProb(0.1, 0.3);
+				double pSkip = skipProb(params.ran);
+				std::uniform_real_distribution<double> coin(0.0, 1.0);
+				for (int c = 1; c <= params.nbClients; c++)
+					if (coin(params.ran) < pSkip)
+						batch[b]->clientVisited[c] = false;
+			}
 		}
-		evaluateIndividual(randomIndiv);
-		addToPopulation(randomIndiv);
+		evaluateBatch(batch);
+		for (int b = 0; b < curBatch; b++)
+		{
+			addToPopulation(*batch[b]);
+			delete batch[b];
+		}
 
 		if (params.verbose && (i + 1) % std::max(1, initSize / 5) == 0)
 			std::cout << "  Init " << i + 1 << "/" << initSize
@@ -304,7 +319,12 @@ void GeneticHGS::run(std::ostream * logStream)
 	// --- Main genetic loop ---
 	auto tMainStart = std::chrono::steady_clock::now();
 	int nbIterNonProd = 0;
-	Individual offspring(params);
+
+	std::vector<Individual*> offspringPool;
+	offspringPool.reserve(batchSize);
+	for (int b = 0; b < batchSize; b++)
+		offspringPool.push_back(new Individual(params, gpuMode));
+	std::vector<Individual*> batchPtrs(batchSize);
 
 	for (int iter = 1; ; iter++)
 	{
@@ -329,11 +349,18 @@ void GeneticHGS::run(std::ostream * logStream)
 					std::cout << "----- RESTART at iter " << iter << "  T=" << t << "s" << std::endl;
 				for (auto * p : population) delete p;
 				population.clear();
-				for (int i = 0; i < initSize; i++)
+				for (int i = 0; i < initSize; i += batchSize)
 				{
-					Individual ri(params);
-					evaluateIndividual(ri);
-					addToPopulation(ri);
+					int curBatch = std::min(batchSize, initSize - i);
+					std::vector<Individual*> batch(curBatch);
+					for (int b = 0; b < curBatch; b++)
+						batch[b] = new Individual(params, gpuMode);
+					evaluateBatch(batch);
+					for (int b = 0; b < curBatch; b++)
+					{
+						addToPopulation(*batch[b]);
+						delete batch[b];
+					}
 				}
 				nbIterNonProd = 0;
 				continue;
@@ -345,15 +372,21 @@ void GeneticHGS::run(std::ostream * logStream)
 			}
 		}
 
-		crossoverOX(offspring, binaryTournament(), binaryTournament());
-		mutate(offspring);
-		evaluateIndividual(offspring);
-
-		bool improved = addToPopulation(offspring);
-		if (improved)
-			nbIterNonProd = 0;
-		else
-			nbIterNonProd++;
+		for (int b = 0; b < batchSize; b++)
+		{
+			crossoverOX(*offspringPool[b], binaryTournament(), binaryTournament());
+			mutate(*offspringPool[b]);
+			batchPtrs[b] = offspringPool[b];
+		}
+		evaluateBatch(batchPtrs);
+		for (int b = 0; b < batchSize; b++)
+		{
+			bool improved = addToPopulation(*offspringPool[b]);
+			if (improved)
+				nbIterNonProd = 0;
+			else
+				nbIterNonProd++;
+		}
 
 		if (logStream)
 		{
@@ -374,6 +407,8 @@ void GeneticHGS::run(std::ostream * logStream)
 					  << std::endl;
 		}
 	}
+
+	for (auto* p : offspringPool) delete p;
 
 	double mainLoopTime = std::chrono::duration_cast<std::chrono::milliseconds>(
 		std::chrono::steady_clock::now() - tMainStart).count() / 1000.0;
