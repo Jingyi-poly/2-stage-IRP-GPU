@@ -4,6 +4,7 @@
 #include <algorithm>
 #include <numeric>
 #include <iostream>
+#include <iomanip>
 #include <queue>
 #include <cmath>
 
@@ -189,6 +190,11 @@ PCTSPResult PCTSPExact::solveDeterministic()
             model.addConstr(expr == 2.0 * yVars[i]);
         }
 
+        // When all visits forced, fix y[i] = 1 => reduces to TSP
+        if (!params.ap.optionalVisit)
+            for (int i = 1; i < n; i++)
+                model.addConstr(yVars[i] == 1);
+
         model.update();
 
         SubtourCallback cb(n, xVars.data(), yVars.data());
@@ -265,7 +271,7 @@ std::vector<int> PCTSPExact::solveTSP(const std::vector<int> & clients) const
         env.start();
 
         GRBModel model(env);
-        model.set(GRB_DoubleParam_TimeLimit, std::min(timeLimit * 0.5, 60.0));
+        model.set(GRB_DoubleParam_TimeLimit, std::min(timeLimit * 0.5, 300.0));
 
         std::vector<int> nodes = {0};
         nodes.insert(nodes.end(), clients.begin(), clients.end());
@@ -377,12 +383,313 @@ double PCTSPExact::evaluateSubset(const std::vector<bool> & visited) const
 // 2. Local search: toggle each client, keep best improvement
 // 3. Repeat until no improvement
 // ──────────────────────────────────────────────────────────
+// ──────────────────────────────────────────────────────────
+// Benders callback: evaluates candidate tours via Split DP
+// across all scenarios, adds integer L-shaped optimality cuts.
+//
+// Master has only tour vars (a[i][j]) + one penalty variable θ.
+// θ represents the average stochastic Split DP cost.
+// When Gurobi proposes an integer tour, the callback:
+//   1. Extracts the tour permutation
+//   2. Evaluates SplitDP on all S scenarios (OpenMP parallel)
+//   3. If θ < true cost, adds a lazy cut to tighten θ
+// ──────────────────────────────────────────────────────────
+class BendersSplitCallback : public GRBCallback {
+public:
+    const Params & params;
+    int nc;
+    GRBVar * a_flat;
+    GRBVar   theta;
+    int numCuts;
+    double bestFoundCost;
+    std::vector<int> bestPerm;
+    bool verbose;
+
+    BendersSplitCallback(const Params & p, int nc, GRBVar * a, GRBVar th, bool verb)
+        : params(p), nc(nc), a_flat(a), theta(th),
+          numCuts(0), bestFoundCost(1e30), verbose(verb) {}
+
+protected:
+    void callback() override {
+        if (where != GRB_CB_MIPSOL) return;
+
+        std::vector<int> succ(nc, -1);
+        for (int i = 0; i < nc; i++)
+            for (int j = 0; j < nc; j++) if (i != j)
+                if (getSolution(a_flat[i * nc + j]) > 0.5)
+                    succ[i] = j;
+
+        std::vector<int> perm;
+        perm.reserve(nc);
+        int cur = 0;
+        for (int step = 0; step < nc; step++) {
+            perm.push_back(cur + 1);
+            if (succ[cur] < 0) return;
+            cur = succ[cur];
+        }
+
+        int S = params.n_scenarios;
+        double totalCost = 0.0;
+        #pragma omp parallel for reduction(+:totalCost) schedule(static)
+        for (int s = 0; s < S; s++)
+            totalCost += splitDPeval(perm, s);
+        double avgCost = totalCost / S;
+
+        if (avgCost < bestFoundCost) {
+            bestFoundCost = avgCost;
+            bestPerm = perm;
+        }
+
+        double thetaVal = getSolution(theta);
+        if (thetaVal < avgCost - 1e-4) {
+            GRBLinExpr tourSum = 0;
+            int c = 0;
+            for (int step = 0; step < nc; step++) {
+                tourSum += a_flat[c * nc + succ[c]];
+                c = succ[c];
+            }
+            addLazy(theta >= avgCost - avgCost * (nc - tourSum));
+            numCuts++;
+
+            if (verbose && numCuts % 50 == 1)
+                std::cout << "  [CB] cut #" << numCuts
+                          << "  θ_sol=" << thetaVal
+                          << "  true=" << avgCost
+                          << "  best=" << bestFoundCost << std::endl;
+        }
+    }
+
+    double splitDPeval(const std::vector<int> & perm, int scenIdx) const {
+        int sz = (int)perm.size();
+        if (sz == 0) return 0.0;
+        const double cap = params.vehicleCapacity;
+        const double penCap = params.penaltyCapacity;
+        std::vector<double> cost(sz + 1, 1e30);
+        cost[0] = 0.0;
+        for (int j = 1; j <= sz; j++) {
+            double load = 0.0, routeDist = 0.0;
+            for (int i = j; i >= 1; i--) {
+                int cli = perm[i - 1];
+                load += params.cli[cli].demands_scenarios[scenIdx];
+                if (i == j) routeDist = params.timeCost[cli][0];
+                else routeDist += params.timeCost[cli][perm[i]];
+                double fullDist = params.timeCost[0][cli] + routeDist;
+                double excess = std::max(0.0, load - cap);
+                double segCost = fullDist + penCap * excess;
+                if (cost[i - 1] + segCost < cost[j])
+                    cost[j] = cost[i - 1] + segCost;
+            }
+        }
+        return cost[sz];
+    }
+};
+
+// ──────────────────────────────────────────────────────────
+// Full stochastic MILP via Benders decomposition:
+//   Master:  directed TSP tour (a[i][j], u[i]) + θ penalty
+//   Sub:     Split DP evaluation per scenario (in callback)
+//
+// Model size is independent of S — only ~nc² variables.
+// Scenario costs are computed on-the-fly and fed back as
+// integer optimality cuts (lazy constraints).
+// ──────────────────────────────────────────────────────────
+PCTSPResult PCTSPExact::solveFullStochasticMILP()
+{
+    using std::cout; using std::endl; using std::fixed; using std::setprecision;
+    auto tStart = std::chrono::steady_clock::now();
+    PCTSPResult result;
+    result.optimal = false;
+    result.objValue = 1e30;
+
+    const int nc = n - 1;
+    const int S  = params.n_scenarios;
+
+    cout << "\n===== Benders Stochastic CVRP =====" << endl;
+    cout << "  Clients:    " << nc << endl;
+    cout << "  Scenarios:  " << S << endl;
+    cout << "  Master vars (binary):     " << nc * (nc - 1) << "  (tour arcs)" << endl;
+    cout << "  Master vars (continuous):  " << nc + 1 << "  (MTZ pos + θ)" << endl;
+    cout << "  Master constraints:        ~" << nc * (nc - 1) + 2 * nc + 1 << endl;
+    cout << "  Subproblem: SplitDP O(n²) × " << S << " scenarios per callback" << endl;
+    cout << "==================================" << endl;
+
+    try {
+        GRBEnv env(true);
+        if (!verbose) env.set(GRB_IntParam_OutputFlag, 0);
+        env.set(GRB_IntParam_LazyConstraints, 1);
+        env.start();
+        GRBModel model(env);
+        model.set(GRB_DoubleParam_TimeLimit, timeLimit);
+
+        /* ── 1. Directed tour arcs ── */
+        std::vector<GRBVar> a_var(nc * nc);
+        for (int i = 0; i < nc; i++)
+            for (int j = 0; j < nc; j++)
+                if (i != j)
+                    a_var[i * nc + j] = model.addVar(0, 1, 0, GRB_BINARY);
+
+        for (int i = 0; i < nc; i++) {
+            GRBLinExpr outD = 0, inD = 0;
+            for (int j = 0; j < nc; j++) if (j != i) {
+                outD += a_var[i * nc + j];
+                inD  += a_var[j * nc + i];
+            }
+            model.addConstr(outD == 1);
+            model.addConstr(inD  == 1);
+        }
+
+        /* ── 2. MTZ subtour elimination ── */
+        std::vector<GRBVar> u_var(nc);
+        for (int i = 0; i < nc; i++)
+            u_var[i] = model.addVar(1, nc, 0, GRB_CONTINUOUS);
+        model.addConstr(u_var[0] == 1);
+        for (int i = 0; i < nc; i++)
+            for (int j = 1; j < nc; j++) if (i != j)
+                model.addConstr(u_var[j] >= u_var[i] + 1 - nc * (1 - a_var[i * nc + j]));
+
+        /* ── 3. θ penalty variable: average stochastic Split cost ── */
+        GRBVar theta = model.addVar(0, GRB_INFINITY, 1.0, GRB_CONTINUOUS, "theta");
+        model.setObjective(GRBLinExpr(theta), GRB_MINIMIZE);
+
+        model.update();
+
+        cout << "\nMaster model:" << endl;
+        cout << "  Vars:        " << model.get(GRB_IntAttr_NumVars) << endl;
+        cout << "  Binary:      " << model.get(GRB_IntAttr_NumBinVars) << endl;
+        cout << "  Constraints: " << model.get(GRB_IntAttr_NumConstrs) << endl;
+        cout << "  Non-zeros:   " << model.get(GRB_IntAttr_NumNZs) << endl;
+        cout << "Solving with Benders callbacks..." << endl;
+
+        BendersSplitCallback cb(params, nc, a_var.data(), theta, verbose);
+        model.setCallback(&cb);
+        model.optimize();
+
+        auto tEnd = std::chrono::steady_clock::now();
+        result.solveTime = std::chrono::duration<double>(tEnd - tStart).count();
+
+        int status = model.get(GRB_IntAttr_Status);
+        cout << "\n  Benders cuts added: " << cb.numCuts << endl;
+        cout << "  Gurobi status:      " << status << endl;
+
+        if (cb.bestPerm.empty()) {
+            cout << "No feasible tour evaluated." << endl;
+            return result;
+        }
+
+        double bestBound = model.get(GRB_DoubleAttr_ObjBound);
+        result.objValue = cb.bestFoundCost;
+        result.optimal  = (status == GRB_OPTIMAL &&
+                           std::abs(cb.bestFoundCost - bestBound) < 1e-4);
+
+        result.tour.clear();
+        result.tour.push_back(0);
+        for (int c : cb.bestPerm) result.tour.push_back(c);
+        result.tour.push_back(0);
+
+        result.selectedNodes.push_back(0);
+        for (int c = 1; c <= nc; c++)
+            result.selectedNodes.push_back(c);
+
+        result.totalDistance = 0;
+        for (int i = 0; i + 1 < (int)result.tour.size(); i++)
+            result.totalDistance += params.timeCost[result.tour[i]][result.tour[i + 1]];
+
+        double totalDist = 0, totalExcess = 0;
+        const std::vector<int> & perm = cb.bestPerm;
+        #pragma omp parallel for reduction(+:totalDist,totalExcess) schedule(static)
+        for (int s = 0; s < S; s++) {
+            int sz = (int)perm.size();
+            std::vector<double> dp(sz + 1, 1e30);
+            std::vector<double> dpDist(sz + 1, 0), dpExcess(sz + 1, 0);
+            dp[0] = 0;
+            for (int j = 1; j <= sz; j++) {
+                double load = 0, rDist = 0;
+                for (int i = j; i >= 1; i--) {
+                    int cli = perm[i - 1];
+                    load += params.cli[cli].demands_scenarios[s];
+                    if (i == j) rDist = params.timeCost[cli][0];
+                    else rDist += params.timeCost[cli][perm[i]];
+                    double fDist = params.timeCost[0][cli] + rDist;
+                    double exc = std::max(0.0, load - params.vehicleCapacity);
+                    double seg = fDist + params.penaltyCapacity * exc;
+                    if (dp[i - 1] + seg < dp[j]) {
+                        dp[j] = dp[i - 1] + seg;
+                        dpDist[j] = dpDist[i - 1] + fDist;
+                        dpExcess[j] = dpExcess[i - 1] + exc;
+                    }
+                }
+            }
+            totalDist += dpDist[sz];
+            totalExcess += dpExcess[sz];
+        }
+        double avgDist = totalDist / S;
+        double avgExcess = totalExcess / S;
+
+        cout << "\n===== Benders Result =====" << endl;
+        cout << fixed << setprecision(2);
+        cout << "  Stochastic cost:  " << result.objValue << endl;
+        cout << "  avg distance:     " << avgDist << endl;
+        cout << "  avg capExcess:    " << avgExcess << endl;
+        cout << "  tourDist(TSP):    " << result.totalDistance << endl;
+        cout << "  Best bound:       " << bestBound << endl;
+        cout << "  Gap:              " << 100.0 * (result.objValue - bestBound) / (std::abs(result.objValue) + 1e-10) << "%" << endl;
+        cout << "  Cuts generated:   " << cb.numCuts << endl;
+        cout << "  Solve time:       " << result.solveTime << "s" << endl;
+
+    } catch (GRBException & e) {
+        std::cerr << "Gurobi error " << e.getErrorCode()
+                  << ": " << e.getMessage() << std::endl;
+    }
+    return result;
+}
+
+// ──────────────────────────────────────────────────────────
+// Solve stochastic PCTSP (original: TSP + Split DP)
+// ──────────────────────────────────────────────────────────
 PCTSPResult PCTSPExact::solveStochastic()
 {
     auto tStart = std::chrono::steady_clock::now();
     PCTSPResult best;
     best.objValue = 1e30;
     best.optimal = false;
+
+    // Forced all visits: solve TSP on all clients + stochastic evaluation only
+    if (!params.ap.optionalVisit) {
+        if (verbose)
+            std::cout << "--- All visits forced: TSP + stochastic Split DP ---" << std::endl;
+
+        std::vector<int> allClients;
+        for (int c = 1; c < n; c++) allClients.push_back(c);
+        std::vector<int> tour = solveTSP(allClients);
+        std::vector<bool> visited(n, true);
+
+        if (verbose)
+            std::cout << "  TSP solved, tour size: " << tour.size() << std::endl;
+
+        double cost = evaluateTourStochastic(tour, visited);
+
+        best.tour.clear();
+        best.tour.push_back(0);
+        for (int c : tour) best.tour.push_back(c);
+        best.tour.push_back(0);
+        best.selectedNodes.push_back(0);
+        for (int c : allClients) best.selectedNodes.push_back(c);
+        best.objValue = cost;
+        best.totalPrize = 0;
+        best.totalDistance = 0;
+        for (int i = 0; i + 1 < (int)best.tour.size(); i++)
+            best.totalDistance += params.timeCost[best.tour[i]][best.tour[i + 1]];
+
+        auto tEnd = std::chrono::steady_clock::now();
+        best.solveTime = std::chrono::duration<double>(tEnd - tStart).count();
+
+        if (verbose) {
+            std::cout << "  Stochastic cost (avg penalized): " << cost << std::endl;
+            std::cout << "  TSP tour distance: " << best.totalDistance << std::endl;
+            std::cout << "  Time: " << best.solveTime << "s" << std::endl;
+        }
+        return best;
+    }
 
     // Step 1: Deterministic PCTSP for initial subset
     PCTSPResult detResult = solveDeterministic();

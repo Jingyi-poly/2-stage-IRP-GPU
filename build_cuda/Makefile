@@ -276,6 +276,19 @@ bin_cuda/fast:
 .PHONY : bin_cuda/fast
 
 #=============================================================================
+# Target rules for targets named cross_validate
+
+# Build rule for target.
+cross_validate: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 cross_validate
+.PHONY : cross_validate
+
+# fast build rule for target.
+cross_validate/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cross_validate.dir/build.make CMakeFiles/cross_validate.dir/build
+.PHONY : cross_validate/fast
+
+#=============================================================================
 # Target rules for targets named pctsp_exact
 
 # Build rule for target.
@@ -983,6 +996,30 @@ Program/SplitCUDA.cu.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/objlib_cuda.dir/build.make CMakeFiles/objlib_cuda.dir/Program/SplitCUDA.cu.s
 .PHONY : Program/SplitCUDA.cu.s
 
+Program/cross_validate.o: Program/cross_validate.cpp.o
+.PHONY : Program/cross_validate.o
+
+# target to build an object file
+Program/cross_validate.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cross_validate.dir/build.make CMakeFiles/cross_validate.dir/Program/cross_validate.cpp.o
+.PHONY : Program/cross_validate.cpp.o
+
+Program/cross_validate.i: Program/cross_validate.cpp.i
+.PHONY : Program/cross_validate.i
+
+# target to preprocess a source file
+Program/cross_validate.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cross_validate.dir/build.make CMakeFiles/cross_validate.dir/Program/cross_validate.cpp.i
+.PHONY : Program/cross_validate.cpp.i
+
+Program/cross_validate.s: Program/cross_validate.cpp.s
+.PHONY : Program/cross_validate.s
+
+# target to generate assembly for a file
+Program/cross_validate.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cross_validate.dir/build.make CMakeFiles/cross_validate.dir/Program/cross_validate.cpp.s
+.PHONY : Program/cross_validate.cpp.s
+
 Program/main2.o: Program/main2.cpp.o
 .PHONY : Program/main2.o
 
@@ -1098,6 +1135,7 @@ help:
 	@echo "... NightlyUpdate"
 	@echo "... bin"
 	@echo "... bin_cuda"
+	@echo "... cross_validate"
 	@echo "... lib"
 	@echo "... lib_cuda"
 	@echo "... lib_static"
@@ -1142,6 +1180,9 @@ help:
 	@echo "... Program/SplitCUDA.o"
 	@echo "... Program/SplitCUDA.i"
 	@echo "... Program/SplitCUDA.s"
+	@echo "... Program/cross_validate.o"
+	@echo "... Program/cross_validate.i"
+	@echo "... Program/cross_validate.s"
 	@echo "... Program/main2.o"
 	@echo "... Program/main2.i"
 	@echo "... Program/main2.s"

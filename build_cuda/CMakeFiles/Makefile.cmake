@@ -72,6 +72,7 @@ set(CMAKE_DEPEND_INFO_FILES
   "CMakeFiles/lib_static_cuda.dir/DependInfo.cmake"
   "CMakeFiles/bin.dir/DependInfo.cmake"
   "CMakeFiles/bin_cuda.dir/DependInfo.cmake"
+  "CMakeFiles/cross_validate.dir/DependInfo.cmake"
   "CMakeFiles/pctsp_exact.dir/DependInfo.cmake"
   "CMakeFiles/Experimental.dir/DependInfo.cmake"
   "CMakeFiles/Nightly.dir/DependInfo.cmake"

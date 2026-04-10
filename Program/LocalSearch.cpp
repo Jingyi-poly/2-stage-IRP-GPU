@@ -18,9 +18,9 @@ void LocalSearch::run(Individual & indiv, double penaltyCapacityLS, double penal
 	searchCompleted = false;
 	for (loopID = 0; !searchCompleted; loopID++)
 	{
-		// std::cout<<"loopID: "<<loopID;
 		if (loopID > 1) // Allows at least two loops since some moves involving empty routes are not checked at the first loop
 			searchCompleted = true;
+		if (loopID > 200) { searchCompleted = true; break; }
 
 		/* CLASSICAL ROUTE IMPROVEMENT (RI) MOVES SUBJECT TO A PROXIMITY RESTRICTION */
 		for (int posU = 0; posU < params.nbClients; posU++)
@@ -877,15 +877,17 @@ void LocalSearch::exportIndividual(Individual & indiv)
 	int pos = 0;
 	for (int r = 0; r < params.nbVehicles; r++)
 	{
+		indiv.chromR[r].clear();
 		for (int i = 0; i < params.n_scenarios; ++i){
-			indiv.chromR_scen[r][i].clear();
+			indiv.chromR_scen[i][r].clear();
 		}
 		Node * node = depots[routePolarAngles[r].second].next;
 		while (!node->isDepot)
 		{
 			indiv.chromT[pos] = node->cour;
+			indiv.chromR[r].push_back(node->cour);
 			for (int i = 0; i < params.n_scenarios; ++i){
-				indiv.chromR_scen[r][i].push_back(node->cour);
+				indiv.chromR_scen[i][r].push_back(node->cour);
 			}
 			node = node->next;
 			pos++;

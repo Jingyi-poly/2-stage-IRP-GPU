@@ -118,6 +118,7 @@ class Split
 
 public:
 	int generateChromR(Individual & indiv, int idx_scen);
+	int generateChromR_single(Individual & indiv);
 
   // General Split function (tests the unlimited fleet, and only if it does not produce a feasible solution, runs the Split algorithm for limited fleet)
   void generalSplit(Individual & indiv, int nbMaxVehicles, int idx_scen);

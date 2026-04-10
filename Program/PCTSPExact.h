@@ -27,6 +27,10 @@ public:
     // over all scenarios. Returns the best subset + tour evaluated stochastically.
     PCTSPResult solveStochastic();
 
+    // Full stochastic MILP: jointly optimize tour ordering + per-scenario route
+    // splits with all scenarios as constraints in a single Gurobi model.
+    PCTSPResult solveFullStochasticMILP();
+
     // Evaluate a tour (visiting selected clients in tour order) across all scenarios
     double evaluateTourStochastic(const std::vector<int> & tour,
                                    const std::vector<bool> & visited) const;

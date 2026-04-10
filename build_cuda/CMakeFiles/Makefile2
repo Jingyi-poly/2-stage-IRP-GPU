@@ -71,6 +71,7 @@ all: CMakeFiles/lib_static.dir/all
 all: CMakeFiles/lib_static_cuda.dir/all
 all: CMakeFiles/bin.dir/all
 all: CMakeFiles/bin_cuda.dir/all
+all: CMakeFiles/cross_validate.dir/all
 all: CMakeFiles/pctsp_exact.dir/all
 all: Test/Test-c/all
 .PHONY : all
@@ -88,6 +89,7 @@ clean: CMakeFiles/lib_static.dir/clean
 clean: CMakeFiles/lib_static_cuda.dir/clean
 clean: CMakeFiles/bin.dir/clean
 clean: CMakeFiles/bin_cuda.dir/clean
+clean: CMakeFiles/cross_validate.dir/clean
 clean: CMakeFiles/pctsp_exact.dir/clean
 clean: CMakeFiles/Experimental.dir/clean
 clean: CMakeFiles/Nightly.dir/clean
@@ -142,7 +144,7 @@ Test/Test-c/clean: Test/Test-c/CMakeFiles/lib_test_c.dir/clean
 CMakeFiles/objlib.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/objlib.dir/build.make CMakeFiles/objlib.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/objlib.dir/build.make CMakeFiles/objlib.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/mnt/sda2/git/2-stage-IRP-GPU/build_cuda/CMakeFiles --progress-num=11,12,13,14,15,16,17,18,19,20 "Built target objlib"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/mnt/sda2/git/2-stage-IRP-GPU/build_cuda/CMakeFiles --progress-num=13,14,15,16,17,18,19,20,21,22 "Built target objlib"
 .PHONY : CMakeFiles/objlib.dir/all
 
 # Build rule for subdir invocation for target.
@@ -168,7 +170,7 @@ CMakeFiles/objlib.dir/clean:
 CMakeFiles/objlib_cuda.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/objlib_cuda.dir/build.make CMakeFiles/objlib_cuda.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/objlib_cuda.dir/build.make CMakeFiles/objlib_cuda.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/mnt/sda2/git/2-stage-IRP-GPU/build_cuda/CMakeFiles --progress-num=21,22,23,24,25,26,27,28,29,30,31 "Built target objlib_cuda"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/mnt/sda2/git/2-stage-IRP-GPU/build_cuda/CMakeFiles --progress-num=23,24,25,26,27,28,29,30,31,32,33 "Built target objlib_cuda"
 .PHONY : CMakeFiles/objlib_cuda.dir/all
 
 # Build rule for subdir invocation for target.
@@ -194,7 +196,7 @@ CMakeFiles/objlib_cuda.dir/clean:
 CMakeFiles/lib.dir/all: CMakeFiles/objlib.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/lib.dir/build.make CMakeFiles/lib.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/lib.dir/build.make CMakeFiles/lib.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/mnt/sda2/git/2-stage-IRP-GPU/build_cuda/CMakeFiles --progress-num=5 "Built target lib"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/mnt/sda2/git/2-stage-IRP-GPU/build_cuda/CMakeFiles --progress-num=7 "Built target lib"
 .PHONY : CMakeFiles/lib.dir/all
 
 # Build rule for subdir invocation for target.
@@ -220,7 +222,7 @@ CMakeFiles/lib.dir/clean:
 CMakeFiles/lib_cuda.dir/all: CMakeFiles/objlib_cuda.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/lib_cuda.dir/build.make CMakeFiles/lib_cuda.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/lib_cuda.dir/build.make CMakeFiles/lib_cuda.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/mnt/sda2/git/2-stage-IRP-GPU/build_cuda/CMakeFiles --progress-num=6 "Built target lib_cuda"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/mnt/sda2/git/2-stage-IRP-GPU/build_cuda/CMakeFiles --progress-num=8 "Built target lib_cuda"
 .PHONY : CMakeFiles/lib_cuda.dir/all
 
 # Build rule for subdir invocation for target.
@@ -246,7 +248,7 @@ CMakeFiles/lib_cuda.dir/clean:
 CMakeFiles/lib_static.dir/all: CMakeFiles/objlib.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/lib_static.dir/build.make CMakeFiles/lib_static.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/lib_static.dir/build.make CMakeFiles/lib_static.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/mnt/sda2/git/2-stage-IRP-GPU/build_cuda/CMakeFiles --progress-num=7 "Built target lib_static"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/mnt/sda2/git/2-stage-IRP-GPU/build_cuda/CMakeFiles --progress-num=9 "Built target lib_static"
 .PHONY : CMakeFiles/lib_static.dir/all
 
 # Build rule for subdir invocation for target.
@@ -272,7 +274,7 @@ CMakeFiles/lib_static.dir/clean:
 CMakeFiles/lib_static_cuda.dir/all: CMakeFiles/objlib_cuda.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/lib_static_cuda.dir/build.make CMakeFiles/lib_static_cuda.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/lib_static_cuda.dir/build.make CMakeFiles/lib_static_cuda.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/mnt/sda2/git/2-stage-IRP-GPU/build_cuda/CMakeFiles --progress-num=8 "Built target lib_static_cuda"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/mnt/sda2/git/2-stage-IRP-GPU/build_cuda/CMakeFiles --progress-num=10 "Built target lib_static_cuda"
 .PHONY : CMakeFiles/lib_static_cuda.dir/all
 
 # Build rule for subdir invocation for target.
@@ -344,13 +346,39 @@ CMakeFiles/bin_cuda.dir/clean:
 .PHONY : CMakeFiles/bin_cuda.dir/clean
 
 #=============================================================================
+# Target rules for target CMakeFiles/cross_validate.dir
+
+# All Build rule for target.
+CMakeFiles/cross_validate.dir/all: CMakeFiles/lib_static.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cross_validate.dir/build.make CMakeFiles/cross_validate.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cross_validate.dir/build.make CMakeFiles/cross_validate.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/mnt/sda2/git/2-stage-IRP-GPU/build_cuda/CMakeFiles --progress-num=5,6 "Built target cross_validate"
+.PHONY : CMakeFiles/cross_validate.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/cross_validate.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /mnt/sda2/git/2-stage-IRP-GPU/build_cuda/CMakeFiles 13
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/cross_validate.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /mnt/sda2/git/2-stage-IRP-GPU/build_cuda/CMakeFiles 0
+.PHONY : CMakeFiles/cross_validate.dir/rule
+
+# Convenience name for target.
+cross_validate: CMakeFiles/cross_validate.dir/rule
+.PHONY : cross_validate
+
+# clean rule for target.
+CMakeFiles/cross_validate.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cross_validate.dir/build.make CMakeFiles/cross_validate.dir/clean
+.PHONY : CMakeFiles/cross_validate.dir/clean
+
+#=============================================================================
 # Target rules for target CMakeFiles/pctsp_exact.dir
 
 # All Build rule for target.
 CMakeFiles/pctsp_exact.dir/all: CMakeFiles/lib_static.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/pctsp_exact.dir/build.make CMakeFiles/pctsp_exact.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/pctsp_exact.dir/build.make CMakeFiles/pctsp_exact.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/mnt/sda2/git/2-stage-IRP-GPU/build_cuda/CMakeFiles --progress-num=32,33,34 "Built target pctsp_exact"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/mnt/sda2/git/2-stage-IRP-GPU/build_cuda/CMakeFiles --progress-num=34,35,36 "Built target pctsp_exact"
 .PHONY : CMakeFiles/pctsp_exact.dir/all
 
 # Build rule for subdir invocation for target.
@@ -1104,7 +1132,7 @@ CMakeFiles/ContinuousSubmit.dir/clean:
 Test/Test-c/CMakeFiles/lib_test_c.dir/all: CMakeFiles/lib_static.dir/all
 	$(MAKE) $(MAKESILENT) -f Test/Test-c/CMakeFiles/lib_test_c.dir/build.make Test/Test-c/CMakeFiles/lib_test_c.dir/depend
 	$(MAKE) $(MAKESILENT) -f Test/Test-c/CMakeFiles/lib_test_c.dir/build.make Test/Test-c/CMakeFiles/lib_test_c.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/mnt/sda2/git/2-stage-IRP-GPU/build_cuda/CMakeFiles --progress-num=9,10 "Built target lib_test_c"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/mnt/sda2/git/2-stage-IRP-GPU/build_cuda/CMakeFiles --progress-num=11,12 "Built target lib_test_c"
 .PHONY : Test/Test-c/CMakeFiles/lib_test_c.dir/all
 
 # Build rule for subdir invocation for target.

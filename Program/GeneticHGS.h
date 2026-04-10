@@ -2,6 +2,8 @@
 #define GENETIC_HGS_H
 
 #include "Individual.h"
+#include "LocalSearch.h"
+#include "Split.h"
 #include <vector>
 #include <fstream>
 #include <chrono>
@@ -27,6 +29,9 @@ private:
 	int batchSize;
 	bool gpuMode;
 
+	LocalSearch localSearch;
+	Split splitLS;
+
 	std::vector<Individual *> population;
 	Individual bestSolution;
 
@@ -36,12 +41,15 @@ private:
 	// OX Crossover (identical to classic HGS)
 	void crossoverOX(Individual & result, const Individual & parent1, const Individual & parent2);
 
-	// Mutation operators (compensate for skipping LocalSearch)
+	// Mutation operators
 	void mutateSegmentReversal(Individual & indiv);
 	void mutateSwap(Individual & indiv);
 	void mutateOrOpt(Individual & indiv);
 	void mutateToggleVisit(Individual & indiv);
 	void mutate(Individual & indiv);
+
+	// Local search on routes (single-scenario mean demand, then GPU re-evaluates)
+	void educate(Individual & indiv);
 
 	// Population management
 	bool addToPopulation(const Individual & indiv);

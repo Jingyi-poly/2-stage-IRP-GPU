@@ -40,46 +40,55 @@ int main(int argc, char *argv[])
         if (commandline.ap.timeLim > 0)
             pctspTimeLimit = commandline.ap.timeLim;
 
+        bool forceAllVisits = !commandline.ap.optionalVisit;
+        cout << "Mode: " << (forceAllVisits ? "Full Stochastic MILP (all visits)" : "PCTSP (optional visits)") << endl;
+
         PCTSPExact solver(params, pctspTimeLimit, commandline.verbose);
 
-        // ── 1. Deterministic PCTSP ──
-        cout << "\n========================================" << endl;
-        cout << " PHASE 1: Deterministic PCTSP (Gurobi)" << endl;
-        cout << "========================================" << endl;
-        PCTSPResult detResult = solver.solveDeterministic();
+        PCTSPResult stochResult;
 
-        if (!detResult.selectedNodes.empty()) {
-            cout << fixed << setprecision(2);
-            cout << "  Obj (prize - dist): " << detResult.objValue << endl;
-            cout << "  Visited: " << detResult.selectedNodes.size() - 1
-                 << "/" << params.nbClients << endl;
-            cout << "  Tour distance: " << detResult.totalDistance << endl;
-            cout << "  Optimal: " << (detResult.optimal ? "Yes" : "No") << endl;
-            cout << "  Time: " << detResult.solveTime << "s" << endl;
+        if (forceAllVisits) {
+            // ── Full stochastic MILP: tour + per-scenario splits in one model ──
+            stochResult = solver.solveFullStochasticMILP();
+        } else {
+            // ── 1. Deterministic PCTSP ──
+            cout << "\n========================================" << endl;
+            cout << " PHASE 1: Deterministic PCTSP (Gurobi)" << endl;
+            cout << "========================================" << endl;
+            PCTSPResult detResult = solver.solveDeterministic();
+
+            if (!detResult.selectedNodes.empty()) {
+                cout << fixed << setprecision(2);
+                cout << "  Obj (prize - dist): " << detResult.objValue << endl;
+                cout << "  Visited: " << detResult.selectedNodes.size() - 1
+                     << "/" << params.nbClients << endl;
+                cout << "  Tour distance: " << detResult.totalDistance << endl;
+                cout << "  Optimal: " << (detResult.optimal ? "Yes" : "No") << endl;
+                cout << "  Time: " << detResult.solveTime << "s" << endl;
+            }
+
+            // ── 2. Stochastic PCTSP (LS) ──
+            cout << "\n========================================" << endl;
+            cout << " Stochastic PCTSP (LS)" << endl;
+            cout << "========================================" << endl;
+            stochResult = solver.solveStochastic();
         }
 
-        // ── 2. Stochastic PCTSP (with subset local search) ──
+        // ── Summary ──
         cout << "\n========================================" << endl;
-        cout << " PHASE 2: Stochastic PCTSP (LS)" << endl;
-        cout << "========================================" << endl;
-        PCTSPResult stochResult = solver.solveStochastic();
-
-        // ── 3. Summary ──
-        cout << "\n========================================" << endl;
-        cout << " COMPARISON SUMMARY" << endl;
+        cout << " RESULT SUMMARY" << endl;
         cout << "========================================" << endl;
         cout << fixed << setprecision(2);
-        cout << "  Det PCTSP obj (prize-dist):  " << detResult.objValue << endl;
-        cout << "  Stochastic PCTSP cost:       " << stochResult.objValue << endl;
-        cout << "  Stochastic PCTSP visited:    ";
-        for (int nd : stochResult.tour) cout << nd << " ";
+        cout << "  Stochastic cost:   " << stochResult.objValue << endl;
+        cout << "  Tour distance:     " << stochResult.totalDistance << endl;
+        cout << "  Visited:           " << stochResult.selectedNodes.size() - 1
+             << "/" << params.nbClients << endl;
+        cout << "  Time:              " << stochResult.solveTime << "s" << endl;
+
+        cout << "  chromT:";
+        for (int nd : stochResult.tour)
+            if (nd != 0) cout << " " << nd;
         cout << endl;
-        cout << "  Time (total):                " << stochResult.solveTime << "s" << endl;
-        cout << "  ─────────────────────────────" << endl;
-        cout << "  >> Run HGS with same settings to compare:" << endl;
-        cout << "     ./hgs_cuda <instance> sol.txt -seed 1 -nextrascen "
-             << (params.n_scenarios - 1) << " -maxClient " << params.nbClients
-             << " -optionalVisit 1" << endl;
     }
     catch (const string & e) { cout << "EXCEPTION | " << e << endl; }
     catch (const exception & e) { cout << "EXCEPTION | " << e.what() << endl; }

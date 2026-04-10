@@ -1041,6 +1041,8 @@ CMakeFiles/objlib_cuda.dir/Program/GeneticHGS.cpp.o: ../Program/GeneticHGS.cpp \
   /usr/include/c++/11/bits/stl_numeric.h \
   /usr/include/c++/11/bit \
   /usr/include/c++/11/pstl/glue_numeric_defs.h \
+  ../Program/LocalSearch.h \
+  ../Program/Split.h \
   /usr/include/c++/11/chrono \
   /usr/include/c++/11/ratio \
   /usr/include/c++/11/ctime \
@@ -3019,11 +3021,11 @@ CMakeFiles/objlib_cuda.dir/Program/SplitCUDA.cu.o: ../Program/SplitCUDA.cu \
   /usr/include/c++/11/pstl/glue_numeric_defs.h \
   ../Program/Individual.h \
   /usr/lib/gcc/x86_64-linux-gnu/11/include/omp.h \
+  /usr/include/c++/11/cstring \
   /usr/include/c++/11/chrono \
   /usr/include/c++/11/ratio \
   /usr/include/c++/11/ctime \
-  /usr/include/c++/11/bits/parse_numbers.h \
-  /usr/include/c++/11/cstring
+  /usr/include/c++/11/bits/parse_numbers.h
 
 
 /usr/local/cuda/include/device_launch_parameters.h:

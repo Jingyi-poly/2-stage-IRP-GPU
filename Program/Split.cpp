@@ -32,6 +32,21 @@ void Split::generalSplit(Individual & indiv, int nbMaxVehicles, int idx_scen)
 	// indiv.evaluateCompleteCost(params);
 }
 
+int Split::generateChromR_single(Individual & indiv){
+	int end = params.nbClients;
+	for (int k = params.nbVehicles - 1; k >= maxVehicles; k--)
+		indiv.chromR[k].clear();
+	for (int k = maxVehicles - 1; k >= 0; k--)
+	{
+		indiv.chromR[k].clear();
+		int begin = pred[0][end];
+		for (int ii = begin; ii < end; ii++)
+			indiv.chromR[k].push_back(indiv.chromT[ii]);
+		end = begin;
+	}
+	return end;
+}
+
 int Split::generateChromR(Individual & indiv, int idx_scen){
 	// std::cout<<"!!!!!!!!!! function    "<<idx_scen<<"\n";
 	// for (int p : pred[0]){

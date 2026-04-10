@@ -5,7 +5,8 @@
 #include <cmath>
 
 GeneticHGS::GeneticHGS(Params & params, EvalFunc evaluator, int batchSize, bool gpuMode)
-	: params(params), evaluator(std::move(evaluator)), batchSize(batchSize), gpuMode(gpuMode), bestSolution(params)
+	: params(params), evaluator(std::move(evaluator)), batchSize(batchSize), gpuMode(gpuMode),
+	  localSearch(params), splitLS(params), bestSolution(params)
 {
 	bestSolution.eval.penalizedCost = 1.e30;
 }
@@ -144,6 +145,34 @@ void GeneticHGS::mutate(Individual & indiv)
 		case 1: mutateSwap(indiv); break;
 		case 2: mutateOrOpt(indiv); break;
 	}
+}
+
+// ───────────────── Local Search (educate) ─────────────────
+
+void GeneticHGS::educate(Individual & indiv)
+{
+	// CPU Split on scenario 0 (mean demand) to obtain initial route partition
+	splitLS.generalSplit(indiv, params.nbVehicles, 0);
+	splitLS.generateChromR_single(indiv);
+
+	// Temporarily switch to single scenario for fast LS
+	int savedNScen = params.n_scenarios;
+	params.n_scenarios = 1;
+
+	// Save original chromR_scen, allocate [1][nbVehicles] for exportIndividual
+	auto savedChromRScen = std::move(indiv.chromR_scen);
+	indiv.chromR_scen.assign(1, std::vector<std::vector<int>>(params.nbVehicles));
+
+	localSearch.run(indiv, params.penaltyCapacity, params.penaltyDuration);
+
+	// Repair: if infeasible, try again with larger penalties
+	if (!indiv.eval.isFeasible && params.ran() % 2 == 0)
+	{
+		localSearch.run(indiv, params.penaltyCapacity * 10., params.penaltyDuration * 10.);
+	}
+
+	params.n_scenarios = savedNScen;
+	indiv.chromR_scen = std::move(savedChromRScen);
 }
 
 // ───────────────── Population management ─────────────────
@@ -299,6 +328,7 @@ void GeneticHGS::run(std::ostream * logStream)
 					if (coin(params.ran) < pSkip)
 						batch[b]->clientVisited[c] = false;
 			}
+			educate(*batch[b]);
 		}
 		evaluateBatch(batch);
 		for (int b = 0; b < curBatch; b++)
@@ -354,7 +384,10 @@ void GeneticHGS::run(std::ostream * logStream)
 					int curBatch = std::min(batchSize, initSize - i);
 					std::vector<Individual*> batch(curBatch);
 					for (int b = 0; b < curBatch; b++)
+					{
 						batch[b] = new Individual(params, gpuMode);
+						educate(*batch[b]);
+					}
 					evaluateBatch(batch);
 					for (int b = 0; b < curBatch; b++)
 					{
@@ -376,6 +409,7 @@ void GeneticHGS::run(std::ostream * logStream)
 		{
 			crossoverOX(*offspringPool[b], binaryTournament(), binaryTournament());
 			mutate(*offspringPool[b]);
+			educate(*offspringPool[b]);
 			batchPtrs[b] = offspringPool[b];
 		}
 		evaluateBatch(batchPtrs);

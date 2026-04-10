@@ -75,6 +75,10 @@ if(CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR)
     set_target_properties(bin_cuda PROPERTIES OUTPUT_NAME hgs_cuda CUDA_ARCHITECTURES 75)
 
 
+    # Cross-validation tool
+    add_executable(cross_validate Program/cross_validate.cpp)
+    target_link_libraries(cross_validate PRIVATE lib_static OpenMP::OpenMP_CXX)
+
     # PCTSP Exact Solver (requires Gurobi)
     set(GUROBI_HOME "/opt/gurobi1201/linux64")
     add_executable(pctsp_exact Program/main_pctsp.cpp Program/PCTSPExact.cpp)

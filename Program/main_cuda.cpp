@@ -145,6 +145,14 @@ int main(int argc, char *argv[])
 			std::cout << "  avg capExcess: " << best->eval.capacityExcess / params.n_scenarios << std::endl;
 			std::cout << "  isFeasible:    " << best->eval.isFeasible << std::endl;
 			std::cout << "  nbRoutes:      " << best->eval.nbRoutes << std::endl;
+			double tourDist = 0;
+			if (!best->chromT.empty()) {
+				tourDist += params.timeCost[0][best->chromT[0]];
+				for (int i = 0; i + 1 < (int)best->chromT.size(); i++)
+					tourDist += params.timeCost[best->chromT[i]][best->chromT[i+1]];
+				tourDist += params.timeCost[best->chromT.back()][0];
+			}
+			std::cout << "  tourDist(TSP): " << tourDist << std::endl;
 			std::cout << "  chromT:";
 			for (int c : best->chromT) std::cout << " " << c;
 			std::cout << std::endl;
