@@ -73,6 +73,7 @@ all: CMakeFiles/bin.dir/all
 all: CMakeFiles/bin_cuda.dir/all
 all: CMakeFiles/cross_validate.dir/all
 all: CMakeFiles/pctsp_exact.dir/all
+all: CMakeFiles/pctsp_exact_cuda.dir/all
 all: Test/Test-c/all
 .PHONY : all
 
@@ -91,6 +92,7 @@ clean: CMakeFiles/bin.dir/clean
 clean: CMakeFiles/bin_cuda.dir/clean
 clean: CMakeFiles/cross_validate.dir/clean
 clean: CMakeFiles/pctsp_exact.dir/clean
+clean: CMakeFiles/pctsp_exact_cuda.dir/clean
 clean: CMakeFiles/Experimental.dir/clean
 clean: CMakeFiles/Nightly.dir/clean
 clean: CMakeFiles/Continuous.dir/clean
@@ -396,6 +398,32 @@ pctsp_exact: CMakeFiles/pctsp_exact.dir/rule
 CMakeFiles/pctsp_exact.dir/clean:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/pctsp_exact.dir/build.make CMakeFiles/pctsp_exact.dir/clean
 .PHONY : CMakeFiles/pctsp_exact.dir/clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/pctsp_exact_cuda.dir
+
+# All Build rule for target.
+CMakeFiles/pctsp_exact_cuda.dir/all: CMakeFiles/lib_static_cuda.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/pctsp_exact_cuda.dir/build.make CMakeFiles/pctsp_exact_cuda.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/pctsp_exact_cuda.dir/build.make CMakeFiles/pctsp_exact_cuda.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/mnt/sda2/git/2-stage-IRP-GPU/build_cuda/CMakeFiles --progress-num=37,38,39 "Built target pctsp_exact_cuda"
+.PHONY : CMakeFiles/pctsp_exact_cuda.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/pctsp_exact_cuda.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /mnt/sda2/git/2-stage-IRP-GPU/build_cuda/CMakeFiles 15
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/pctsp_exact_cuda.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /mnt/sda2/git/2-stage-IRP-GPU/build_cuda/CMakeFiles 0
+.PHONY : CMakeFiles/pctsp_exact_cuda.dir/rule
+
+# Convenience name for target.
+pctsp_exact_cuda: CMakeFiles/pctsp_exact_cuda.dir/rule
+.PHONY : pctsp_exact_cuda
+
+# clean rule for target.
+CMakeFiles/pctsp_exact_cuda.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/pctsp_exact_cuda.dir/build.make CMakeFiles/pctsp_exact_cuda.dir/clean
+.PHONY : CMakeFiles/pctsp_exact_cuda.dir/clean
 
 #=============================================================================
 # Target rules for target CMakeFiles/Experimental.dir

@@ -302,6 +302,19 @@ pctsp_exact/fast:
 .PHONY : pctsp_exact/fast
 
 #=============================================================================
+# Target rules for targets named pctsp_exact_cuda
+
+# Build rule for target.
+pctsp_exact_cuda: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 pctsp_exact_cuda
+.PHONY : pctsp_exact_cuda
+
+# fast build rule for target.
+pctsp_exact_cuda/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/pctsp_exact_cuda.dir/build.make CMakeFiles/pctsp_exact_cuda.dir/build
+.PHONY : pctsp_exact_cuda/fast
+
+#=============================================================================
 # Target rules for targets named Experimental
 
 # Build rule for target.
@@ -873,6 +886,7 @@ Program/PCTSPExact.o: Program/PCTSPExact.cpp.o
 # target to build an object file
 Program/PCTSPExact.cpp.o:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/pctsp_exact.dir/build.make CMakeFiles/pctsp_exact.dir/Program/PCTSPExact.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/pctsp_exact_cuda.dir/build.make CMakeFiles/pctsp_exact_cuda.dir/Program/PCTSPExact.cpp.o
 .PHONY : Program/PCTSPExact.cpp.o
 
 Program/PCTSPExact.i: Program/PCTSPExact.cpp.i
@@ -881,6 +895,7 @@ Program/PCTSPExact.i: Program/PCTSPExact.cpp.i
 # target to preprocess a source file
 Program/PCTSPExact.cpp.i:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/pctsp_exact.dir/build.make CMakeFiles/pctsp_exact.dir/Program/PCTSPExact.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/pctsp_exact_cuda.dir/build.make CMakeFiles/pctsp_exact_cuda.dir/Program/PCTSPExact.cpp.i
 .PHONY : Program/PCTSPExact.cpp.i
 
 Program/PCTSPExact.s: Program/PCTSPExact.cpp.s
@@ -889,6 +904,7 @@ Program/PCTSPExact.s: Program/PCTSPExact.cpp.s
 # target to generate assembly for a file
 Program/PCTSPExact.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/pctsp_exact.dir/build.make CMakeFiles/pctsp_exact.dir/Program/PCTSPExact.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/pctsp_exact_cuda.dir/build.make CMakeFiles/pctsp_exact_cuda.dir/Program/PCTSPExact.cpp.s
 .PHONY : Program/PCTSPExact.cpp.s
 
 Program/Params.o: Program/Params.cpp.o
@@ -1092,6 +1108,30 @@ Program/main_pctsp.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/pctsp_exact.dir/build.make CMakeFiles/pctsp_exact.dir/Program/main_pctsp.cpp.s
 .PHONY : Program/main_pctsp.cpp.s
 
+Program/main_pctsp_cuda.o: Program/main_pctsp_cuda.cpp.o
+.PHONY : Program/main_pctsp_cuda.o
+
+# target to build an object file
+Program/main_pctsp_cuda.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/pctsp_exact_cuda.dir/build.make CMakeFiles/pctsp_exact_cuda.dir/Program/main_pctsp_cuda.cpp.o
+.PHONY : Program/main_pctsp_cuda.cpp.o
+
+Program/main_pctsp_cuda.i: Program/main_pctsp_cuda.cpp.i
+.PHONY : Program/main_pctsp_cuda.i
+
+# target to preprocess a source file
+Program/main_pctsp_cuda.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/pctsp_exact_cuda.dir/build.make CMakeFiles/pctsp_exact_cuda.dir/Program/main_pctsp_cuda.cpp.i
+.PHONY : Program/main_pctsp_cuda.cpp.i
+
+Program/main_pctsp_cuda.s: Program/main_pctsp_cuda.cpp.s
+.PHONY : Program/main_pctsp_cuda.s
+
+# target to generate assembly for a file
+Program/main_pctsp_cuda.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/pctsp_exact_cuda.dir/build.make CMakeFiles/pctsp_exact_cuda.dir/Program/main_pctsp_cuda.cpp.s
+.PHONY : Program/main_pctsp_cuda.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -1144,6 +1184,7 @@ help:
 	@echo "... objlib"
 	@echo "... objlib_cuda"
 	@echo "... pctsp_exact"
+	@echo "... pctsp_exact_cuda"
 	@echo "... Program/AlgorithmParameters.o"
 	@echo "... Program/AlgorithmParameters.i"
 	@echo "... Program/AlgorithmParameters.s"
@@ -1192,6 +1233,9 @@ help:
 	@echo "... Program/main_pctsp.o"
 	@echo "... Program/main_pctsp.i"
 	@echo "... Program/main_pctsp.s"
+	@echo "... Program/main_pctsp_cuda.o"
+	@echo "... Program/main_pctsp_cuda.i"
+	@echo "... Program/main_pctsp_cuda.s"
 .PHONY : help
 
 

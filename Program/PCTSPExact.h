@@ -4,6 +4,7 @@
 #include "Params.h"
 #include <vector>
 #include <string>
+#include <functional>
 
 struct PCTSPResult {
     double objValue;
@@ -15,21 +16,19 @@ struct PCTSPResult {
     bool optimal;
 };
 
+using TourEvalFunc = std::function<double(const std::vector<int>&)>;
+
 class PCTSPExact {
 public:
     PCTSPExact(const Params & params, double timeLimit = 600.0, bool verbose = true);
 
-    // Deterministic PCTSP: maximize Σ prize_j * y_j - Σ c_ij * x_ij
-    // prizes[i] = skipPenalty[i] for clients, 0 for depot
     PCTSPResult solveDeterministic();
-
-    // Stochastic PCTSP: for each candidate subset, evaluate expected Split cost
-    // over all scenarios. Returns the best subset + tour evaluated stochastically.
     PCTSPResult solveStochastic();
 
-    // Full stochastic MILP: jointly optimize tour ordering + per-scenario route
-    // splits with all scenarios as constraints in a single Gurobi model.
-    PCTSPResult solveFullStochasticMILP();
+    // Benders stochastic MILP. If gpuEval is provided, uses it instead of
+    // internal CPU Split DP to evaluate tours in the callback.
+    // gpuEval signature: (const vector<int>& perm) -> avg stochastic cost
+    PCTSPResult solveFullStochasticMILP(TourEvalFunc gpuEval = nullptr);
 
     // Evaluate a tour (visiting selected clients in tour order) across all scenarios
     double evaluateTourStochastic(const std::vector<int> & tour,

@@ -404,10 +404,13 @@ public:
     double bestFoundCost;
     std::vector<int> bestPerm;
     bool verbose;
+    TourEvalFunc externalEval;
 
-    BendersSplitCallback(const Params & p, int nc, GRBVar * a, GRBVar th, bool verb)
+    BendersSplitCallback(const Params & p, int nc, GRBVar * a, GRBVar th,
+                         bool verb, TourEvalFunc ext = nullptr)
         : params(p), nc(nc), a_flat(a), theta(th),
-          numCuts(0), bestFoundCost(1e30), verbose(verb) {}
+          numCuts(0), bestFoundCost(1e30), verbose(verb),
+          externalEval(std::move(ext)) {}
 
 protected:
     void callback() override {
@@ -428,12 +431,17 @@ protected:
             cur = succ[cur];
         }
 
-        int S = params.n_scenarios;
-        double totalCost = 0.0;
-        #pragma omp parallel for reduction(+:totalCost) schedule(static)
-        for (int s = 0; s < S; s++)
-            totalCost += splitDPeval(perm, s);
-        double avgCost = totalCost / S;
+        double avgCost;
+        if (externalEval) {
+            avgCost = externalEval(perm);
+        } else {
+            int S = params.n_scenarios;
+            double totalCost = 0.0;
+            #pragma omp parallel for reduction(+:totalCost) schedule(static)
+            for (int s = 0; s < S; s++)
+                totalCost += splitDPeval(perm, s);
+            avgCost = totalCost / S;
+        }
 
         if (avgCost < bestFoundCost) {
             bestFoundCost = avgCost;
@@ -493,7 +501,7 @@ protected:
 // Scenario costs are computed on-the-fly and fed back as
 // integer optimality cuts (lazy constraints).
 // ──────────────────────────────────────────────────────────
-PCTSPResult PCTSPExact::solveFullStochasticMILP()
+PCTSPResult PCTSPExact::solveFullStochasticMILP(TourEvalFunc gpuEval)
 {
     using std::cout; using std::endl; using std::fixed; using std::setprecision;
     auto tStart = std::chrono::steady_clock::now();
@@ -560,7 +568,9 @@ PCTSPResult PCTSPExact::solveFullStochasticMILP()
         cout << "  Non-zeros:   " << model.get(GRB_IntAttr_NumNZs) << endl;
         cout << "Solving with Benders callbacks..." << endl;
 
-        BendersSplitCallback cb(params, nc, a_var.data(), theta, verbose);
+        cout << "  Eval mode: " << (gpuEval ? "GPU (external)" : "CPU (OpenMP)") << endl;
+
+        BendersSplitCallback cb(params, nc, a_var.data(), theta, verbose, gpuEval);
         model.setCallback(&cb);
         model.optimize();
 

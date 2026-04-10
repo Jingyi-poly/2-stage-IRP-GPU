@@ -86,6 +86,13 @@ if(CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR)
     target_link_libraries(pctsp_exact PRIVATE lib_static OpenMP::OpenMP_CXX
         ${GUROBI_HOME}/lib/libgurobi_c++.a ${GUROBI_HOME}/lib/libgurobi120.so)
 
+    # PCTSP Exact Solver with GPU Split DP in Benders callback
+    add_executable(pctsp_exact_cuda Program/main_pctsp_cuda.cpp Program/PCTSPExact.cpp)
+    set_target_properties(pctsp_exact_cuda PROPERTIES CUDA_ARCHITECTURES 75)
+    target_include_directories(pctsp_exact_cuda PRIVATE ${GUROBI_HOME}/include)
+    target_link_libraries(pctsp_exact_cuda PRIVATE lib_static_cuda OpenMP::OpenMP_CXX
+        ${GUROBI_HOME}/lib/libgurobi_c++.a ${GUROBI_HOME}/lib/libgurobi120.so)
+
     # Test Executable
 
     include(CTest)
