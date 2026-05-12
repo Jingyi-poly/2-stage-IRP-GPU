@@ -397,36 +397,83 @@ double PCTSPExact::evaluateSubset(const std::vector<bool> & visited) const
 class BendersSplitCallback : public GRBCallback {
 public:
     const Params & params;
-    int nc;
-    GRBVar * a_flat;
+    int nt;              // total nodes in cycle (depot + clients)
+    int nc;              // number of clients = nt - 1
+    GRBVar * a_flat;     // arc vars indexed [i * nt + j], i,j in {0..nt-1}
     GRBVar   theta;
     int numCuts;
+    int numSEC;
     double bestFoundCost;
     std::vector<int> bestPerm;
     bool verbose;
     TourEvalFunc externalEval;
 
-    BendersSplitCallback(const Params & p, int nc, GRBVar * a, GRBVar th,
+    BendersSplitCallback(const Params & p, int nt, GRBVar * a, GRBVar th,
                          bool verb, TourEvalFunc ext = nullptr)
-        : params(p), nc(nc), a_flat(a), theta(th),
-          numCuts(0), bestFoundCost(1e30), verbose(verb),
+        : params(p), nt(nt), nc(nt - 1), a_flat(a), theta(th),
+          numCuts(0), numSEC(0), bestFoundCost(1e30), verbose(verb),
           externalEval(std::move(ext)) {}
 
 protected:
     void callback() override {
-        if (where != GRB_CB_MIPSOL) return;
+        if (where == GRB_CB_MIPSOL) {
+            handleMIPSOL();
+        } else if (where == GRB_CB_MIPNODE) {
+            if (getIntInfo(GRB_CB_MIPNODE_STATUS) == GRB_OPTIMAL)
+                separateDFJ();
+        }
+    }
 
-        std::vector<int> succ(nc, -1);
-        for (int i = 0; i < nc; i++)
-            for (int j = 0; j < nc; j++) if (i != j)
-                if (getSolution(a_flat[i * nc + j]) > 0.5)
+    // ── Integer solution: check subtours, evaluate Split DP, add cuts ──
+    void handleMIPSOL() {
+        std::vector<int> succ(nt, -1);
+        for (int i = 0; i < nt; i++)
+            for (int j = 0; j < nt; j++) if (i != j)
+                if (getSolution(a_flat[i * nt + j]) > 0.5)
                     succ[i] = j;
 
+        // Find connected components to detect subtours
+        std::vector<int> comp(nt, -1);
+        int nComp = 0;
+        std::vector<std::vector<int>> components;
+        for (int start = 0; start < nt; start++) {
+            if (comp[start] >= 0) continue;
+            std::vector<int> cycle;
+            int cur = start;
+            while (cur >= 0 && comp[cur] < 0) {
+                comp[cur] = nComp;
+                cycle.push_back(cur);
+                cur = succ[cur];
+            }
+            components.push_back(std::move(cycle));
+            nComp++;
+        }
+
+        // If subtours exist: add SEC for each component not containing depot
+        if (nComp > 1) {
+            int depotComp = comp[0];
+            for (int c = 0; c < nComp; c++) {
+                if (c == depotComp) continue;
+                const auto & S = components[c];
+                std::vector<bool> inS(nt, false);
+                for (int v : S) inS[v] = true;
+                GRBLinExpr cutExpr = 0;
+                for (int i : S)
+                    for (int j = 0; j < nt; j++) if (!inS[j] && i != j)
+                        cutExpr += a_flat[i * nt + j];
+                addLazy(cutExpr >= 1);
+                numSEC++;
+            }
+            return;
+        }
+
+        // Single Hamiltonian cycle: extract permutation
         std::vector<int> perm;
         perm.reserve(nc);
-        int cur = 0;
+        int cur = succ[0];
+        if (cur < 0) return;
         for (int step = 0; step < nc; step++) {
-            perm.push_back(cur + 1);
+            perm.push_back(cur);
             if (succ[cur] < 0) return;
             cur = succ[cur];
         }
@@ -452,18 +499,119 @@ protected:
         if (thetaVal < avgCost - 1e-4) {
             GRBLinExpr tourSum = 0;
             int c = 0;
-            for (int step = 0; step < nc; step++) {
-                tourSum += a_flat[c * nc + succ[c]];
+            for (int step = 0; step < nt; step++) {
+                tourSum += a_flat[c * nt + succ[c]];
                 c = succ[c];
             }
-            addLazy(theta >= avgCost - avgCost * (nc - tourSum));
+            addLazy(theta >= avgCost - avgCost * (nt - tourSum));
             numCuts++;
 
-            if (verbose && numCuts % 50 == 1)
+            if (verbose && numCuts % 50 == 1) {
+                double lb = getDoubleInfo(GRB_CB_MIPSOL_OBJBND);
+                double gap = (bestFoundCost > 1e-6)
+                    ? 100.0 * (bestFoundCost - lb) / bestFoundCost : 100.0;
                 std::cout << "  [CB] cut #" << numCuts
-                          << "  θ_sol=" << thetaVal
-                          << "  true=" << avgCost
-                          << "  best=" << bestFoundCost << std::endl;
+                          << "  SEC=" << numSEC
+                          << "  LB=" << lb
+                          << "  UB=" << bestFoundCost
+                          << "  gap=" << gap << "%"
+                          << "  (this_tour=" << avgCost << ")"
+                          << std::endl;
+            }
+        }
+    }
+
+    // ── DFJ subtour elimination via max-flow / min-cut separation ──
+    // For each client node t, compute max-flow from depot (0) to t
+    // on the fractional support graph. If max-flow < 1-eps, add SEC.
+    void separateDFJ() {
+        // Build fractional capacity graph
+        std::vector<double> xval(nt * nt, 0.0);
+        for (int i = 0; i < nt; i++)
+            for (int j = 0; j < nt; j++) if (i != j)
+                xval[i * nt + j] = getNodeRel(a_flat[i * nt + j]);
+
+        // Use connected-component approach on undirected fractional graph.
+        // Merge directed arcs into undirected: cap(i,j) = x(i,j) + x(j,i)
+        std::vector<double> ucap(nt * nt, 0.0);
+        for (int i = 0; i < nt; i++)
+            for (int j = i + 1; j < nt; j++) {
+                double c = xval[i * nt + j] + xval[j * nt + i];
+                ucap[i * nt + j] = c;
+                ucap[j * nt + i] = c;
+            }
+
+        // For each client, check max-flow from depot to that client.
+        // Use simple BFS-based max-flow (Edmonds-Karp) on the undirected graph.
+        // Only separate a limited number of cuts per node to avoid overhead.
+        const double EPS = 0.01;
+        int added = 0;
+        const int MAX_SEC_PER_ROUND = 50;
+
+        for (int sink = 1; sink < nt && added < MAX_SEC_PER_ROUND; sink++) {
+            // Edmonds-Karp max-flow from node 0 to sink
+            std::vector<double> residual(nt * nt);
+            for (int i = 0; i < nt * nt; i++) residual[i] = ucap[i];
+
+            double totalFlow = 0.0;
+            while (true) {
+                // BFS to find augmenting path
+                std::vector<int> parent(nt, -1);
+                parent[0] = 0;
+                std::queue<int> q;
+                q.push(0);
+                while (!q.empty() && parent[sink] < 0) {
+                    int u = q.front(); q.pop();
+                    for (int v = 0; v < nt; v++) {
+                        if (parent[v] < 0 && residual[u * nt + v] > EPS * 0.01) {
+                            parent[v] = u;
+                            q.push(v);
+                        }
+                    }
+                }
+                if (parent[sink] < 0) break;
+
+                double pathFlow = 1e30;
+                for (int v = sink; v != 0; v = parent[v])
+                    pathFlow = std::min(pathFlow, residual[parent[v] * nt + v]);
+                for (int v = sink; v != 0; v = parent[v]) {
+                    residual[parent[v] * nt + v] -= pathFlow;
+                    residual[v * nt + parent[v]] += pathFlow;
+                }
+                totalFlow += pathFlow;
+                if (totalFlow >= 1.0 - EPS) break;
+            }
+
+            if (totalFlow < 1.0 - EPS) {
+                // Min-cut found: S = nodes reachable from depot in residual graph
+                std::vector<bool> reachable(nt, false);
+                std::queue<int> q2;
+                q2.push(0);
+                reachable[0] = true;
+                while (!q2.empty()) {
+                    int u = q2.front(); q2.pop();
+                    for (int v = 0; v < nt; v++)
+                        if (!reachable[v] && residual[u * nt + v] > EPS * 0.01) {
+                            reachable[v] = true;
+                            q2.push(v);
+                        }
+                }
+
+                // SEC: Σ_{i in S, j not in S} a[i][j] >= 1
+                GRBLinExpr cutExpr = 0;
+                int cutSize = 0;
+                for (int i = 0; i < nt; i++)
+                    for (int j = 0; j < nt; j++) if (i != j)
+                        if (reachable[i] && !reachable[j]) {
+                            cutExpr += a_flat[i * nt + j];
+                            cutSize++;
+                        }
+                if (cutSize > 0) {
+                    addLazy(cutExpr >= 1);
+                    numSEC++;
+                    added++;
+                }
+            }
         }
     }
 
@@ -509,15 +657,18 @@ PCTSPResult PCTSPExact::solveFullStochasticMILP(TourEvalFunc gpuEval)
     result.optimal = false;
     result.objValue = 1e30;
 
-    const int nc = n - 1;
+    const int nc = n - 1;           // number of clients
+    const int nt = n;               // total nodes in cycle (depot 0 + clients 1..nc)
     const int S  = params.n_scenarios;
 
     cout << "\n===== Benders Stochastic CVRP =====" << endl;
     cout << "  Clients:    " << nc << endl;
     cout << "  Scenarios:  " << S << endl;
-    cout << "  Master vars (binary):     " << nc * (nc - 1) << "  (tour arcs)" << endl;
-    cout << "  Master vars (continuous):  " << nc + 1 << "  (MTZ pos + θ)" << endl;
-    cout << "  Master constraints:        ~" << nc * (nc - 1) + 2 * nc + 1 << endl;
+    cout << "  Nodes in cycle: " << nt << "  (depot + " << nc << " clients)" << endl;
+    cout << "  Master vars (binary):     " << nt * (nt - 1) << "  (tour arcs)" << endl;
+    cout << "  Master vars (continuous):  1  (θ)" << endl;
+    cout << "  Subtour elim: DFJ SEC separation (no MTZ)" << endl;
+    cout << "  Valid ineq: θ >= tour_distance" << endl;
     cout << "  Subproblem: SplitDP O(n²) × " << S << " scenarios per callback" << endl;
     cout << "==================================" << endl;
 
@@ -528,37 +679,49 @@ PCTSPResult PCTSPExact::solveFullStochasticMILP(TourEvalFunc gpuEval)
         env.start();
         GRBModel model(env);
         model.set(GRB_DoubleParam_TimeLimit, timeLimit);
+        if (gpuEval)
+            model.set(GRB_IntParam_Threads, 1);
 
-        /* ── 1. Directed tour arcs ── */
-        std::vector<GRBVar> a_var(nc * nc);
-        for (int i = 0; i < nc; i++)
-            for (int j = 0; j < nc; j++)
+        /* ── 1. Directed tour arcs (depot + clients) ──
+           Node 0 = depot, nodes 1..nc = clients.
+           Arc costs are directly params.timeCost[i][j]. */
+        std::vector<GRBVar> a_var(nt * nt);
+        for (int i = 0; i < nt; i++)
+            for (int j = 0; j < nt; j++)
                 if (i != j)
-                    a_var[i * nc + j] = model.addVar(0, 1, 0, GRB_BINARY);
+                    a_var[i * nt + j] = model.addVar(0, 1, 0, GRB_BINARY);
 
-        for (int i = 0; i < nc; i++) {
+        for (int i = 0; i < nt; i++) {
             GRBLinExpr outD = 0, inD = 0;
-            for (int j = 0; j < nc; j++) if (j != i) {
-                outD += a_var[i * nc + j];
-                inD  += a_var[j * nc + i];
+            for (int j = 0; j < nt; j++) if (j != i) {
+                outD += a_var[i * nt + j];
+                inD  += a_var[j * nt + i];
             }
             model.addConstr(outD == 1);
             model.addConstr(inD  == 1);
         }
 
-        /* ── 2. MTZ subtour elimination ── */
-        std::vector<GRBVar> u_var(nc);
-        for (int i = 0; i < nc; i++)
-            u_var[i] = model.addVar(1, nc, 0, GRB_CONTINUOUS);
-        model.addConstr(u_var[0] == 1);
-        for (int i = 0; i < nc; i++)
-            for (int j = 1; j < nc; j++) if (i != j)
-                model.addConstr(u_var[j] >= u_var[i] + 1 - nc * (1 - a_var[i * nc + j]));
+        /* ── 2. Subtour elimination: DFJ SEC via callback (no MTZ) ──
+           MTZ is replaced by DFJ separation at LP nodes (MIPNODE)
+           and subtour detection at integer solutions (MIPSOL).
+           This gives much tighter LP relaxation (Held-Karp-like bound). */
 
-        /* ── 3. θ penalty variable: average stochastic Split cost ── */
+        /* ── 3. θ = average stochastic Split cost ── */
         GRBVar theta = model.addVar(0, GRB_INFINITY, 1.0, GRB_CONTINUOUS, "theta");
-        model.setObjective(GRBLinExpr(theta), GRB_MINIMIZE);
 
+        /* ── 4. Valid inequality: θ >= tour distance ──
+           For any tour, Split DP cost >= tour distance because splitting
+           only adds extra depot-return trips. This links θ to arc vars
+           and gives a positive LP lower bound. */
+        {
+            GRBLinExpr tourDistExpr = 0;
+            for (int i = 0; i < nt; i++)
+                for (int j = 0; j < nt; j++) if (i != j)
+                    tourDistExpr += params.timeCost[i][j] * a_var[i * nt + j];
+            model.addConstr(theta >= tourDistExpr, "theta_ge_tourDist");
+        }
+
+        model.setObjective(GRBLinExpr(theta), GRB_MINIMIZE);
         model.update();
 
         cout << "\nMaster model:" << endl;
@@ -570,7 +733,7 @@ PCTSPResult PCTSPExact::solveFullStochasticMILP(TourEvalFunc gpuEval)
 
         cout << "  Eval mode: " << (gpuEval ? "GPU (external)" : "CPU (OpenMP)") << endl;
 
-        BendersSplitCallback cb(params, nc, a_var.data(), theta, verbose, gpuEval);
+        BendersSplitCallback cb(params, nt, a_var.data(), theta, verbose, gpuEval);
         model.setCallback(&cb);
         model.optimize();
 
@@ -579,6 +742,7 @@ PCTSPResult PCTSPExact::solveFullStochasticMILP(TourEvalFunc gpuEval)
 
         int status = model.get(GRB_IntAttr_Status);
         cout << "\n  Benders cuts added: " << cb.numCuts << endl;
+        cout << "  DFJ SECs added:     " << cb.numSEC << endl;
         cout << "  Gurobi status:      " << status << endl;
 
         if (cb.bestPerm.empty()) {
@@ -635,15 +799,22 @@ PCTSPResult PCTSPExact::solveFullStochasticMILP(TourEvalFunc gpuEval)
         double avgDist = totalDist / S;
         double avgExcess = totalExcess / S;
 
+        double mipIncumbent = (model.get(GRB_IntAttr_SolCount) > 0)
+            ? model.get(GRB_DoubleAttr_ObjVal) : 1e30;
+        double gap = (result.objValue > 1e-6)
+            ? 100.0 * (result.objValue - bestBound) / result.objValue : 100.0;
+
         cout << "\n===== Benders Result =====" << endl;
         cout << fixed << setprecision(2);
-        cout << "  Stochastic cost:  " << result.objValue << endl;
+        cout << "  UB (best cost):   " << result.objValue << endl;
+        cout << "  LB (best bound):  " << bestBound << endl;
+        cout << "  Gap:              " << gap << "%" << endl;
+        cout << "  MIP incumbent θ:  " << mipIncumbent << endl;
         cout << "  avg distance:     " << avgDist << endl;
         cout << "  avg capExcess:    " << avgExcess << endl;
         cout << "  tourDist(TSP):    " << result.totalDistance << endl;
-        cout << "  Best bound:       " << bestBound << endl;
-        cout << "  Gap:              " << 100.0 * (result.objValue - bestBound) / (std::abs(result.objValue) + 1e-10) << "%" << endl;
-        cout << "  Cuts generated:   " << cb.numCuts << endl;
+        cout << "  Benders cuts:     " << cb.numCuts << endl;
+        cout << "  DFJ SECs:         " << cb.numSEC << endl;
         cout << "  Solve time:       " << result.solveTime << "s" << endl;
 
     } catch (GRBException & e) {
